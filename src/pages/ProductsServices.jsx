@@ -287,8 +287,7 @@ const ProductsServices = () => {
                     <tr key={product.id || product.sl} className="bg-card dark:bg-dark-card border-b border-border dark:border-dark-border last:border-b-0 hover:bg-muted/30 dark:hover:bg-dark-muted/30 transition-colors duration-150">
                         <td className="px-4 py-3">{product.sl}</td>
                         <td className="px-4 py-3 text-xs font-mono">{product.id}</td>
-                        <td className="px-4 py-3 font-medium text-secondary dark:text-dark-secondary">{product.name}</td>
-                        <td className="px-4 py-3">{product.productType}</td>
+                        <td className="px-4 py-3">{product.name}</td>
                         <td className="px-4 py-3">{product.productType}</td>
                         <td className="px-4 py-3">{product.baseUnitName}</td>
                         <td className="px-4 py-3 text-right">{product.avgCostFormatted}</td>

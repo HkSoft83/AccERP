@@ -130,17 +130,12 @@ const SidebarLink = ({ item, closeSidebar }) => {
 };
 
 const Layout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true); 
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false); // changed from sidebarOpen
   const location = useLocation();
   const { toast } = useToast();
   const { theme, toggleTheme } = useTheme();
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-  const closeSidebar = () => {
-    if (window.innerWidth < 768) { 
-      setSidebarOpen(false);
-    }
-  }
+  const toggleSidebar = () => setSidebarCollapsed((prev) => !prev);
 
   let currentPageName = 'Dashboard';
   const currentTopLevelItem = navItems.find(item => location.pathname === item.path || (item.subItems && location.pathname.startsWith(item.path)));
@@ -155,55 +150,98 @@ const Layout = () => {
 
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      {/* Sidebar */}
       <motion.div
-        animate={{ x: sidebarOpen ? 0 : '-100%' }}
+        animate={{ width: sidebarCollapsed ? 64 : 256 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className={`fixed inset-y-0 left-0 z-30 w-64 bg-white dark:bg-gray-800 shadow-xl 
-                    md:static md:inset-0 md:translate-x-0 md:shadow-lg border-r border-gray-200 dark:border-gray-700`}
+        className="fixed inset-y-0 left-0 z-30 bg-white dark:bg-gray-800 shadow-xl border-r border-gray-200 dark:border-gray-700 flex flex-col"
+        style={{ width: sidebarCollapsed ? '4rem' : '16rem', minWidth: sidebarCollapsed ? '4rem' : '16rem', maxWidth: sidebarCollapsed ? '4rem' : '16rem' }}
       >
         <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between h-20 px-6 border-b border-gray-200 dark:border-gray-700 bg-blue-600 dark:bg-gray-800 text-white dark:text-gray-100">
-            <NavLink to="/" className="flex items-center" onClick={closeSidebar}>
+          {/* Top bar */}
+          <div className={`flex items-center justify-between h-20 px-6 border-b border-gray-200 dark:border-gray-700 bg-blue-600 dark:bg-gray-800 text-white dark:text-gray-100 ${sidebarCollapsed ? 'justify-center px-2' : ''}`}>
+            <NavLink to="/" className="flex items-center" onClick={() => {}}>
               <Package size={28} className="mr-2 text-blue-300"/>
-              <span className="text-xl font-bold">Easy CloudBook</span>
+              {!sidebarCollapsed && <span className="text-xl font-bold">Easy CloudBook</span>}
             </NavLink>
-            <Button variant="ghost" size="icon" className="md:hidden text-white dark:text-gray-100 hover:bg-blue-700 dark:hover:bg-gray-700" onClick={toggleSidebar}>
-              <X size={24} />
-            </Button>
+            {!sidebarCollapsed && (
+              <Button variant="ghost" size="icon" className="md:hidden text-white dark:text-gray-100 hover:bg-blue-700 dark:hover:bg-gray-700" onClick={toggleSidebar}>
+                <X size={24} />
+              </Button>
+            )}
           </div>
-          <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+          {/* Navigation */}
+          <nav className={`flex-1 p-2 overflow-y-auto ${sidebarCollapsed ? 'items-center' : ''}`}>
             <ul>
-              {navItems.map(item => <SidebarLink key={item.name} item={item} closeSidebar={closeSidebar} />)}
+              {navItems.map(item => (
+              <li key={item.name} className="mb-1">
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `flex items-center p-3 rounded-lg transition-all duration-200 ease-in-out
+                    hover:bg-blue-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-gray-100
+                    ${isActive ? 'bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-gray-100 font-semibold shadow-sm' : 'text-gray-700 dark:text-gray-300'}
+                    ${sidebarCollapsed ? 'justify-center' : ''}`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <item.icon className={`w-5 h-5 flex-shrink-0 ${sidebarCollapsed ? '' : 'mr-3'} ${isActive ? 'text-blue-600 dark:text-gray-100' : ''}`} />
+                      {!sidebarCollapsed && <span className="text-sm">{item.name}</span>}
+                    </>
+                  )}
+                </NavLink>
+              </li>
+            ))}
             </ul>
           </nav>
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-            <Button 
-              variant="ghost" 
-              className="w-full justify-start text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-gray-100"
-              onClick={() => {
-                toast({ title: "Settings", description: "Settings page coming soon!" });
-                closeSidebar();
-              }}
-            >
-              <Settings size={20} className="mr-3" /> Settings
-            </Button>
-            <Button 
-              variant="ghost" 
-              className="w-full justify-start text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-gray-100"
-              onClick={() => {
-                toast({ title: "Logout", description: "You have been logged out (simulation)." });
-                closeSidebar();
-              }}
-            >
-              <LogOut size={20} className="mr-3" /> Logout
-            </Button>
-          </div>
+          {/* Settings/Logout */}
+          {!sidebarCollapsed && (
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-gray-100"
+                onClick={() => {
+                  toast({ title: "Settings", description: "Settings page coming soon!" });
+                }}
+              >
+                <Settings size={20} className="mr-3" /> Settings
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-gray-100"
+                onClick={() => {
+                  toast({ title: "Logout", description: "You have been logged out (simulation)." });
+                }}
+              >
+                <LogOut size={20} className="mr-3" /> Logout
+              </Button>
+            </div>
+          )}
+          {/* Collapse/Expand Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white dark:bg-gray-700 dark:text-gray-100`}
+            onClick={toggleSidebar}
+            aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {sidebarCollapsed ? <Menu size={24} /> : <X size={24} />}
+          </Button>
         </div>
       </motion.div>
       
-      <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Main Content */}
+      <div
+        className="flex-1 flex flex-col overflow-hidden"
+        style={{
+          marginLeft: sidebarCollapsed ? '4rem' : '16rem',
+          transition: 'margin-left 0.3s',
+        }}
+      >
         <header className="h-20 bg-white dark:bg-gray-800 shadow-md flex items-center justify-between px-6 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center">
+            {/* Optionally hide this button if sidebar is collapsed */}
             <Button variant="ghost" size="icon" className="mr-4 text-gray-700 dark:text-gray-100 hover:bg-blue-100 dark:hover:bg-gray-700" onClick={toggleSidebar}>
               <Menu size={24} />
             </Button>
@@ -253,4 +291,4 @@ const Layout = () => {
   );
 };
 
-export default Layout; 
+export default Layout;
