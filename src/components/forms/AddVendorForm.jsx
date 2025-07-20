@@ -19,6 +19,7 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const [openingBalance, setOpeningBalance] = useState('');
   const [openingBalanceDate, setOpeningBalanceDate] = useState(undefined);
   const [originalId, setOriginalId] = useState(null);
+  const [showAdditionalFields, setShowAdditionalFields] = useState(false);
   const [customFields, setCustomFields] = useState([
     { name: 'Custom Field 1', value: '', options: '' },
     { name: 'Custom Field 2', value: '', options: '' },

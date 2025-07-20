@@ -38,7 +38,7 @@ const initialCustomersData = [
 
 const formatCustomerForDisplay = (customer) => ({
   ...customer,
-  balanceFormatted: `${(customer.balance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${(customer.balance || 0) >= 0 ? '(Receivable)' : '(Payable)'}`,
+  balanceFormatted: (customer.balance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }),
 });
 
 const SortableHeader = ({ children, columnKey, sortConfig, requestSort, isTextRight = false, className = "" }) => {

@@ -30,15 +30,15 @@ import AddVendorForm from '@/components/forms/AddVendorForm';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const initialVendorsData = [
-  { id: 'vend-001', name: 'Supplier Alpha Inc.', proprietorName: 'Mr. A', vendorNumber: 'V001', address: '123 Supply St', balance: 1500.00, openingBalance: 1500.00, openingBalanceDate: '2023-01-01' },
-  { id: 'vend-002', name: 'Service Provider Beta', proprietorName: 'Ms. B', vendorNumber: 'V002', address: '456 Service Ave', balance: 0.00, openingBalance: 0.00, openingBalanceDate: '2023-01-01' },
-  { id: 'vend-003', name: 'Materials Inc.', proprietorName: 'Dr. M', vendorNumber: 'V003', address: '789 Material Rd', balance: 3250.50, openingBalance: 3250.50, openingBalanceDate: '2023-01-01' },
-  { id: 'vend-004', name: 'Vendor Gamma Co.', proprietorName: 'Prof. G', vendorNumber: 'V004', address: '012 Gamma Blvd', balance: -500.00, openingBalance: -500.00, openingBalanceDate: '2023-01-01' },
+  { id: 'vend-001', name: 'Supplier Alpha Inc.', proprietorName: 'Mr. A', vendorNumber: 'V001', address: '123 Supply St', phoneNumber: '555-111-2222', balance: 1500.00, openingBalance: 1500.00, openingBalanceDate: '2023-01-01' },
+  { id: 'vend-002', name: 'Service Provider Beta', proprietorName: 'Ms. B', vendorNumber: 'V002', address: '456 Service Ave', phoneNumber: '555-333-4444', balance: 0.00, openingBalance: 0.00, openingBalanceDate: '2023-01-01' },
+  { id: 'vend-003', name: 'Materials Inc.', proprietorName: 'Dr. M', vendorNumber: 'V003', address: '789 Material Rd', phoneNumber: '555-555-6666', balance: 3250.50, openingBalance: 3250.50, openingBalanceDate: '2023-01-01' },
+  { id: 'vend-004', name: 'Vendor Gamma Co.', proprietorName: 'Prof. G', vendorNumber: 'V004', address: '012 Gamma Blvd', phoneNumber: '555-777-8888', balance: -500.00, openingBalance: -500.00, openingBalanceDate: '2023-01-01' },
 ];
 
 const formatVendorForDisplay = (vendor) => ({
   ...vendor,
-  balanceFormatted: `${(vendor.balance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${(vendor.balance || 0) >= 0 ? '(Payable)' : '(Receivable)'}`,
+  balanceFormatted: (vendor.balance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }),
 });
 
 const SortableHeader = ({ children, columnKey, sortConfig, requestSort, isTextRight = false, className = "" }) => {
@@ -253,6 +253,8 @@ const Vendor = () => {
               <thead className="text-xs text-primary dark:text-dark-primary uppercase bg-muted/50 dark:bg-dark-muted/50">
                 <tr>
                   <SortableHeader columnKey="name" sortConfig={sortConfig} requestSort={requestSort} className="min-w-[250px]">Vendor Name</SortableHeader>
+                  <SortableHeader columnKey="address" sortConfig={sortConfig} requestSort={requestSort}>Address</SortableHeader>
+                  <SortableHeader columnKey="phoneNumber" sortConfig={sortConfig} requestSort={requestSort}>Phone Number</SortableHeader>
                   <SortableHeader columnKey="balance" sortConfig={sortConfig} requestSort={requestSort} isTextRight={true}>Balance</SortableHeader>
                   <th scope="col" className="px-4 py-3 text-center w-28">Actions</th>
                 </tr>
@@ -266,6 +268,8 @@ const Vendor = () => {
                     >
                       {vendor.name}
                     </td>
+                    <td className="px-4 py-3">{vendor.address}</td>
+                    <td className="px-4 py-3">{vendor.phoneNumber}</td>
                     <td className="px-4 py-3 text-right font-semibold">{vendor.balanceFormatted}</td>
                     <td className="px-4 py-3 text-center space-x-1">
                       <Button 
