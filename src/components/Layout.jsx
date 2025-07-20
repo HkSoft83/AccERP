@@ -218,16 +218,7 @@ const Layout = () => {
               </Button>
             </div>
           )}
-          {/* Collapse/Expand Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white dark:bg-gray-700 dark:text-gray-100`}
-            onClick={toggleSidebar}
-            aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          >
-            {sidebarCollapsed ? <Menu size={24} /> : <X size={24} />}
-          </Button>
+          
         </div>
       </motion.div>
       
