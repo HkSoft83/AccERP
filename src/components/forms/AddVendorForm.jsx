@@ -4,8 +4,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DatePicker } from '@/components/ui/date-picker';
 import { useToast } from '@/components/ui/use-toast';
-import { DialogFooter, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
-import { Save } from 'lucide-react';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription, DialogClose, DialogTrigger } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Save, Settings } from 'lucide-react';
 
 const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const { toast } = useToast();
@@ -18,6 +19,29 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const [openingBalance, setOpeningBalance] = useState('');
   const [openingBalanceDate, setOpeningBalanceDate] = useState(undefined);
   const [originalId, setOriginalId] = useState(null);
+  const [customFields, setCustomFields] = useState([
+    { name: 'Custom Field 1', value: '', options: '' },
+    { name: 'Custom Field 2', value: '', options: '' },
+    { name: 'Custom Field 3', value: '', options: '' },
+  ]);
+
+  const handleCustomFieldNameChange = (index, name) => {
+    const newCustomFields = [...customFields];
+    newCustomFields[index].name = name;
+    setCustomFields(newCustomFields);
+  };
+
+  const handleCustomFieldOptionsChange = (index, options) => {
+    const newCustomFields = [...customFields];
+    newCustomFields[index].options = options;
+    setCustomFields(newCustomFields);
+  };
+
+  const handleCustomFieldValueChange = (index, value) => {
+    const newCustomFields = [...customFields];
+    newCustomFields[index].value = value;
+    setCustomFields(newCustomFields);
+  };
 
   useEffect(() => {
     if (isEditMode && initialData) {
@@ -30,6 +54,9 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       setOpeningBalance(initialData.openingBalance?.toString() || '');
       setOpeningBalanceDate(initialData.openingBalanceDate ? new Date(initialData.openingBalanceDate) : undefined);
       setOriginalId(initialData.id || initialData.vendorNumber);
+      if (initialData.customFields) {
+        setCustomFields(initialData.customFields);
+      }
     } else {
       resetForm();
     }
@@ -45,6 +72,11 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
     setOpeningBalance('');
     setOpeningBalanceDate(undefined);
     setOriginalId(null);
+    setCustomFields([
+      { name: 'Custom Field 1', value: '', options: '' },
+      { name: 'Custom Field 2', value: '', options: '' },
+      { name: 'Custom Field 3', value: '', options: '' },
+    ]);
   };
 
   const handleSubmit = (e, closeAfterSave = true) => {
@@ -68,6 +100,7 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       nid,
       openingBalance: parseFloat(openingBalance) || 0,
       openingBalanceDate: openingBalanceDate ? openingBalanceDate.toISOString().split('T')[0] : null,
+      customFields,
     };
 
     onSave(vendorData, isEditMode);
@@ -86,12 +119,45 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
 
   return (
     <form onSubmit={(e) => handleSubmit(e, true)} className="space-y-4 py-2">
-      <DialogHeader className="hidden">
-        <DialogTitle>{isEditMode ? 'Edit Vendor' : 'Add New Vendor'}</DialogTitle>
-        <DialogDescription>
-          {isEditMode ? 'Update vendor details.' : 'Fill in the details to add a new vendor.'}
-        </DialogDescription>
-      </DialogHeader>
+      <div className="flex justify-end">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Settings className="h-5 w-5" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Customize Fields</DialogTitle>
+              <DialogDescription>
+                Define the labels and options for your custom fields.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              {customFields.map((field, index) => (
+                <div key={index} className="space-y-2">
+                  <Label>Field {index + 1} Name</Label>
+                  <Input
+                    value={field.name}
+                    onChange={(e) => handleCustomFieldNameChange(index, e.target.value)}
+                  />
+                  <Label>Field {index + 1} Options (comma-separated)</Label>
+                  <Input
+                    value={field.options}
+                    onChange={(e) => handleCustomFieldOptionsChange(index, e.target.value)}
+                    placeholder="e.g., Option 1, Option 2"
+                  />
+                </div>
+              ))}
+            </div>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button>Done</Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
       <div>
         <Label htmlFor="vendorName">Vendor Name <span className="text-red-500">*</span></Label>
         <Input
@@ -155,6 +221,36 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
           className="mt-1"
         />
       </div>
+      {customFields.map((field, index) => (
+        <div key={index}>
+          <Label htmlFor={`custom-field-${index}`}>{field.name}</Label>
+          {field.options ? (
+            <Select
+              onValueChange={(value) => handleCustomFieldValueChange(index, value)}
+              value={field.value}
+            >
+              <SelectTrigger className="mt-1">
+                <SelectValue placeholder={`Select ${field.name}`} />
+              </SelectTrigger>
+              <SelectContent>
+                {field.options.split(',').map((option, optionIndex) => (
+                  <SelectItem key={optionIndex} value={option.trim()}>
+                    {option.trim()}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            <Input
+              id={`custom-field-${index}`}
+              value={field.value}
+              onChange={(e) => handleCustomFieldValueChange(index, e.target.value)}
+              placeholder={`Enter ${field.name}`}
+              className="mt-1"
+            />
+          )}
+        </div>
+      ))}
       <div>
         <Label htmlFor="openingBalance">Opening Balance</Label>
         <Input
