@@ -39,6 +39,8 @@ const navItems = [
       { name: 'Debit Note', path: '/transactions/debit-note' },
       { name: 'Credit Note', path: '/transactions/credit-note' },
       { name: 'Manual Journal', path: '/transactions/manual-journal' },
+      { name: 'Recurring & Adjustments', path: '/transactions/recurring-adjustments' },
+      { name: 'Txn Transfer', path: '/transactions/txn-transfer' },
     ]
   },
   {

@@ -26,6 +26,8 @@ const Contra = lazy(() => import('@/pages/transactions/Contra'));
 const DebitNote = lazy(() => import('@/pages/transactions/DebitNote'));
 const CreditNote = lazy(() => import('@/pages/transactions/CreditNote'));
 const ManualJournal = lazy(() => import('@/pages/transactions/ManualJournal'));
+const RecurringAdjustments = lazy(() => import('@/pages/transactions/RecurringAdjustments'));
+const TxnTransfer = lazy(() => import('@/pages/transactions/TxnTransfer'));
 
 const AddEmployee = lazy(() => import('@/pages/employee/AddEmployee'));
 const EmployeeDatabase = lazy(() => import('@/pages/employee/EmployeeDatabase'));
@@ -80,6 +82,8 @@ function App() {
                 <Route path="debit-note" element={<DebitNote />} />
                 <Route path="credit-note" element={<CreditNote />} />
                 <Route path="manual-journal" element={<ManualJournal />} />
+                <Route path="recurring-adjustments" element={<RecurringAdjustments />} />
+                <Route path="txn-transfer" element={<TxnTransfer />} />
               </Route>
 
               <Route path="employee">
