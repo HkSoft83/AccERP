@@ -12,7 +12,12 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const [customerName, setCustomerName] = useState('');
   const [proprietorName, setProprietorName] = useState('');
   const [customerNumber, setCustomerNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
+  const [nid, setNid] = useState('');
+  const [extraField1, setExtraField1] = useState('');
+  const [extraField2, setExtraField2] = useState('');
+  const [extraField3, setExtraField3] = useState('');
   const [openingBalance, setOpeningBalance] = useState('');
   const [openingBalanceDate, setOpeningBalanceDate] = useState(undefined);
   const [originalId, setOriginalId] = useState(null);
@@ -22,7 +27,12 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       setCustomerName(initialData.name || '');
       setProprietorName(initialData.proprietorName || '');
       setCustomerNumber(initialData.customerNumber || '');
+      setPhoneNumber(initialData.phoneNumber || '');
       setAddress(initialData.address || '');
+      setNid(initialData.nid || '');
+      setExtraField1(initialData.extraField1 || '');
+      setExtraField2(initialData.extraField2 || '');
+      setExtraField3(initialData.extraField3 || '');
       setOpeningBalance(initialData.openingBalance?.toString() || '');
       setOpeningBalanceDate(initialData.openingBalanceDate ? new Date(initialData.openingBalanceDate) : undefined);
       setOriginalId(initialData.id || initialData.customerNumber);
@@ -35,7 +45,12 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
     setCustomerName('');
     setProprietorName('');
     setCustomerNumber('');
+    setPhoneNumber('');
     setAddress('');
+    setNid('');
+    setExtraField1('');
+    setExtraField2('');
+    setExtraField3('');
     setOpeningBalance('');
     setOpeningBalanceDate(undefined);
     setOriginalId(null);
@@ -57,7 +72,12 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       name: customerName,
       proprietorName,
       customerNumber: customerNumber || (originalId ? originalId.split('-')[1] || String(Date.now()).slice(-4) : `C${String(Date.now()).slice(-4)}`),
+      phoneNumber,
       address,
+      nid,
+      extraField1,
+      extraField2,
+      extraField3,
       openingBalance: parseFloat(openingBalance) || 0,
       openingBalanceDate: openingBalanceDate ? openingBalanceDate.toISOString().split('T')[0] : null,
     };
@@ -118,12 +138,62 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
         {isEditMode && <p className="text-xs text-muted-foreground">Customer number cannot be changed after creation.</p>}
       </div>
       <div>
+        <Label htmlFor="phoneNumber">Phone Number</Label>
+        <Input
+          id="phoneNumber"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          placeholder="e.g., +1234567890"
+          className="mt-1"
+        />
+      </div>
+      <div>
         <Label htmlFor="address">Address</Label>
         <Input
           id="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           placeholder="e.g., 456 Client Ave"
+          className="mt-1"
+        />
+      </div>
+      <div>
+        <Label htmlFor="nid">NID</Label>
+        <Input
+          id="nid"
+          value={nid}
+          onChange={(e) => setNid(e.target.value)}
+          placeholder="e.g., 1234567890"
+          className="mt-1"
+        />
+      </div>
+      <div>
+        <Label htmlFor="extraField1">Extra Field 1</Label>
+        <Input
+          id="extraField1"
+          value={extraField1}
+          onChange={(e) => setExtraField1(e.target.value)}
+          placeholder=""
+          className="mt-1"
+        />
+      </div>
+      <div>
+        <Label htmlFor="extraField2">Extra Field 2</Label>
+        <Input
+          id="extraField2"
+          value={extraField2}
+          onChange={(e) => setExtraField2(e.target.value)}
+          placeholder=""
+          className="mt-1"
+        />
+      </div>
+      <div>
+        <Label htmlFor="extraField3">Extra Field 3</Label>
+        <Input
+          id="extraField3"
+          value={extraField3}
+          onChange={(e) => setExtraField3(e.target.value)}
+          placeholder=""
           className="mt-1"
         />
       </div>
