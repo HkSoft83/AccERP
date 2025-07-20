@@ -12,7 +12,9 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const [vendorName, setVendorName] = useState('');
   const [proprietorName, setProprietorName] = useState('');
   const [vendorNumber, setVendorNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
+  const [nid, setNid] = useState('');
   const [openingBalance, setOpeningBalance] = useState('');
   const [openingBalanceDate, setOpeningBalanceDate] = useState(undefined);
   const [originalId, setOriginalId] = useState(null);
@@ -22,7 +24,9 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       setVendorName(initialData.name || '');
       setProprietorName(initialData.proprietorName || '');
       setVendorNumber(initialData.vendorNumber || '');
+      setPhoneNumber(initialData.phoneNumber || '');
       setAddress(initialData.address || '');
+      setNid(initialData.nid || '');
       setOpeningBalance(initialData.openingBalance?.toString() || '');
       setOpeningBalanceDate(initialData.openingBalanceDate ? new Date(initialData.openingBalanceDate) : undefined);
       setOriginalId(initialData.id || initialData.vendorNumber);
@@ -35,7 +39,9 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
     setVendorName('');
     setProprietorName('');
     setVendorNumber('');
+    setPhoneNumber('');
     setAddress('');
+    setNid('');
     setOpeningBalance('');
     setOpeningBalanceDate(undefined);
     setOriginalId(null);
@@ -57,7 +63,9 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       name: vendorName,
       proprietorName,
       vendorNumber: vendorNumber || (originalId ? originalId.split('-')[1] || String(Date.now()).slice(-4) : `V${String(Date.now()).slice(-4)}`),
+      phoneNumber,
       address,
+      nid,
       openingBalance: parseFloat(openingBalance) || 0,
       openingBalanceDate: openingBalanceDate ? openingBalanceDate.toISOString().split('T')[0] : null,
     };
@@ -118,12 +126,32 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
         {isEditMode && <p className="text-xs text-muted-foreground">Vendor number cannot be changed after creation.</p>}
       </div>
       <div>
+        <Label htmlFor="phoneNumber">Phone Number</Label>
+        <Input
+          id="phoneNumber"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          placeholder="e.g., +1234567890"
+          className="mt-1"
+        />
+      </div>
+      <div>
         <Label htmlFor="address">Address</Label>
         <Input
           id="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           placeholder="e.g., 123 Supply Chain Rd"
+          className="mt-1"
+        />
+      </div>
+      <div>
+        <Label htmlFor="nid">NID</Label>
+        <Input
+          id="nid"
+          value={nid}
+          onChange={(e) => setNid(e.target.value)}
+          placeholder="e.g., 1234567890123"
           className="mt-1"
         />
       </div>
