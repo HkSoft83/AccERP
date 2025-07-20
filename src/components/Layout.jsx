@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutDashboard, Menu, X, Users, ShoppingCart, FileText, BarChart3, Briefcase, Building, Users2, Settings, LogOut, ChevronDown, ChevronRight, Package, Factory, ShoppingBag, PieChart, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, Menu, X, Users, ShoppingCart, FileText, BarChart3, Briefcase, Building, Users2, Settings, LogOut, ChevronDown, ChevronRight, Package, Factory, ShoppingBag, PieChart, Sun, Moon, Dot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/components/ui/use-toast';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
@@ -16,7 +17,7 @@ const navItems = [
   {
     name: 'Sales', path: '/sales', icon: FileText,
     subItems: [
-      { name: 'Sales Invoice', path: '/sales/invoice', },
+      { name: 'Sales Invoice', path: '/sales/invoice' },
       { name: 'Sales Return', path: '/sales/return' },
       { name: 'Sales Order', path: '/sales/order' },
     ]
@@ -60,24 +61,77 @@ const navItems = [
   },
 ];
 
-const SidebarLink = ({ item, closeSidebar }) => {
+const SidebarLink = ({ item, sidebarCollapsed }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isActive = item.subItems 
+  const isActive = item.subItems
     ? location.pathname.startsWith(item.path)
     : location.pathname === item.path;
 
   const handleToggle = (e) => {
+    e.preventDefault();
     if (item.subItems) {
-      e.preventDefault();
-      setIsOpen(!isOpen);
+      if (!sidebarCollapsed) {
+        setIsOpen(!isOpen);
+      }
     } else {
       navigate(item.path);
-      if (closeSidebar) closeSidebar();
     }
   };
+
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  const handleSubMenuClick = () => {
+    setIsPopoverOpen(false);
+  };
+
+  if (sidebarCollapsed && item.subItems) {
+    return (
+      <li className="mb-1">
+        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="ghost"
+              className={
+                `w-full p-3 rounded-lg transition-all duration-200 ease-in-out
+                 hover:bg-blue-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-gray-100
+                 ${isActive
+                   ? 'bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-gray-100 font-semibold shadow-sm'
+                   : 'text-gray-700 dark:text-gray-300'}`
+              }
+            >
+              <item.icon className="w-5 h-5 flex-shrink-0" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-48 p-2" side="right" align="start">
+            <h4 className="font-semibold text-sm mb-2 px-2">{item.name}</h4>
+            <ul>
+              {item.subItems.map(subItem => (
+                <li key={subItem.name}>
+                  <NavLink
+                    to={subItem.path}
+                    onClick={handleSubMenuClick}
+                    className={({ isActive: subIsActive }) =>
+                      `flex items-center p-2 rounded-md text-xs transition-colors duration-200
+                       hover:bg-blue-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-gray-100
+                       ${subIsActive
+                         ? 'bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-gray-100 font-medium'
+                         : 'text-gray-600 dark:text-gray-400'}`
+                    }
+                  >
+                    <Dot className="w-4 h-4 mr-1 flex-shrink-0" />
+                    {subItem.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </PopoverContent>
+        </Popover>
+      </li>
+    );
+  }
 
   return (
     <li className="mb-1">
@@ -85,20 +139,21 @@ const SidebarLink = ({ item, closeSidebar }) => {
         href={item.path}
         onClick={handleToggle}
         className={
-          `flex items-center justify-between p-3 rounded-lg transition-all duration-200 ease-in-out
+          `flex items-center p-3 rounded-lg transition-all duration-200 ease-in-out
            hover:bg-blue-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-gray-100
-           ${isActive 
-             ? 'bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-gray-100 font-semibold shadow-sm' 
+           ${sidebarCollapsed ? 'justify-center' : 'justify-between'}
+           ${isActive
+             ? 'bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-gray-100 font-semibold shadow-sm'
              : 'text-gray-700 dark:text-gray-300'}`
         }
       >
         <div className="flex items-center">
-          <item.icon className={`w-5 h-5 mr-3 flex-shrink-0 ${isActive ? 'text-blue-600 dark:text-gray-100' : ''}`} />
-          <span className="text-sm">{item.name}</span>
+          <item.icon className={`w-5 h-5 flex-shrink-0 ${!sidebarCollapsed ? 'mr-3' : ''} ${isActive ? 'text-blue-600 dark:text-gray-100' : ''}`} />
+          {!sidebarCollapsed && <span className="text-sm">{item.name}</span>}
         </div>
-        {item.subItems && (isOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />)}
+        {item.subItems && !sidebarCollapsed && (isOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />)}
       </a>
-      {item.subItems && isOpen && (
+      {!sidebarCollapsed && item.subItems && isOpen && (
         <motion.ul
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 'auto', opacity: 1 }}
@@ -109,12 +164,11 @@ const SidebarLink = ({ item, closeSidebar }) => {
             <li key={subItem.name}>
               <NavLink
                 to={subItem.path}
-                onClick={closeSidebar} 
                 className={({ isActive: subIsActive }) =>
                   `flex items-center p-2 pl-5 rounded-md text-xs transition-colors duration-200
                    hover:bg-blue-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-gray-100
-                   ${subIsActive 
-                     ? 'bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-gray-100 font-medium' 
+                   ${subIsActive
+                     ? 'bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-gray-100 font-medium'
                      : 'text-gray-600 dark:text-gray-400'}`
                 }
               >
@@ -130,7 +184,7 @@ const SidebarLink = ({ item, closeSidebar }) => {
 };
 
 const Layout = () => {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false); // changed from sidebarOpen
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();
   const { toast } = useToast();
   const { theme, toggleTheme } = useTheme();
@@ -174,7 +228,7 @@ const Layout = () => {
           <nav className={`flex-1 p-2 overflow-y-auto ${sidebarCollapsed ? 'items-center' : ''}`}>
             <ul>
               {navItems.map(item => (
-                <SidebarLink key={item.name} item={item} />
+                <SidebarLink key={item.name} item={item} sidebarCollapsed={sidebarCollapsed} />
               ))}
             </ul>
           </nav>
