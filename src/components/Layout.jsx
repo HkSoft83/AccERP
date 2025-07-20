@@ -174,25 +174,8 @@ const Layout = () => {
           <nav className={`flex-1 p-2 overflow-y-auto ${sidebarCollapsed ? 'items-center' : ''}`}>
             <ul>
               {navItems.map(item => (
-              <li key={item.name} className="mb-1">
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) =>
-                    `flex items-center p-3 rounded-lg transition-all duration-200 ease-in-out
-                    hover:bg-blue-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-gray-100
-                    ${isActive ? 'bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-gray-100 font-semibold shadow-sm' : 'text-gray-700 dark:text-gray-300'}
-                    ${sidebarCollapsed ? 'justify-center' : ''}`
-                  }
-                >
-                  {({ isActive }) => (
-                    <>
-                      <item.icon className={`w-5 h-5 flex-shrink-0 ${sidebarCollapsed ? '' : 'mr-3'} ${isActive ? 'text-blue-600 dark:text-gray-100' : ''}`} />
-                      {!sidebarCollapsed && <span className="text-sm">{item.name}</span>}
-                    </>
-                  )}
-                </NavLink>
-              </li>
-            ))}
+                <SidebarLink key={item.name} item={item} />
+              ))}
             </ul>
           </nav>
           {/* Settings/Logout */}
