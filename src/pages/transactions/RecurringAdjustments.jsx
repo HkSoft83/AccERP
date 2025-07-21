@@ -17,6 +17,8 @@ export default function RecurringAdjustments() {
   const [automationType, setAutomationType] = useState('');
   const [customFrequencyValue, setCustomFrequencyValue] = useState('');
   const [customFrequencyUnit, setCustomFrequencyUnit] = useState('');
+  const [occurrenceDay, setOccurrenceDay] = useState('');
+  const [occurrenceTime, setOccurrenceTime] = useState('');
   const [recurringTransactions, setRecurringTransactions] = useState([]);
 
   const handleAddRecurringTransaction = () => {
@@ -25,6 +27,8 @@ export default function RecurringAdjustments() {
       transactionType,
       frequency,
       ...(frequency === 'custom' && { customFrequencyValue, customFrequencyUnit }),
+      occurrenceDay,
+      occurrenceTime,
       startDate: startDate ? startDate.toDateString() : '',
       endDate: endDate ? endDate.toDateString() : '',
       amount,
@@ -42,6 +46,8 @@ export default function RecurringAdjustments() {
     setAutomationType('');
     setCustomFrequencyValue('');
     setCustomFrequencyUnit('');
+    setOccurrenceDay('');
+    setOccurrenceTime('');
   };
 
   return (
@@ -141,6 +147,94 @@ export default function RecurringAdjustments() {
                 </SelectContent>
               </Select>
             </div>
+            {frequency && (
+              <>
+                <div>
+                  <Label htmlFor="occurrenceTime">Time of Day</Label>
+                  <Input
+                    id="occurrenceTime"
+                    type="text"
+                    value={occurrenceTime}
+                    onChange={(e) => setOccurrenceTime(e.target.value)}
+                    placeholder="e.g., 11:00 AM"
+                  />
+                </div>
+                {(frequency === 'weekly' || frequency === 'monthly' || frequency === 'quarterly' || frequency === 'half-yearly' || frequency === 'annually' || frequency === 'custom') && (
+                  <div>
+                    <Label htmlFor="occurrenceDay">Day of {frequency === 'weekly' ? 'Week' : frequency === 'monthly' ? 'Month' : frequency === 'annually' ? 'Year' : 'Period'}</Label>
+                    <Input
+                      id="occurrenceDay"
+                      type="text"
+                      value={occurrenceDay}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        let maxDay;
+
+                        switch (frequency) {
+                          case 'weekly':
+                            maxDay = 7;
+                            break;
+                          case 'monthly':
+                            maxDay = 31;
+                            break;
+                          case 'quarterly':
+                            maxDay = 92; // Approx. 365/4
+                            break;
+                          case 'half-yearly':
+                            maxDay = 183; // Approx. 365/2
+                            break;
+                          case 'annually':
+                            maxDay = 365;
+                            break;
+                          case 'custom':
+                            if (customFrequencyUnit === 'days') {
+                              maxDay = parseInt(customFrequencyValue) || 1;
+                            } else if (customFrequencyUnit === 'weeks') {
+                              maxDay = (parseInt(customFrequencyValue) || 1) * 7;
+                            } else if (customFrequencyUnit === 'months') {
+                              maxDay = (parseInt(customFrequencyValue) || 1) * 31;
+                            } else if (customFrequencyUnit === 'years') {
+                              maxDay = (parseInt(customFrequencyValue) || 1) * 365;
+                            }
+                            break;
+                          default:
+                            maxDay = Infinity;
+                        }
+
+                        const days = value.split(/[,/]/).map(day => day.trim());
+                        let allValid = true;
+
+                        if (value === '') {
+                          setOccurrenceDay('');
+                          return;
+                        }
+
+                        for (const day of days) {
+                          if (day.toLowerCase() === 'last') {
+                            continue;
+                          }
+                          const numValue = parseInt(day);
+                          if (isNaN(numValue) || numValue < 1 || numValue > maxDay) {
+                            allValid = false;
+                            break;
+                          }
+                        }
+
+                        if (allValid) {
+                          setOccurrenceDay(value);
+                        }
+                      }}
+                      placeholder={
+                        frequency === 'weekly' ? 'e.g., 1 (Mon), 7 (Sun)' :
+                        frequency === 'monthly' ? 'e.g., 1, 15, last' :
+                        frequency === 'quarterly' || frequency === 'half-yearly' || frequency === 'annually' ? 'e.g., 1, 90, 180, last' :
+                        'e.g., 1, 4, last'
+                      }
+                    />
+                  </div>
+                )}
+              </>
+            )}
           </div>
           <Button onClick={handleAddRecurringTransaction}>Add Recurring Transaction</Button>
         </CardContent>
@@ -159,6 +253,8 @@ export default function RecurringAdjustments() {
                 <Card key={txn.id} className="p-4">
                   <p><strong>Type:</strong> {txn.transactionType}</p>
                   <p><strong>Frequency:</strong> {txn.frequency} {txn.frequency === 'custom' && `(Every ${txn.customFrequencyValue} ${txn.customFrequencyUnit})`}</p>
+                  {txn.occurrenceDay && <p><strong>Occurs On:</strong> {txn.occurrenceDay}</p>}
+                  {txn.occurrenceTime && <p><strong>At Time:</strong> {txn.occurrenceTime}</p>}
                   <p><strong>Start Date:</strong> {txn.startDate}</p>
                   <p><strong>End Date:</strong> {txn.endDate || 'N/A'}</p>
                   <p><strong>Amount:</strong> {txn.amount}</p>
