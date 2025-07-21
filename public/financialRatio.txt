@@ -1,0 +1,47 @@
+ 1. Liquidity Ratios (Short-term financial health)
+Current Ratio = Current Assets / Current Liabilities
+
+Quick Ratio (Acid-Test) = (Current Assets – Inventory) / Current Liabilities
+
+Cash Ratio = Cash & Cash Equivalents / Current Liabilities
+
+💰 2. Profitability Ratios (How well the business generates profit)
+Gross Profit Margin = Gross Profit / Revenue
+
+Net Profit Margin = Net Profit / Revenue
+
+Operating Profit Margin = Operating Profit / Revenue
+
+Return on Assets (ROA) = Net Profit / Total Assets
+
+Return on Equity (ROE) = Net Profit / Shareholder’s Equity
+
+⚙️ 3. Efficiency Ratios (How efficiently resources are used)
+Inventory Turnover Ratio = Cost of Goods Sold / Average Inventory
+
+Accounts Receivable Turnover = Net Credit Sales / Average A/R
+
+Accounts Payable Turnover = Cost of Goods Sold / Average A/P
+
+Asset Turnover Ratio = Revenue / Average Total Assets
+
+📈 4. Solvency Ratios (Long-term financial stability)
+Debt-to-Equity Ratio = Total Liabilities / Shareholder’s Equity
+
+Debt Ratio = Total Liabilities / Total Assets
+
+Interest Coverage Ratio = EBIT / Interest Expense
+
+🕒 5. Activity / Working Capital Ratios
+Working Capital = Current Assets – Current Liabilities
+
+Days Sales Outstanding (DSO) = (A/R / Total Credit Sales) × No. of Days
+
+Days Payable Outstanding (DPO) = (A/P / Cost of Sales) × No. of Days
+
+Cash Conversion Cycle (CCC) = DSO + Inventory Days – DPO
+
+Bonus (if public company):
+Earnings Per Share (EPS) = Net Income / No. of Outstanding Shares
+
+Price to Earnings Ratio (P/E) = Share Price / EPS

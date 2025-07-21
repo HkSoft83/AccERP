@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import WorkingCapitalReport from './WorkingCapitalReport';
+import FinancialRatioReport from './FinancialRatioReport';
+import { Button } from '@/components/ui/button';
 
 const OtherReports = () => {
+  const [selectedReport, setSelectedReport] = useState(null);
+
   const reports = {
     "📈 Management/Analytical Reports:": [
       "Working Capital Report",
@@ -37,6 +42,34 @@ const OtherReports = () => {
     ],
   };
 
+  const handleReportClick = (reportName) => {
+    setSelectedReport(reportName);
+  };
+
+  const handleBackClick = () => {
+    setSelectedReport(null);
+  };
+
+  if (selectedReport === "Working Capital Report") {
+    return (
+      <div className="space-y-6">
+        <Button onClick={handleBackClick} className="mb-4 bg-ecb-primary text-ecb-primary-foreground hover:bg-ecb-primary/90">
+          ← Back to Other Reports
+        </Button>
+        <WorkingCapitalReport />
+      </div>
+    );
+  } else if (selectedReport === "Financial Ratio Report") {
+    return (
+      <div className="space-y-6">
+        <Button onClick={handleBackClick} className="mb-4 bg-ecb-primary text-ecb-primary-foreground hover:bg-ecb-primary/90">
+          ← Back to Other Reports
+        </Button>
+        <FinancialRatioReport />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -48,7 +81,11 @@ const OtherReports = () => {
             <CardContent className="p-4">
               <ul className="space-y-2">
                 {items.map((item, index) => (
-                  <li key={index} className="text-ecb-textDark dark:text-ecb-textLight text-sm">
+                  <li
+                    key={index}
+                    className="text-ecb-textDark dark:text-ecb-textLight text-sm cursor-pointer hover:text-ecb-primary dark:hover:text-ecb-primary-foreground transition-colors"
+                    onClick={() => handleReportClick(item)}
+                  >
                     <span className="mr-2 text-ecb-primary dark:text-ecb-primary-foreground">•</span>{item}
                   </li>
                 ))}
