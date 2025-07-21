@@ -1,10 +1,175 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
+import { Label } from '../../components/ui/label';
+import { Input } from '../../components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
+import { Button } from '../../components/ui/button';
+import { DatePicker } from '../../components/ui/date-picker';
+import { Switch } from '../../components/ui/switch';
 
 export default function RecurringAdjustments() {
+  const [transactionType, setTransactionType] = useState('');
+  const [frequency, setFrequency] = useState('');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [amount, setAmount] = useState('');
+  const [description, setDescription] = useState('');
+  const [automationType, setAutomationType] = useState('');
+  const [customFrequencyValue, setCustomFrequencyValue] = useState('');
+  const [customFrequencyUnit, setCustomFrequencyUnit] = useState('');
+  const [recurringTransactions, setRecurringTransactions] = useState([]);
+
+  const handleAddRecurringTransaction = () => {
+    const newTransaction = {
+      id: Date.now(), // Simple unique ID
+      transactionType,
+      frequency,
+      ...(frequency === 'custom' && { customFrequencyValue, customFrequencyUnit }),
+      startDate: startDate ? startDate.toDateString() : '',
+      endDate: endDate ? endDate.toDateString() : '',
+      amount,
+      description,
+      automationType,
+    };
+    setRecurringTransactions([...recurringTransactions, newTransaction]);
+    // Clear form fields
+    setTransactionType('');
+    setFrequency('');
+    setStartDate(null);
+    setEndDate(null);
+    setAmount('');
+    setDescription('');
+    setAutomationType('');
+    setCustomFrequencyValue('');
+    setCustomFrequencyUnit('');
+  };
+
   return (
-    <div>
-      <h1>Recurring & Adjustments</h1>
-      {/* Add your content here */}
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Recurring Transactions</h1>
+
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Create New Recurring Transaction</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <Label htmlFor="transactionType">Transaction Type</Label>
+              <Select onValueChange={setTransactionType} value={transactionType}>
+                <SelectTrigger id="transactionType">
+                  <SelectValue placeholder="Select Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="invoice">Invoice</SelectItem>
+                  <SelectItem value="expense">Expense</SelectItem>
+                  <SelectItem value="journalEntry">Journal Entry</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="frequency">Frequency</Label>
+              <Select onValueChange={setFrequency} value={frequency}>
+                <SelectTrigger id="frequency">
+                  <SelectValue placeholder="Select Frequency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="daily">Daily</SelectItem>
+                  <SelectItem value="weekly">Weekly</SelectItem>
+                  <SelectItem value="monthly">Monthly</SelectItem>
+                  <SelectItem value="quarterly">Quarterly</SelectItem>
+                  <SelectItem value="half-yearly">Half-Yearly</SelectItem>
+                  <SelectItem value="annually">Annually</SelectItem>
+                  <SelectItem value="custom">Custom</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            {frequency === 'custom' && (
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <Label htmlFor="customFrequencyValue">Every</Label>
+                  <Input
+                    id="customFrequencyValue"
+                    type="number"
+                    value={customFrequencyValue}
+                    onChange={(e) => setCustomFrequencyValue(e.target.value)}
+                    placeholder="e.g., 2, 3"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="customFrequencyUnit">Unit</Label>
+                  <Select onValueChange={setCustomFrequencyUnit} value={customFrequencyUnit}>
+                    <SelectTrigger id="customFrequencyUnit">
+                      <SelectValue placeholder="Select Unit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="days">Days</SelectItem>
+                      <SelectItem value="weeks">Weeks</SelectItem>
+                      <SelectItem value="months">Months</SelectItem>
+                      <SelectItem value="years">Years</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            )}
+            <div>
+              <Label htmlFor="startDate">Start Date</Label>
+              <DatePicker selected={startDate} onSelect={setStartDate} />
+            </div>
+            <div>
+              <Label htmlFor="endDate">End Date (Optional)</Label>
+              <DatePicker selected={endDate} onSelect={setEndDate} />
+            </div>
+            <div>
+              <Label htmlFor="amount">Amount</Label>
+              <Input id="amount" type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
+            </div>
+            <div>
+              <Label htmlFor="description">Description</Label>
+              <Input id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+            </div>
+            <div>
+              <Label htmlFor="automationType">Automation Type</Label>
+              <Select onValueChange={setAutomationType} value={automationType}>
+                <SelectTrigger id="automationType">
+                  <SelectValue placeholder="Select Automation" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="scheduled">Scheduled</SelectItem>
+                  <SelectItem value="reminder">Reminder</SelectItem>
+                  <SelectItem value="unscheduled">Unscheduled</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <Button onClick={handleAddRecurringTransaction}>Add Recurring Transaction</Button>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Existing Recurring Transactions</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {recurringTransactions.length === 0 ? (
+            <p>No recurring transactions added yet.</p>
+          ) : (
+            <div className="grid grid-cols-1 gap-4">
+              {recurringTransactions.map((txn) => (
+                <Card key={txn.id} className="p-4">
+                  <p><strong>Type:</strong> {txn.transactionType}</p>
+                  <p><strong>Frequency:</strong> {txn.frequency} {txn.frequency === 'custom' && `(Every ${txn.customFrequencyValue} ${txn.customFrequencyUnit})`}</p>
+                  <p><strong>Start Date:</strong> {txn.startDate}</p>
+                  <p><strong>End Date:</strong> {txn.endDate || 'N/A'}</p>
+                  <p><strong>Amount:</strong> {txn.amount}</p>
+                  <p><strong>Description:</strong> {txn.description}</p>
+                  <p><strong>Automation:</strong> {txn.automationType}</p>
+                </Card>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }
