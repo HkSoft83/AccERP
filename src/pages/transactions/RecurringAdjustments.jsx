@@ -5,6 +5,7 @@ import { Input } from '../../components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
 import { Button } from '../../components/ui/button';
 import { DatePicker } from '../../components/ui/date-picker';
+import { TimePicker } from '../../components/ui/time-picker';
 import { Switch } from '../../components/ui/switch';
 
 export default function RecurringAdjustments() {
@@ -159,12 +160,9 @@ export default function RecurringAdjustments() {
               <>
                 <div>
                   <Label htmlFor="occurrenceTime">Time of Day</Label>
-                  <Input
-                    id="occurrenceTime"
-                    type="text"
+                  <TimePicker
                     value={occurrenceTime}
-                    onChange={(e) => setOccurrenceTime(e.target.value)}
-                    placeholder="e.g., 11:00 AM"
+                    onChange={setOccurrenceTime}
                   />
                 </div>
                 {(frequency === 'weekly' || frequency === 'monthly' || frequency === 'quarterly' || frequency === 'half-yearly' || frequency === 'annually' || frequency === 'custom') && (
@@ -200,7 +198,7 @@ export default function RecurringAdjustments() {
                             } else if (customFrequencyUnit === 'weeks') {
                               maxDay = (parseInt(customFrequencyValue) || 1) * 7;
                             } else if (customFrequencyUnit === 'months') {
-                              maxDay = (parseInt(customFrequencyValue) || 1) * 31;
+                              maxDay = (parseInt(customFrequencyValue) || 1) * new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate();
                             } else if (customFrequencyUnit === 'years') {
                               maxDay = (parseInt(customFrequencyValue) || 1) * 365;
                             }
