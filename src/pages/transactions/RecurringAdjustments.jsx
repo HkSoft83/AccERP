@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Label } from '../../components/ui/label';
 import { Input } from '../../components/ui/input';
@@ -7,6 +7,7 @@ import { Button } from '../../components/ui/button';
 import { DatePicker } from '../../components/ui/date-picker';
 import { TimePicker } from '../../components/ui/time-picker';
 import { Switch } from '../../components/ui/switch';
+import mockAccounts from '../../data/mockAccounts';
 
 export default function RecurringAdjustments() {
   const [transactionType, setTransactionType] = useState('');
@@ -21,6 +22,62 @@ export default function RecurringAdjustments() {
   const [occurrenceDay, setOccurrenceDay] = useState('');
   const [occurrenceTime, setOccurrenceTime] = useState('');
   const [recurringTransactions, setRecurringTransactions] = useState([]);
+  const [journalEntries, setJournalEntries] = useState([
+    { account: '', debit: '', credit: '', lineNarration: '' },
+    { account: '', debit: '', credit: '', lineNarration: '' },
+  ]);
+  const [overallNarration, setOverallNarration] = useState('');
+  const [totalDebit, setTotalDebit] = useState(0);
+  const [totalCredit, setTotalCredit] = useState(0);
+
+  useEffect(() => {
+    calculateTotals();
+  }, [journalEntries]);
+
+  const handleJournalEntryChange = (index, field, value) => {
+    const newJournalEntries = [...journalEntries];
+    newJournalEntries[index][field] = value;
+    setJournalEntries(newJournalEntries);
+  };
+
+  const addJournalEntry = () => {
+    setJournalEntries([
+      ...journalEntries,
+      { account: '', debit: '', credit: '', lineNarration: '' },
+    ]);
+  };
+
+  const removeJournalEntry = (index) => {
+    const newJournalEntries = journalEntries.filter((_, i) => i !== index);
+    setJournalEntries(newJournalEntries);
+  };
+
+  const handleDebitFocus = (index) => {
+    const newJournalEntries = [...journalEntries];
+    if (newJournalEntries[index].credit !== '') {
+      newJournalEntries[index].credit = '';
+      setJournalEntries(newJournalEntries);
+    }
+  };
+
+  const handleCreditFocus = (index) => {
+    const newJournalEntries = [...journalEntries];
+    if (newJournalEntries[index].debit !== '') {
+      newJournalEntries[index].debit = '';
+      setJournalEntries(newJournalEntries);
+    }
+  };
+
+  const calculateTotals = () => {
+    let debitSum = 0;
+    let creditSum = 0;
+    journalEntries.forEach((entry) => {
+      debitSum += parseFloat(entry.debit) || 0;
+      creditSum += parseFloat(entry.credit) || 0;
+    });
+    setTotalDebit(debitSum);
+    setTotalCredit(creditSum);
+  };
 
   const handleAddRecurringTransaction = () => {
     const newTransaction = {
@@ -49,6 +106,10 @@ export default function RecurringAdjustments() {
     setCustomFrequencyUnit('');
     setOccurrenceDay('');
     setOccurrenceTime('');
+
+    // Clear journal entry fields
+    setJournalEntries([{ account: '', debit: '', credit: '', lineNarration: '' }]);
+    setOverallNarration('');
   };
 
   return (
@@ -242,6 +303,91 @@ export default function RecurringAdjustments() {
               </>
             )}
           </div>
+          {transactionType === 'journalEntry' && (
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold mb-2">Journal Entry Details</h2>
+              <table className="min-w-full bg-white border border-gray-200">
+                <thead>
+                  <tr>
+                    <th className="py-2 px-4 border-b">Account</th>
+                    <th className="py-2 px-4 border-b">Debit</th>
+                    <th className="py-2 px-4 border-b">Credit</th>
+                    <th className="py-2 px-4 border-b">Line Narration</th>
+                    <th className="py-2 px-4 border-b">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {journalEntries.map((entry, index) => (
+                    <tr key={index}>
+                      <td className="py-2 px-4 border-b">
+                        <Select onValueChange={(value) => handleJournalEntryChange(index, 'account', value)} value={entry.account}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select Account" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {mockAccounts.map(account => (
+                              <SelectItem key={account.id} value={account.name}>{account.name}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </td>
+                      <td className="py-2 px-4 border-b">
+                        <Input
+                          type="number"
+                          value={entry.debit}
+                          onChange={(e) => handleJournalEntryChange(index, 'debit', e.target.value)}
+                          onFocus={() => handleDebitFocus(index)}
+                          className="w-full"
+                        />
+                      </td>
+                      <td className="py-2 px-4 border-b">
+                        <Input
+                          type="number"
+                          value={entry.credit}
+                          onChange={(e) => handleJournalEntryChange(index, 'credit', e.target.value)}
+                          onFocus={() => handleCreditFocus(index)}
+                          className="w-full"
+                        />
+                      </td>
+                      <td className="py-2 px-4 border-b">
+                        <Input
+                          type="text"
+                          value={entry.lineNarration}
+                          onChange={(e) => handleJournalEntryChange(index, 'lineNarration', e.target.value)}
+                          className="w-full"
+                        />
+                      </td>
+                      <td className="py-2 px-4 border-b text-center">
+                        <Button variant="destructive" size="sm" onClick={() => removeJournalEntry(index)}>Remove</Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td className="py-2 px-4 font-bold text-right">Total:</td>
+                    <td className="py-2 px-4 font-bold">{totalDebit.toFixed(2)}</td>
+                    <td className="py-2 px-4 font-bold">{totalCredit.toFixed(2)}</td>
+                    <td colSpan="2"></td>
+                  </tr>
+                </tfoot>
+              </table>
+              <Button onClick={addJournalEntry} className="mt-2">Add Line Item</Button>
+              {totalDebit !== totalCredit && (
+                <p className="text-red-500 mt-2">Debit and Credit totals must be equal!</p>
+              )}
+              <div className="mt-4">
+                <Label htmlFor="overallNarration">Overall Narration</Label>
+                <Input
+                  id="overallNarration"
+                  type="text"
+                  value={overallNarration}
+                  onChange={(e) => setOverallNarration(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+            </div>
+          )}
           <Button onClick={handleAddRecurringTransaction}>Add Recurring Transaction</Button>
         </CardContent>
       </Card>
