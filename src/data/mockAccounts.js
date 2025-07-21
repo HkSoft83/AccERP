@@ -12,21 +12,21 @@ const mockAccounts = [
   { id: 'acc-loan-001', name: 'Short-Term Loan Payable', type: 'Liability', category: 'Payable', balance: 10000.00 },
 
   // Income
-  { id: 'acc-inc-001', name: 'Sales Revenue - Products', type: 'Income', category: 'Income', balance: 0 },
-  { id: 'acc-inc-002', name: 'Sales Revenue - Services', type: 'Income', category: 'Income', balance: 0 },
-  { id: 'acc-inc-003', name: 'Interest Income', type: 'Income', category: 'Income', balance: 0 },
-  { id: 'acc-inc-004', name: 'Sales Returns & Allowances', type: 'Income', category: 'Contra Income', balance: 0 },
+  { id: 'acc-inc-001', name: 'Sales Revenue - Products', type: 'Income', category: 'Income', balance: 150000.00 },
+  { id: 'acc-inc-002', name: 'Sales Revenue - Services', type: 'Income', category: 'Income', balance: 75000.00 },
+  { id: 'acc-inc-003', name: 'Interest Income', type: 'Income', category: 'Income', balance: 1200.00 },
+  { id: 'acc-inc-004', name: 'Sales Returns & Allowances', type: 'Income', category: 'Contra Income', balance: -5000.00 },
 
 
   // Expenses
-  { id: 'acc-exp-001', name: 'Rent Expense', type: 'Expense', category: 'Expense', balance: 0 },
-  { id: 'acc-exp-002', name: 'Utilities Expense', type: 'Expense', category: 'Expense', balance: 0 },
-  { id: 'acc-exp-003', name: 'Salaries Expense', type: 'Expense', category: 'Expense', balance: 0 },
-  { id: 'acc-exp-004', name: 'Office Supplies', type: 'Expense', category: 'Expense', balance: 0 },
-  { id: 'acc-exp-005', name: 'Advertising Expense', type: 'Expense', category: 'Expense', balance: 0 },
-  { id: 'acc-exp-006', name: 'Bank Charges', type: 'Expense', category: 'Expense', balance: 0 },
-  { id: 'acc-exp-007', name: 'Cost of Goods Sold', type: 'Expense', category: 'COGS', balance: 0 },
-  { id: 'acc-exp-008', name: 'Purchase Discounts', type: 'Expense', category: 'Contra Expense', balance: 0 },
+  { id: 'acc-exp-001', name: 'Rent Expense', type: 'Expense', category: 'Expense', balance: 12000.00 },
+  { id: 'acc-exp-002', name: 'Utilities Expense', type: 'Expense', category: 'Expense', balance: 3500.00 },
+  { id: 'acc-exp-003', name: 'Salaries Expense', type: 'Expense', category: 'Expense', balance: 60000.00 },
+  { id: 'acc-exp-004', name: 'Office Supplies', type: 'Expense', category: 'Expense', balance: 1800.00 },
+  { id: 'acc-exp-005', name: 'Advertising Expense', type: 'Expense', category: 'Expense', balance: 7000.00 },
+  { id: 'acc-exp-006', name: 'Bank Charges', type: 'Expense', category: 'Expense', balance: 250.00 },
+  { id: 'acc-exp-007', name: 'Cost of Goods Sold', type: 'Expense', category: 'COGS', balance: 80000.00 },
+  { id: 'acc-exp-008', name: 'Purchase Discounts', type: 'Expense', category: 'Contra Expense', balance: -1000.00 },
 
 
   // Equity

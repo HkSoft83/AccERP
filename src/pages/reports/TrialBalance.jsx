@@ -49,8 +49,10 @@ const TrialBalance = () => {
   return (
     <div className="space-y-6">
       <Card className="shadow-lg">
-        <CardHeader className="bg-ecb-primary rounded-t-lg">
-          <CardTitle className="text-2xl font-bold text-white">Trial Balance</CardTitle>
+        <CardHeader className="bg-ecb-primary rounded-t-lg text-center">
+          <CardTitle className="text-2xl font-bold text-ecb-primary-foreground">[Your Enterprise Name]</CardTitle>
+          <CardTitle className="text-xl font-bold text-ecb-primary-foreground">Trial Balance</CardTitle>
+          <CardTitle className="text-lg font-bold text-ecb-primary-foreground">As of {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
           <Table>
