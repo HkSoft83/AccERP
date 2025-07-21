@@ -10,7 +10,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-export function DatePicker({ date, setDate, className, disabled, placeholder = "Pick a date" }) {
+export function DatePicker({ date, setDate, className, disabled, placeholder = "Pick a date", disabledDate }) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const handleSelectDate = (selectedDate) => {
@@ -69,7 +69,7 @@ export function DatePicker({ date, setDate, className, disabled, placeholder = "
               // Close the popover after selection
               setTimeout(() => setIsOpen(false), 100);
             }}
-          disabled={disabled}
+          disabled={disabledDate}
           initialFocus
             className="rounded-md border"
         />

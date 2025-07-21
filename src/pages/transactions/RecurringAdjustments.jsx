@@ -120,11 +120,19 @@ export default function RecurringAdjustments() {
             )}
             <div>
               <Label htmlFor="startDate">Start Date</Label>
-              <DatePicker selected={startDate} onSelect={setStartDate} />
+              <DatePicker
+                date={startDate}
+                setDate={(newStartDate) => {
+                  setStartDate(newStartDate);
+                  if (endDate && newStartDate > endDate) {
+                    setEndDate(null);
+                  }
+                }}
+              />
             </div>
             <div>
               <Label htmlFor="endDate">End Date (Optional)</Label>
-              <DatePicker selected={endDate} onSelect={setEndDate} />
+              <DatePicker date={endDate} setDate={setEndDate} disabledDate={{ before: startDate }} />
             </div>
             <div>
               <Label htmlFor="amount">Amount</Label>
