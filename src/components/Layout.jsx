@@ -59,6 +59,13 @@ const navItems = [
       { name: 'Trial Balance', path: '/reports/trial-balance' },
       { name: 'Owners Equity', path: '/reports/owners-equity' },
       { name: 'Stock Report', path: '/reports/stock-report' },
+      { name: 'Cash Flow Statement', path: '/reports/cash-flow-statement' },
+      {
+        name: 'Other Report', path: '/reports/other',
+        subItems: [
+          // Add other reports here later
+        ]
+      },
     ]
   },
 ];

@@ -39,6 +39,8 @@ const BalanceSheet = lazy(() => import('@/pages/reports/BalanceSheet'));
 const TrialBalance = lazy(() => import('@/pages/reports/TrialBalance.jsx'));
 const OwnersEquityStatement = lazy(() => import('@/pages/reports/OwnersEquityStatement'));
 const StockReport = lazy(() => import('@/pages/reports/StockReport'));
+const CashFlowStatement = lazy(() => import('@/pages/reports/CashFlowStatement'));
+const OtherReports = lazy(() => import('@/pages/reports/OtherReports'));
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center h-screen w-screen fixed inset-0 bg-gray-100 dark:bg-gray-900 z-50">
@@ -101,6 +103,8 @@ function App() {
                 <Route path="trial-balance" element={<TrialBalance />} />
                 <Route path="owners-equity" element={<OwnersEquityStatement />} />
                 <Route path="stock-report" element={<StockReport />} />
+                <Route path="cash-flow-statement" element={<CashFlowStatement />} />
+                <Route path="other" element={<OtherReports />} />
               </Route>
               
               <Route path="*" element={<div className="p-6 text-center"><h2 className="text-2xl font-semibold text-blue-600">404 - Page Not Found</h2><p className="text-gray-600 mt-2">Oops! The page you're looking for doesn't exist.</p><Button onClick={() => window.history.back()} className="mt-4 bg-blue-600 text-white hover:bg-blue-700">Go Back</Button></div>} />

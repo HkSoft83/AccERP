@@ -1,0 +1,49 @@
+
+📈 Management/Analytical Reports:
+Working Capital Report
+
+Financial Ratio Report
+
+Expense Analysis
+
+Revenue Trends
+
+Budget vs Actual
+
+📑 Accounting Operations Reports:
+Journal Report
+
+Day Book / Transaction Report
+
+Voucher Report
+
+Account Statement
+
+Bank Reconciliation Report
+
+👥 Customer & Vendor Reports:
+Accounts Receivable (A/R) Aging
+
+Accounts Payable (A/P) Aging
+
+Customer Statement
+
+Vendor Statement
+
+Dormant Customers/Vendors
+
+📦 Inventory Reports:
+Stock Summary
+
+Inventory Valuation
+
+Fast & Slow Moving Items
+
+Stock Aging Report
+
+🧾 Tax & Compliance Reports:
+VAT Report
+
+TDS Report
+
+Income Tax Projection
