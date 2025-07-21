@@ -1,0 +1,20 @@
+[plugin:vite:import-analysis] Failed to resolve import "../../components/ui/table.jsx" from "src\pages\reports\TrialBalance.jsx". Does the file exist?
+D:/B-Important/Programming/Github/AccERP/src/pages/reports/TrialBalance.jsx:3:78
+17 |  import React from "react";
+18 |  import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+19 |  import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table.jsx";
+   |                                                                                 ^
+20 |  import mockAccounts from "@/data/mockAccounts";
+21 |  const TrialBalance = () => {
+    at formatError (file:///D:/B-Important/Programming/Github/AccERP/node_modules/vite/dist/node/chunks/dep-827b23df.js:44066:46)
+    at TransformContext.error (file:///D:/B-Important/Programming/Github/AccERP/node_modules/vite/dist/node/chunks/dep-827b23df.js:44062:19)
+    at normalizeUrl (file:///D:/B-Important/Programming/Github/AccERP/node_modules/vite/dist/node/chunks/dep-827b23df.js:41845:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///D:/B-Important/Programming/Github/AccERP/node_modules/vite/dist/node/chunks/dep-827b23df.js:41999:47
+    at async Promise.all (index 5)
+    at async TransformContext.transform (file:///D:/B-Important/Programming/Github/AccERP/node_modules/vite/dist/node/chunks/dep-827b23df.js:41915:13)
+    at async Object.transform (file:///D:/B-Important/Programming/Github/AccERP/node_modules/vite/dist/node/chunks/dep-827b23df.js:44356:30)
+    at async loadAndTransform (file:///D:/B-Important/Programming/Github/AccERP/node_modules/vite/dist/node/chunks/dep-827b23df.js:55088:29)
+    at async viteTransformMiddleware (file:///D:/B-Important/Programming/Github/AccERP/node_modules/vite/dist/node/chunks/dep-827b23df.js:64699:32
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.js.

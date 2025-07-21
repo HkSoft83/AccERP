@@ -36,7 +36,7 @@ const Production = lazy(() => import('@/pages/Production'));
 
 const IncomeStatement = lazy(() => import('@/pages/reports/IncomeStatement'));
 const BalanceSheet = lazy(() => import('@/pages/reports/BalanceSheet'));
-const TrialBalance = lazy(() => import('@/pages/reports/TrialBalance'));
+const TrialBalance = lazy(() => import('@/pages/reports/TrialBalance.jsx'));
 const OwnersEquityStatement = lazy(() => import('@/pages/reports/OwnersEquityStatement'));
 const StockReport = lazy(() => import('@/pages/reports/StockReport'));
 
