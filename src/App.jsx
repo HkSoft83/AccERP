@@ -42,6 +42,7 @@ const CashFlowStatement = lazy(() => import('@/pages/reports/CashFlowStatement')
 const CustomerLedger = lazy(() => import('@/pages/reports/CustomerLedger'));
 const VendorLedger = lazy(() => import('@/pages/reports/VendorLedger'));
 const OtherReports = lazy(() => import('@/pages/reports/OtherReports'));
+const FixedAssetManagement = lazy(() => import('@/pages/fixed-asset/FixedAssetManagement'));
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center h-screen w-screen fixed inset-0 bg-gray-100 dark:bg-gray-900 z-50">
@@ -107,6 +108,7 @@ function App() {
                 <Route path="other" element={<OtherReports />} />
                 <Route path="vendor-ledger" element={<VendorLedger />} />
               </Route>
+              <Route path="fixed-asset-management" element={<FixedAssetManagement />} />
               
               <Route path="*" element={<div className="p-6 text-center"><h2 className="text-2xl font-semibold text-blue-600">404 - Page Not Found</h2><p className="text-gray-600 mt-2">Oops! The page you're looking for doesn't exist.</p><Button onClick={() => window.history.back()} className="mt-4 bg-blue-600 text-white hover:bg-blue-700">Go Back</Button></div>} />
             </Route>

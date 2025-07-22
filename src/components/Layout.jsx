@@ -69,6 +69,7 @@ const navItems = [
       { name: 'Vendor Ledger', path: '/reports/vendor-ledger' },
     ]
   },
+  { name: 'Fixed Asset Management', path: '/fixed-asset-management', icon: Briefcase },
 ];
 
 const SidebarLink = ({ item, sidebarCollapsed }) => {
