@@ -4,6 +4,10 @@ import AddAssetForm from './AddAssetForm';
 import AssetDepreciation from './AssetDepreciation';
 import AssetDisposal from './AssetDisposal';
 import AssetReports from './AssetReports';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
 
 const mockAssets = [
   {
@@ -13,6 +17,9 @@ const mockAssets = [
     purchaseDate: '2023-01-15',
     amount: 1500.00,
     status: 'Active',
+    salvageValue: 150,
+    usefulLife: 5,
+    depreciationMethod: 'Straight Line',
   },
   {
     id: 2,
@@ -21,6 +28,9 @@ const mockAssets = [
     purchaseDate: '2023-02-20',
     amount: 250.00,
     status: 'Active',
+    salvageValue: 25,
+    usefulLife: 10,
+    depreciationMethod: 'Straight Line',
   },
   {
     id: 3,
@@ -29,14 +39,19 @@ const mockAssets = [
     purchaseDate: '2022-11-10',
     amount: 25000.00,
     status: 'Sold',
+    salvageValue: 2500,
+    usefulLife: 7,
+    depreciationMethod: 'Straight Line',
   },
 ];
 
 const FixedAssetManagement = () => {
   const [assets, setAssets] = useState(mockAssets);
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
 
   const addAsset = (asset) => {
     setAssets((prevAssets) => [...prevAssets, { ...asset, id: prevAssets.length + 1 }]);
+    setIsAddFormOpen(false); // Close the dialog after adding asset
   };
 
   const disposeAsset = (assetId, disposalType) => {
@@ -52,23 +67,41 @@ const FixedAssetManagement = () => {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Fixed Asset Management</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="md:col-span-2">
-          <AddAssetForm addAsset={addAsset} />
-        </div>
-        <div className="md:col-span-2">
+      <Tabs defaultValue="register" className="w-full">
+        <TabsList>
+          <TabsTrigger value="register">Register</TabsTrigger>
+          <TabsTrigger value="depreciation">Depreciation</TabsTrigger>
+          <TabsTrigger value="disposal">Disposal</TabsTrigger>
+          <TabsTrigger value="reports">Reports</TabsTrigger>
+        </TabsList>
+        <TabsContent value="register">
+          <div className="flex justify-end mb-4">
+            <Dialog open={isAddFormOpen} onOpenChange={setIsAddFormOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                  <Plus className="mr-2 h-4 w-4" /> Add New Asset
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[600px]">
+                <DialogHeader>
+                  <DialogTitle>Add/Edit Asset</DialogTitle>
+                </DialogHeader>
+                <AddAssetForm addAsset={addAsset} />
+              </DialogContent>
+            </Dialog>
+          </div>
           <FixedAssetMasterRegister assets={assets} />
-        </div>
-        <div>
+        </TabsContent>
+        <TabsContent value="depreciation">
           <AssetDepreciation assets={assets} />
-        </div>
-        <div>
+        </TabsContent>
+        <TabsContent value="disposal">
           <AssetDisposal assets={assets} disposeAsset={disposeAsset} />
-        </div>
-        <div className="md:col-span-2">
+        </TabsContent>
+        <TabsContent value="reports">
           <AssetReports assets={assets} />
-        </div>
-      </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

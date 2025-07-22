@@ -83,7 +83,15 @@ const AddAssetForm = ({ addAsset }) => {
           </div>
           <div>
             <Label htmlFor="depreciationMethod">Depreciation Method</Label>
-            <Input id="depreciationMethod" placeholder="e.g., Straight Line" value={formData.depreciationMethod} onChange={handleChange} />
+            <Select onValueChange={(value) => setFormData((prevData) => ({ ...prevData, depreciationMethod: value }))} value={formData.depreciationMethod}>
+              <SelectTrigger id="depreciationMethod">
+                <SelectValue placeholder="Select method" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Straight Line">Straight Line</SelectItem>
+                <SelectItem value="Reducing Balance">Reducing Balance</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div>
             <Label htmlFor="assetLocation">Asset Location</Label>
