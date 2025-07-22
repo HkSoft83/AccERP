@@ -131,16 +131,7 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
 
   return (
     <Card className="shadow-xl border-border dark:border-dark-border">
-      <CardHeader className="bg-muted/50 dark:bg-dark-muted/50 p-4 md:p-6 border-b border-border dark:border-dark-border">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-          <CardTitle className="text-2xl md:text-3xl font-bold text-primary dark:text-dark-primary flex items-center">
-            {vendorName || (vendorDetails ? vendorDetails.name : 'Loading...')}
-          </CardTitle>
-          <Button onClick={handlePrint} variant="outline" size="sm" className="self-start sm:self-center">
-            <Printer size={16} className="mr-2" /> Print
-          </Button>
-        </div>
-      </CardHeader>
+      
       <CardContent className="p-4 md:p-6 space-y-4">
         {vendorDetails && (
           <div className="p-3 bg-primary/5 dark:bg-dark-primary/10 rounded-md border border-primary/20 dark:border-dark-primary/20 mb-4">
