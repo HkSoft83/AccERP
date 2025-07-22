@@ -53,9 +53,9 @@ const CashFlowStatement = () => {
       if (account.type === 'Liability' && account.category === 'Payable' && account.name.includes('Loan')) {
         // Assuming increase in loans is inflow, decrease is outflow
         cashFromFinancing += account.balance; // Treat as inflow for simplicity
-      } else if (account.type === 'Equity' && account.name === 'Owner's Capital') {
+      } else if (account.type === 'Equity' && account.name === 'Owner,s Capital') {
         cashFromFinancing += account.balance; // Owner contributions
-      } else if (account.type === 'Equity' && account.name === 'Owner's Drawings') {
+      } else if (account.type === 'Equity' && account.name === 'Owner,s Drawings') {
         cashFromFinancing -= account.balance; // Owner withdrawals
       }
     });
