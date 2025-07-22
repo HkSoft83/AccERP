@@ -27,7 +27,6 @@ const DebitNote = lazy(() => import('@/pages/transactions/DebitNote'));
 const CreditNote = lazy(() => import('@/pages/transactions/CreditNote'));
 const ManualJournal = lazy(() => import('@/pages/transactions/ManualJournal'));
 const RecurringAdjustments = lazy(() => import('@/pages/transactions/RecurringAdjustments'));
-const TxnTransfer = lazy(() => import('@/pages/transactions/TxnTransfer'));
 
 const AddEmployee = lazy(() => import('@/pages/employee/AddEmployee'));
 const EmployeeDatabase = lazy(() => import('@/pages/employee/EmployeeDatabase'));
@@ -40,6 +39,8 @@ const TrialBalance = lazy(() => import('@/pages/reports/TrialBalance.jsx'));
 const OwnersEquityStatement = lazy(() => import('@/pages/reports/OwnersEquityStatement'));
 const StockReport = lazy(() => import('@/pages/reports/StockReport'));
 const CashFlowStatement = lazy(() => import('@/pages/reports/CashFlowStatement'));
+const CustomerLedger = lazy(() => import('@/pages/reports/CustomerLedger'));
+const VendorLedger = lazy(() => import('@/pages/reports/VendorLedger'));
 const OtherReports = lazy(() => import('@/pages/reports/OtherReports'));
 
 const LoadingFallback = () => (
@@ -85,7 +86,6 @@ function App() {
                 <Route path="credit-note" element={<CreditNote />} />
                 <Route path="manual-journal" element={<ManualJournal />} />
                 <Route path="recurring-adjustments" element={<RecurringAdjustments />} />
-                <Route path="txn-transfer" element={<TxnTransfer />} />
               </Route>
 
               <Route path="employee">
@@ -105,6 +105,7 @@ function App() {
                 <Route path="stock-report" element={<StockReport />} />
                 <Route path="cash-flow-statement" element={<CashFlowStatement />} />
                 <Route path="other" element={<OtherReports />} />
+                <Route path="vendor-ledger" element={<VendorLedger />} />
               </Route>
               
               <Route path="*" element={<div className="p-6 text-center"><h2 className="text-2xl font-semibold text-blue-600">404 - Page Not Found</h2><p className="text-gray-600 mt-2">Oops! The page you're looking for doesn't exist.</p><Button onClick={() => window.history.back()} className="mt-4 bg-blue-600 text-white hover:bg-blue-700">Go Back</Button></div>} />

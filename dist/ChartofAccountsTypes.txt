@@ -1,0 +1,11 @@
+Chart of Accounts: Account Types and Subtypes
+Assets 
+Sub-typeCurrent AssetsFixed AssetsTangible AssetsIntangible AssetsLong-term AssetsInvestments
+Liabilities (????)
+Sub-typeCurrent LiabilitiesLong-term LiabilitiesProvisionsAccrued Liabilities
+Equity (????????)
+Sub-typeOwner's CapitalOwner's DrawingsRetained EarningsShare CapitalReserves & Surplus
+Income / Revenue (???)
+Sub-typeOperating IncomeNon-operating IncomeOther Income
+Expenses (?????)
+Sub-typeDirect ExpensesIndirect ExpensesOperating ExpensesFinancial ExpensesDepreciation & AmortizationCost of Goods Sold

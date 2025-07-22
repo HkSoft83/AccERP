@@ -6,11 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { format, parseISO } from 'date-fns';
-import { Truck, FilterX, Printer, Search } from 'lucide-react';
+import { User, FilterX, Printer, Search } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 
 const VendorLedger = () => {
+  const [searchParams] = useSearchParams();
+  const initialVendorId = searchParams.get('vendorId');
+
   const [vendors, setVendors] = useState([]);
-  const [selectedVendorId, setSelectedVendorId] = useState('');
+  const [selectedVendorId, setSelectedVendorId] = useState(initialVendorId || '');
   const [transactions, setTransactions] = useState([]);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [startDate, setStartDate] = useState(null);
@@ -20,8 +24,8 @@ const VendorLedger = () => {
   useEffect(() => {
     // Fetch vendors from localStorage
     const storedVendors = JSON.parse(localStorage.getItem('vendors')) || [
-        { id: 'vend-001', name: 'Supplier Alpha Inc.', openingBalance: 1500, openingBalanceDate: '2025-01-01' },
-        { id: 'vend-002', name: 'Service Provider Beta', openingBalance: 0, openingBalanceDate: '2025-01-01' }
+        { id: 'vend-001', name: 'Supplier Alpha Inc.', openingBalance: 5000, openingBalanceDate: '2025-01-01' },
+        { id: 'vend-002', name: 'Vendor Beta Corp.', openingBalance: 0, openingBalanceDate: '2025-01-01' }
     ];
     const formattedVendors = storedVendors.map(vend => ({
       id: vend.vendorNumber || vend.id,
@@ -30,10 +34,10 @@ const VendorLedger = () => {
       openingBalanceDate: vend.openingBalanceDate ? parseISO(vend.openingBalanceDate) : new Date(new Date().getFullYear(), 0, 1)
     }));
     setVendors(formattedVendors);
-    if (formattedVendors.length > 0) {
+    if (!initialVendorId && formattedVendors.length > 0) {
       setSelectedVendorId(formattedVendors[0].id);
     }
-  }, []);
+  }, [initialVendorId]);
 
   useEffect(() => {
     if (!selectedVendorId) return;
@@ -43,7 +47,7 @@ const VendorLedger = () => {
     const payments = JSON.parse(localStorage.getItem('payments')) || [];
     const purchaseReturns = JSON.parse(localStorage.getItem('purchaseReturns')) || [];
     const debitNotes = JSON.parse(localStorage.getItem('debitNotes')) || [];
-    
+
     const vendorTransactions = [];
 
     purchaseBills
@@ -53,21 +57,21 @@ const VendorLedger = () => {
         type: 'Purchase Bill',
         ref: bill.billNumber,
         narration: `Bill for ${bill.lineItems?.length || 0} items`,
-        debit: 0,
+        debit: 0, // Purchase bills increase payable (credit to vendor)
         credit: parseFloat(bill.grandTotal) || 0,
       }));
 
     payments
-      .filter(pmt => pmt.paymentTo === selectedVendorId) // Assuming paymentTo holds vendorId for payments
-      .forEach(pmt => vendorTransactions.push({
-        date: parseISO(pmt.date),
+      .filter(pay => pay.paidTo === selectedVendorId) // Assuming paidTo holds vendorId for payments
+      .forEach(pay => vendorTransactions.push({
+        date: parseISO(pay.date),
         type: 'Payment',
-        ref: pmt.paymentNumber,
-        narration: pmt.narration || 'Payment made',
-        debit: parseFloat(pmt.amount) || 0,
+        ref: pay.paymentNumber,
+        narration: pay.narration || 'Payment made',
+        debit: parseFloat(pay.amount) || 0, // Payments decrease payable (debit to vendor)
         credit: 0,
       }));
-
+    
     purchaseReturns
       .filter(ret => ret.vendorId === selectedVendorId)
       .forEach(ret => vendorTransactions.push({
@@ -75,18 +79,18 @@ const VendorLedger = () => {
           type: 'Purchase Return',
           ref: ret.returnNumber,
           narration: `Return of ${ret.lineItems?.length || 0} items`,
-          debit: parseFloat(ret.grandTotal) || 0,
+          debit: parseFloat(ret.grandTotal) || 0, // Purchase returns decrease payable (debit to vendor)
           credit: 0,
       }));
-    
+
     debitNotes
       .filter(dn => dn.creditAccount === selectedVendorId) // Assuming creditAccount is vendor for DN
       .forEach(dn => vendorTransactions.push({
           date: parseISO(dn.date),
           type: 'Debit Note',
           ref: dn.debitNoteNumber,
-          narration: dn.narration || 'Debit note issued',
-          debit: parseFloat(dn.amount) || 0,
+          narration: dn.narration || 'Debit issued',
+          debit: parseFloat(dn.amount) || 0, // Debit notes decrease payable (debit to vendor)
           credit: 0,
       }));
 
@@ -100,17 +104,17 @@ const VendorLedger = () => {
   const processedTransactions = useMemo(() => {
     if (!selectedVendorDetails) return [];
 
-    let runningBalance = selectedVendorDetails.openingBalance; // Vendor balance: Credit is positive (money owed to vendor)
+    let runningBalance = selectedVendorDetails.openingBalance; // Vendor balance: Credit is positive (payable)
     const openingBalanceDate = selectedVendorDetails.openingBalanceDate || new Date(new Date().getFullYear(), 0, 1);
-    
+
     const ledgerEntries = [];
     ledgerEntries.push({
       date: openingBalanceDate,
       type: 'Opening Balance',
       ref: '-',
       narration: 'Opening Balance',
-      debit: selectedVendorDetails.openingBalance < 0 ? Math.abs(selectedVendorDetails.openingBalance) : 0,
-      credit: selectedVendorDetails.openingBalance >= 0 ? selectedVendorDetails.openingBalance : 0,
+      debit: selectedVendorDetails.openingBalance < 0 ? Math.abs(selectedVendorDetails.openingBalance) : 0, // If opening balance is debit (negative payable)
+      credit: selectedVendorDetails.openingBalance >= 0 ? selectedVendorDetails.openingBalance : 0, // If opening balance is credit (positive payable)
       balance: runningBalance,
     });
 
@@ -118,7 +122,7 @@ const VendorLedger = () => {
       .sort((a, b) => a.date - b.date);
 
     sortedTransactions.forEach(tx => {
-      runningBalance += (tx.credit || 0) - (tx.debit || 0);
+      runningBalance += (tx.credit || 0) - (tx.debit || 0); // For vendors, credit increases balance, debit decreases
       ledgerEntries.push({ ...tx, balance: runningBalance });
     });
 
@@ -153,7 +157,7 @@ const VendorLedger = () => {
         <CardHeader className="bg-muted/50 dark:bg-dark-muted/50 p-4 md:p-6 border-b border-border dark:border-dark-border">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <CardTitle className="text-2xl md:text-3xl font-bold text-primary dark:text-dark-primary flex items-center">
-              <Truck size={28} className="mr-3 text-accent dark:text-dark-accent" /> Vendor Ledger
+              <User size={28} className="mr-3 text-accent dark:text-dark-accent" /> Vendor Ledger
             </CardTitle>
             <Button onClick={handlePrint} variant="outline" size="sm" className="self-start sm:self-center">
               <Printer size={16} className="mr-2" /> Print
@@ -162,6 +166,7 @@ const VendorLedger = () => {
         </CardHeader>
         <CardContent className="p-4 md:p-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
+            {initialVendorId ? null : (
             <div className="space-y-1">
               <label htmlFor="vendorSelect" className="text-sm font-medium text-muted-foreground dark:text-dark-muted-foreground">Select Vendor</label>
               <Select value={selectedVendorId} onValueChange={setSelectedVendorId}>
@@ -173,6 +178,7 @@ const VendorLedger = () => {
                 </SelectContent>
               </Select>
             </div>
+          )}
             <div className="space-y-1">
               <label htmlFor="startDate" className="text-sm font-medium text-muted-foreground dark:text-dark-muted-foreground">From Date</label>
               <DatePicker date={startDate} setDate={setStartDate} id="startDate" placeholder="Start Date"/>
@@ -182,7 +188,7 @@ const VendorLedger = () => {
               <DatePicker date={endDate} setDate={setEndDate} id="endDate" placeholder="End Date"/>
             </div>
           </div>
-           <div className="flex flex-col sm:flex-row gap-2 items-center pt-2">
+          <div className="flex flex-col sm:flex-row gap-2 items-center pt-2">
             <div className="relative flex-grow w-full sm:w-auto">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground dark:text-dark-muted-foreground" />
               <Input
@@ -244,10 +250,10 @@ const VendorLedger = () => {
               </TableBody>
             </Table>
           </div>
-          {filteredTransactions.length > 0 && (
+           {filteredTransactions.length > 0 && (
             <div className="flex justify-end pt-2 text-sm font-semibold text-primary dark:text-dark-primary">
               Final Balance: {filteredTransactions[filteredTransactions.length -1].balance.toFixed(2)}
-              { filteredTransactions[filteredTransactions.length -1].balance >= 0 ? " (Payable)" : " (Receivable)"}
+               { filteredTransactions[filteredTransactions.length -1].balance >= 0 ? " (Payable)" : " (Receivable)"}
             </div>
           )}
         </CardContent>

@@ -1,0 +1,5 @@
+Clicking on the name of a vendor or on its balance  will open the  vendor ledger that will contain two parts of the vendor ledger, one is vendor info another is transaction info. In vendor info part vendor name as heading,ID, address, contact no, Credit limit,bank account no,  attachment in, Purchase order list button, Notes will be here.
+
+In the transaction info part will have a table with column head, sl no, date, description, txn type, debit, credit, balance.date range selection is also needed.
+
+Vendor Account balance is not allowed to edit, if any Vendor has no transaction can be deleted. Sort, search, filter on every column head. 

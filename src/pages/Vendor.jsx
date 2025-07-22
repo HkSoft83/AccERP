@@ -3,6 +3,7 @@ import { PlusCircle, Search, Edit, Trash2, ArrowUpDown, Truck } from 'lucide-rea
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
+import { useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,6 +29,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import AddVendorForm from '@/components/forms/AddVendorForm';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import VendorProfileLedger from '@/components/vendor/VendorProfileLedger';
 
 const initialVendorsData = [
   { id: 'vend-001', name: 'Supplier Alpha Inc.', proprietorName: 'Mr. A', vendorNumber: 'V001', address: '123 Supply St', phoneNumber: '555-111-2222', balance: 1500.00, openingBalance: 1500.00, openingBalanceDate: '2023-01-01' },
@@ -38,7 +40,7 @@ const initialVendorsData = [
 
 const formatVendorForDisplay = (vendor) => ({
   ...vendor,
-  balanceFormatted: (vendor.balance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+  balanceFormatted: parseFloat(vendor.balance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }),
 });
 
 const SortableHeader = ({ children, columnKey, sortConfig, requestSort, isTextRight = false, className = "" }) => {
@@ -60,6 +62,7 @@ const SortableHeader = ({ children, columnKey, sortConfig, requestSort, isTextRi
 
 const Vendor = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [vendors, setVendors] = useState(() => initialVendorsData.map(formatVendorForDisplay));
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
@@ -67,6 +70,7 @@ const Vendor = () => {
   const [vendorToEdit, setVendorToEdit] = useState(null);
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
   const [vendorToDelete, setVendorToDelete] = useState(null);
+  const [selectedVendorForLedger, setSelectedVendorForLedger] = useState(null);
 
   useEffect(() => {
     const storedVendors = localStorage.getItem('vendors');
@@ -124,6 +128,14 @@ const Vendor = () => {
       setIsConfirmDeleteModalOpen(false);
       setVendorToDelete(null);
     }
+  };
+
+  const handleOpenLedger = (vendor) => {
+    setSelectedVendorForLedger(vendor);
+  };
+
+  const handleCloseLedger = () => {
+    setSelectedVendorForLedger(null);
   };
 
   const handleImportExcel = () => {
@@ -232,75 +244,96 @@ const Vendor = () => {
             </AlertDialogContent>
           </AlertDialog>
 
-          <div className="mb-6 flex items-center space-x-2 p-3 bg-background dark:bg-dark-background rounded-lg shadow-sm border border-border dark:border-dark-border">
-            <Input 
-              type="text" 
-              placeholder="Search vendors (Name, Balance...)" 
-              className="flex-grow focus:ring-accent dark:focus:ring-dark-accent border-input dark:border-dark-input focus:border-primary dark:focus:border-dark-primary"
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            <Button 
-              className="bg-primary text-primary-foreground hover:bg-primary-hover dark:bg-dark-primary dark:text-dark-primary-foreground dark:hover:bg-dark-primary-hover"
-              onClick={() => toast({ title: "Search Updated", description: `Displaying results for "${searchTerm}"` })}
-            >
-              <Search size={18} className="mr-2" /> Search
-            </Button>
-          </div>
+          {selectedVendorForLedger ? (
+            <Dialog open={!!selectedVendorForLedger} onOpenChange={handleCloseLedger}>
+              <DialogContent className="sm:max-w-[90%] h-[90vh] flex flex-col p-0">
+                <DialogHeader className="p-4 border-b">
+                  <DialogTitle className="text-2xl font-bold">Vendor Ledger</DialogTitle>
+                  <DialogDescription>Detailed transaction history for {selectedVendorForLedger.name}</DialogDescription>
+                </DialogHeader>
+                <div className="flex-grow overflow-y-auto p-4">
+                  <VendorProfileLedger 
+                    vendorId={selectedVendorForLedger.id} 
+                    vendorName={selectedVendorForLedger.name} 
+                    onClose={handleCloseLedger} 
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
+          ) : (
+            <>
+              <div className="mb-6 flex items-center space-x-2 p-3 bg-background dark:bg-dark-background rounded-lg shadow-sm border border-border dark:border-dark-border">
+                <Input 
+                  type="text" 
+                  placeholder="Search vendors (Name, Balance...)" 
+                  className="flex-grow focus:ring-accent dark:focus:ring-dark-accent border-input dark:border-dark-input focus:border-primary dark:focus:border-dark-primary"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                <Button 
+                  className="bg-primary text-primary-foreground hover:bg-primary-hover dark:bg-dark-primary dark:text-dark-primary-foreground dark:hover:bg-dark-primary-hover"
+                  onClick={() => toast({ title: "Search Updated", description: `Displaying results for "${searchTerm}"` })}
+                >
+                  <Search size={18} className="mr-2" /> Search
+                </Button>
+              </div>
 
-          <div className="overflow-x-auto rounded-lg border border-border dark:border-dark-border shadow-md">
-            <table className="w-full min-w-[600px] text-sm text-left text-foreground dark:text-dark-foreground">
-              <thead className="text-xs text-primary dark:text-dark-primary uppercase bg-muted/50 dark:bg-dark-muted/50">
-                <tr>
-                  <SortableHeader columnKey="name" sortConfig={sortConfig} requestSort={requestSort} className="min-w-[250px]">Vendor Name</SortableHeader>
-                  <SortableHeader columnKey="address" sortConfig={sortConfig} requestSort={requestSort}>Address</SortableHeader>
-                  <SortableHeader columnKey="phoneNumber" sortConfig={sortConfig} requestSort={requestSort}>Phone Number</SortableHeader>
-                  <SortableHeader columnKey="balance" sortConfig={sortConfig} requestSort={requestSort} isTextRight={true}>Balance</SortableHeader>
-                  <th scope="col" className="px-4 py-3 text-center w-28">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sortedAndFilteredVendors.map((vendor) => (
-                  <tr key={vendor.id} className="bg-card dark:bg-dark-card border-b border-border dark:border-dark-border last:border-b-0 hover:bg-muted/30 dark:hover:bg-dark-muted/30 transition-colors duration-150">
-                    <td 
-                      className="px-4 py-3 font-medium text-secondary dark:text-dark-secondary hover:underline cursor-pointer"
-                      onClick={() => toast({ title: `View Ledger: ${vendor.name}`, description: "Detailed vendor ledger view coming soon."})}
-                    >
-                      {vendor.name}
-                    </td>
-                    <td className="px-4 py-3">{vendor.address}</td>
-                    <td className="px-4 py-3">{vendor.phoneNumber}</td>
-                    <td className="px-4 py-3 text-right font-semibold">{vendor.balanceFormatted}</td>
-                    <td className="px-4 py-3 text-center space-x-1">
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="text-secondary dark:text-dark-secondary hover:text-accent dark:hover:text-dark-accent h-8 w-8"
-                        onClick={() => handleOpenModal(vendor)}
-                      >
-                        <Edit size={16} />
-                      </Button>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="text-destructive dark:text-red-400 hover:text-destructive/80 dark:hover:text-red-300 h-8 w-8"
-                        onClick={() => handleDeleteVendor(vendor.id)}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-                {sortedAndFilteredVendors.length === 0 && (
-                  <tr>
-                    <td colSpan="3" className="text-center py-10 text-muted-foreground dark:text-dark-muted-foreground">
-                      {searchTerm ? `No vendors found for "${searchTerm}".` : "No vendors found. Add your first vendor!"}
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+              <div className="overflow-x-auto rounded-lg border border-border dark:border-dark-border shadow-md">
+                <table className="w-full min-w-[600px] text-sm text-left text-foreground dark:text-dark-foreground">
+                  <thead className="text-xs text-primary dark:text-dark-primary uppercase bg-muted/50 dark:bg-dark-muted/50">
+                    <tr>
+                      <SortableHeader columnKey="name" sortConfig={sortConfig} requestSort={requestSort} className="min-w-[250px]">Vendor Name</SortableHeader>
+                      <SortableHeader columnKey="address" sortConfig={sortConfig} requestSort={requestSort}>Address</SortableHeader>
+                      <SortableHeader columnKey="phoneNumber" sortConfig={sortConfig} requestSort={requestSort}>Phone Number</SortableHeader>
+                      <SortableHeader columnKey="balance" sortConfig={sortConfig} requestSort={requestSort} isTextRight={true}>Balance</SortableHeader>
+                      <th scope="col" className="px-4 py-3 text-center w-28">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sortedAndFilteredVendors.map((vendor) => (
+                      <tr key={vendor.id} className="bg-card dark:bg-dark-card border-b border-border dark:border-dark-border last:border-b-0 hover:bg-muted/30 dark:hover:bg-dark-muted/30 transition-colors duration-150">
+                        <td 
+                          className="px-4 py-3 font-medium text-secondary dark:text-dark-secondary hover:underline cursor-pointer"
+                          onClick={() => handleOpenLedger(vendor)}
+                        >
+                          {vendor.name}
+                        </td>
+                        <td className="px-4 py-3">{vendor.address}</td>
+                        <td className="px-4 py-3">{vendor.phoneNumber}</td>
+                        <td className="px-4 py-3 text-right font-semibold cursor-pointer hover:underline"
+                          onClick={() => handleOpenLedger(vendor)}>{vendor.balanceFormatted}</td>
+                        <td className="px-4 py-3 text-center space-x-1">
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="text-secondary dark:text-dark-secondary hover:text-accent dark:hover:text-dark-accent h-8 w-8"
+                            onClick={() => handleOpenModal(vendor)}
+                          >
+                            <Edit size={16} />
+                          </Button>
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="text-destructive dark:text-red-400 hover:text-destructive/80 dark:hover:text-red-300 h-8 w-8"
+                            onClick={() => handleDeleteVendor(vendor.id)}
+                          >
+                            <Trash2 size={16} />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                    {sortedAndFilteredVendors.length === 0 && (
+                      <tr>
+                        <td colSpan="3" className="text-center py-10 text-muted-foreground dark:text-dark-muted-foreground">
+                          {searchTerm ? `No vendors found for "${searchTerm}".` : "No vendors found. Add your first vendor!"}
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>

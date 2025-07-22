@@ -1,0 +1,8 @@
+Product Type
+Stock: Products you buy and/or sell and that you track quantities of.
+Non-stock:Products you buy and/or sell but don’t need to (or can’t) track quantities of, for example, nuts and bolts used in an installation.
+Service: Services that you provide to customers.
+Combo: A collection of products and/or services that you sell together, for example, a gift basket of fruit, cheese, and wine.
+Details about “combo”
+When the user select the “combo”  product type , only Product name, product code, description will be visible in the form and a table(column head: Product/Service name, qty, action(delete icon)) will be shown in the form where product can be added from the existing product/services
+

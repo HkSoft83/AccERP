@@ -66,6 +66,7 @@ const navItems = [
           // Add other reports here later
         ]
       },
+      { name: 'Vendor Ledger', path: '/reports/vendor-ledger' },
     ]
   },
 ];
