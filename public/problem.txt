@@ -1,59 +1,1190 @@
-[plugin:vite:react-babel] D:\B-Important\Programming\Github\AccERP\src\pages\reports\CashFlowStatement.jsx: Unexpected token, expected ")" (56:70)
-  59 |         cashFromFinancing -= account.balance; // Owner withdrawals
-D:/B-Important/Programming/Github/AccERP/src/pages/reports/CashFlowStatement.jsx:56:70
-54 |          // Assuming increase in loans is inflow, decrease is outflow
-55 |          cashFromFinancing += account.balance; // Treat as inflow for simplicity
-56 |        } else if (account.type === 'Equity' && account.name === 'Owner's Capital') {
-   |                                                                        ^
-57 |          cashFromFinancing += account.balance; // Owner contributions
-58 |        } else if (account.type === 'Equity' && account.name === 'Owner's Drawings') {
-    at constructor (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:360:19)
-    at JSXParserMixin.raise (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:6613:19)
-    at JSXParserMixin.unexpected (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:6633:16)
-    at JSXParserMixin.expect (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:6914:12)
-    at JSXParserMixin.parseHeaderExpression (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12909:10)
-    at JSXParserMixin.parseIfStatement (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13005:22)
-    at JSXParserMixin.parseStatementContent (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12673:21)
-    at JSXParserMixin.parseStatementLike (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12644:17)
-    at JSXParserMixin.parseStatementOrSloppyAnnexBFunctionDeclaration (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12634:17)
-    at JSXParserMixin.parseIfStatement (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13007:42)
-    at JSXParserMixin.parseStatementContent (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12673:21)
-    at JSXParserMixin.parseStatementLike (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12644:17)
-    at JSXParserMixin.parseStatementListItem (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12624:17)
-    at JSXParserMixin.parseBlockOrModuleBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13192:61)
-    at JSXParserMixin.parseBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13185:10)
-    at JSXParserMixin.parseBlock (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13173:10)
-    at JSXParserMixin.parseFunctionBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12018:24)
-    at JSXParserMixin.parseArrowExpression (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11993:10)
-    at JSXParserMixin.parseExprAtom (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11354:25)
-    at JSXParserMixin.parseExprAtom (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:4770:20)
-    at JSXParserMixin.parseExprSubscripts (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10992:23)
-    at JSXParserMixin.parseUpdate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10977:21)
-    at JSXParserMixin.parseMaybeUnary (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10957:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10810:61)
-    at JSXParserMixin.parseExprOps (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10815:23)
-    at JSXParserMixin.parseMaybeConditional (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10792:23)
-    at JSXParserMixin.parseMaybeAssign (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10745:21)
-    at D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10714:39
-    at JSXParserMixin.allowInAnd (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12334:12)
-    at JSXParserMixin.parseMaybeAssignAllowIn (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10714:17)
-    at JSXParserMixin.parseExprListItem (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12093:18)
-    at JSXParserMixin.parseCallExpressionArguments (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11163:22)
-    at JSXParserMixin.parseCoverCallAndAsyncArrowHead (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11097:29)
-    at JSXParserMixin.parseSubscript (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11031:19)
-    at JSXParserMixin.parseSubscripts (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11005:19)
-    at JSXParserMixin.parseExprSubscripts (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10996:17)
-    at JSXParserMixin.parseUpdate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10977:21)
-    at JSXParserMixin.parseMaybeUnary (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10957:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10810:61)
-    at JSXParserMixin.parseExprOps (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10815:23)
-    at JSXParserMixin.parseMaybeConditional (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10792:23)
-    at JSXParserMixin.parseMaybeAssign (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10745:21)
-    at JSXParserMixin.parseExpressionBase (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10698:23)
-    at D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10694:39
-    at JSXParserMixin.allowInAnd (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12329:16)
-    at JSXParserMixin.parseExpression (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10694:17)
-    at JSXParserMixin.parseStatementContent (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12771:23)
-    at JSXParserMixin.parseStatementLike (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12644:17)
-    at JSXParserMixin.parseStatementListItem (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12624:17)
-    at JSXParserMixin.parseBlockOrModuleBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\par
+main.jsx is executing
+main.jsx:9 Root element: <div id=​"root">​…​</div>​<div class=​"flex h-screen bg-gray-50 dark:​bg-gray-900 text-gray-900 dark:​text-gray-100" style>​…​</div>​flex<div class=​"fixed inset-y-0 left-0 z-30 bg-white dark:​bg-gray-800 shadow-xl border-r border-gray-200 dark:​border-gray-700 flex flex-col" style=​"width:​ 256px;​ min-width:​ 16rem;​ max-width:​ 16rem;​">​…​</div>​flex<div class=​"flex-1 flex flex-col overflow-hidden" style=​"margin-left:​ 16rem;​ transition:​ margin-left 0.3s;​">​…​</div>​flex<header class=​"h-20 bg-white dark:​bg-gray-800 shadow-md flex items-center justify-between px-6 border-b border-gray-200 dark:​border-gray-700">​…​</header>​flex<main class=​"flex-1 overflow-x-hidden overflow-y-auto p-6 bg-gray-50 dark:​bg-gray-900">​…​</main>​<div style=​"opacity:​ 1;​ transform:​ translateY(-5.57776px)​ scale(0.994422)​ translateZ(0px)​;​">​…​</div>​<div>​…​</div>​<h1 class=​"text-2xl font-bold mb-4">​Fixed Asset Management​</h1>​<div dir=​"ltr" data-orientation=​"horizontal" class=​"w-full">​…​</div>​<div role=​"tablist" aria-orientation=​"horizontal" class=​"inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground" tabindex=​"0" data-orientation=​"horizontal" style=​"outline:​ none;​">​…​</div>​flex<div data-state=​"active" data-orientation=​"horizontal" role=​"tabpanel" aria-labelledby=​"radix-:​rn:​-trigger-register" id=​"radix-:​rn:​-content-register" tabindex=​"0" class=​"mt-2 ring-offset-background focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2" style=​"animation-duration:​ 0s;​">​…​</div>​<div class=​"flex justify-end mb-4">​…​</div>​flex<div class=​"p-4 border rounded-lg">​…​</div>​<h2 class=​"text-xl font-bold mb-4">​Fixed Asset Master Register​</h2>​<div class=​"relative w-full overflow-auto">​…​</div>​scroll<table class=​"w-full caption-bottom text-sm">​…​</table>​<thead class=​"[&_tr]​:​border-b bg-gray-200">​…​</thead>​<tr class=​"border-b transition-colors hover:​bg-muted/​50 data-[state=selected]​:​bg-muted">​…​</tr>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter name..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter tag no..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter category..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter location..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter date..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter date..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter price..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter life..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter value..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter method..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter rate..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter..." value>​flex</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​flex<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter status..." value>​</th>​<th class=​"h-12 px-4 text-left align-middle font-bold text-base text-muted-foreground [&:​has([role=checkbox]​)​]​:​pr-0">​…​</th>​<div class=​"flex items-center">​…​</div>​<input class=​"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 mt-1" placeholder=​"Filter date..." value>​</th>​</tr>​</thead>​<tbody class=​"[&_tr:​last-child]​:​border-0">​…​</tbody>​</table>​</div>​</div>​</div>​<div data-state=​"inactive" data-orientation=​"horizontal" role=​"tabpanel" aria-labelledby=​"radix-:​rn:​-trigger-depreciation" hidden id=​"radix-:​rn:​-content-depreciation" tabindex=​"0" class=​"mt-2 ring-offset-background focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2">​</div>​<div data-state=​"inactive" data-orientation=​"horizontal" role=​"tabpanel" aria-labelledby=​"radix-:​rn:​-trigger-disposal" hidden id=​"radix-:​rn:​-content-disposal" tabindex=​"0" class=​"mt-2 ring-offset-background focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2">​</div>​<div data-state=​"inactive" data-orientation=​"horizontal" role=​"tabpanel" aria-labelledby=​"radix-:​rn:​-trigger-reports" hidden id=​"radix-:​rn:​-content-reports" tabindex=​"0" class=​"mt-2 ring-offset-background focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2">​</div>​</div>​</div>​</div>​</main>​</div>​<div role=​"region" aria-label=​"Notifications (F8)​" tabindex=​"-1" style=​"pointer-events:​ none;​">​…​</div>​</div>​<div role=​"region" aria-label=​"Notifications (F8)​" tabindex=​"-1" style=​"pointer-events:​ none;​">​…​</div>​</div>​
+hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
+    at BrowserRouter (react-router-dom.js?v=359dd23b:5266:5)
+    at ThemeProvider (ThemeContext.jsx:7:33)
+    at App (<anonymous>)
+overrideMethod @ hook.js:608Understand this warning
+hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
+    at BrowserRouter (react-router-dom.js?v=359dd23b:5266:5)
+    at ThemeProvider (ThemeContext.jsx:7:33)
+    at App (<anonymous>)
+overrideMethod @ hook.js:608Understand this warning
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 
+AddAssetForm.jsx:55 Useful Life: 
+AddAssetForm.jsx:56 Salvage Value: 
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: NaN
+AddAssetForm.jsx:65 Parsed Useful Life: NaN
+AddAssetForm.jsx:66 Parsed Salvage Value: NaN
+AddAssetForm.jsx:78 Invalid input for calculation. Clearing depreciation rate.
+hook.js:608 Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. Error Component Stack
+    at DescriptionWarning (chunk-XULRTX4H.js?v=359dd23b:333:29)
+    at chunk-XULRTX4H.js?v=359dd23b:236:13
+    at chunk-XULRTX4H.js?v=359dd23b:155:58
+    at Presence (chunk-VTOHP5L6.js?v=359dd23b:214:11)
+    at chunk-XULRTX4H.js?v=359dd23b:146:64
+    at chunk-2JAXWTIS.js?v=359dd23b:80:13
+    at chunk-2JAXWTIS.js?v=359dd23b:56:13
+    at chunk-HY2TCPCB.js?v=359dd23b:43:13
+    at chunk-IZVXIOIV.js?v=359dd23b:266:22
+    at Presence (chunk-VTOHP5L6.js?v=359dd23b:214:11)
+    at Provider (chunk-VTOHP5L6.js?v=359dd23b:53:15)
+    at DialogPortal (chunk-XULRTX4H.js?v=359dd23b:108:11)
+    at _c3 (dialog.jsx:22:43)
+    at Provider (chunk-VTOHP5L6.js?v=359dd23b:53:15)
+    at Dialog (chunk-XULRTX4H.js?v=359dd23b:48:5)
+    at div (<anonymous>)
+    at div (<anonymous>)
+    at chunk-HY2TCPCB.js?v=359dd23b:43:13
+    at Presence (chunk-VTOHP5L6.js?v=359dd23b:214:11)
+    at @radix-ui_react-tabs.js?v=359dd23b:169:13
+    at _c5 (tabs.jsx:32:41)
+    at div (<anonymous>)
+    at chunk-HY2TCPCB.js?v=359dd23b:43:13
+    at Provider (chunk-VTOHP5L6.js?v=359dd23b:53:15)
+    at @radix-ui_react-tabs.js?v=359dd23b:45:7
+    at div (<anonymous>)
+    at FixedAssetManagement (FixedAssetManagement.jsx:49:31)
+    at RenderedRoute (react-router-dom.js?v=359dd23b:4103:5)
+    at Outlet (react-router-dom.js?v=359dd23b:4510:26)
+    at div (<anonymous>)
+    at MotionComponent (framer-motion.js?v=359dd23b:278:40)
+    at PresenceChild (framer-motion.js?v=359dd23b:7103:24)
+    at AnimatePresence (framer-motion.js?v=359dd23b:7169:26)
+    at main (<anonymous>)
+    at div (<anonymous>)
+    at div (<anonymous>)
+    at Layout (Layout.jsx:198:51)
+    at RenderedRoute (react-router-dom.js?v=359dd23b:4103:5)
+    at Routes (react-router-dom.js?v=359dd23b:4574:5)
+    at Suspense (<anonymous>)
+    at Router (react-router-dom.js?v=359dd23b:4517:15)
+    at BrowserRouter (react-router-dom.js?v=359dd23b:5266:5)
+    at ThemeProvider (ThemeContext.jsx:7:33)
+    at App (<anonymous>)
+overrideMethod @ hook.js:608
+(anonymous) @ chunk-XULRTX4H.js?v=359dd23b:342
+commitHookEffectListMount @ chunk-V5LT2MCF.js?v=359dd23b:16936
+commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:18184
+commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=359dd23b:18157
+commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=359dd23b:18147
+commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=359dd23b:18137
+flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=359dd23b:19518
+flushPassiveEffects @ chunk-V5LT2MCF.js?v=359dd23b:19475
+commitRootImpl @ chunk-V5LT2MCF.js?v=359dd23b:19444
+commitRoot @ chunk-V5LT2MCF.js?v=359dd23b:19305
+performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=359dd23b:18923
+flushSyncCallbacks @ chunk-V5LT2MCF.js?v=359dd23b:9135
+(anonymous) @ chunk-V5LT2MCF.js?v=359dd23b:18655Understand this warning
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 
+AddAssetForm.jsx:55 Useful Life: 
+AddAssetForm.jsx:56 Salvage Value: 
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: NaN
+AddAssetForm.jsx:65 Parsed Useful Life: NaN
+AddAssetForm.jsx:66 Parsed Salvage Value: NaN
+AddAssetForm.jsx:78 Invalid input for calculation. Clearing depreciation rate.
+hook.js:608 Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+overrideMethod @ hook.js:608
+(anonymous) @ chunk-XULRTX4H.js?v=359dd23b:342
+commitHookEffectListMount @ chunk-V5LT2MCF.js?v=359dd23b:16936
+invokePassiveEffectMountInDEV @ chunk-V5LT2MCF.js?v=359dd23b:18352
+invokeEffectsInDev @ chunk-V5LT2MCF.js?v=359dd23b:19729
+commitDoubleInvokeEffectsInDEV @ chunk-V5LT2MCF.js?v=359dd23b:19714
+flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=359dd23b:19531
+flushPassiveEffects @ chunk-V5LT2MCF.js?v=359dd23b:19475
+commitRootImpl @ chunk-V5LT2MCF.js?v=359dd23b:19444
+commitRoot @ chunk-V5LT2MCF.js?v=359dd23b:19305
+performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=359dd23b:18923
+flushSyncCallbacks @ chunk-V5LT2MCF.js?v=359dd23b:9135
+(anonymous) @ chunk-V5LT2MCF.js?v=359dd23b:18655Understand this warning
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 1
+AddAssetForm.jsx:55 Useful Life: 
+AddAssetForm.jsx:56 Salvage Value: 
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 1
+AddAssetForm.jsx:65 Parsed Useful Life: NaN
+AddAssetForm.jsx:66 Parsed Salvage Value: NaN
+AddAssetForm.jsx:78 Invalid input for calculation. Clearing depreciation rate.
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 11
+AddAssetForm.jsx:55 Useful Life: 
+AddAssetForm.jsx:56 Salvage Value: 
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 11
+AddAssetForm.jsx:65 Parsed Useful Life: NaN
+AddAssetForm.jsx:66 Parsed Salvage Value: NaN
+AddAssetForm.jsx:78 Invalid input for calculation. Clearing depreciation rate.
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110
+AddAssetForm.jsx:55 Useful Life: 
+AddAssetForm.jsx:56 Salvage Value: 
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 110
+AddAssetForm.jsx:65 Parsed Useful Life: NaN
+AddAssetForm.jsx:66 Parsed Salvage Value: NaN
+AddAssetForm.jsx:78 Invalid input for calculation. Clearing depreciation rate.
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 1100
+AddAssetForm.jsx:55 Useful Life: 
+AddAssetForm.jsx:56 Salvage Value: 
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 1100
+AddAssetForm.jsx:65 Parsed Useful Life: NaN
+AddAssetForm.jsx:66 Parsed Salvage Value: NaN
+AddAssetForm.jsx:78 Invalid input for calculation. Clearing depreciation rate.
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 11000
+AddAssetForm.jsx:55 Useful Life: 
+AddAssetForm.jsx:56 Salvage Value: 
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 11000
+AddAssetForm.jsx:65 Parsed Useful Life: NaN
+AddAssetForm.jsx:66 Parsed Salvage Value: NaN
+AddAssetForm.jsx:78 Invalid input for calculation. Clearing depreciation rate.
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110000
+AddAssetForm.jsx:55 Useful Life: 
+AddAssetForm.jsx:56 Salvage Value: 
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 110000
+AddAssetForm.jsx:65 Parsed Useful Life: NaN
+AddAssetForm.jsx:66 Parsed Salvage Value: NaN
+AddAssetForm.jsx:78 Invalid input for calculation. Clearing depreciation rate.
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110000
+AddAssetForm.jsx:55 Useful Life: 5
+AddAssetForm.jsx:56 Salvage Value: 
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 110000
+AddAssetForm.jsx:65 Parsed Useful Life: 5
+AddAssetForm.jsx:66 Parsed Salvage Value: NaN
+AddAssetForm.jsx:78 Invalid input for calculation. Clearing depreciation rate.
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110000
+AddAssetForm.jsx:55 Useful Life: 5
+AddAssetForm.jsx:56 Salvage Value: 1
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 110000
+AddAssetForm.jsx:65 Parsed Useful Life: 5
+AddAssetForm.jsx:66 Parsed Salvage Value: 1
+AddAssetForm.jsx:71 Annual Depreciation: 21999.8
+AddAssetForm.jsx:72 Calculated Rate: 19.99981818181818
+5The specified value "20.00%" cannot be parsed, or is out of range.Understand this warning
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110000
+AddAssetForm.jsx:55 Useful Life: 5
+AddAssetForm.jsx:56 Salvage Value: 10
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 110000
+AddAssetForm.jsx:65 Parsed Useful Life: 5
+AddAssetForm.jsx:66 Parsed Salvage Value: 10
+AddAssetForm.jsx:71 Annual Depreciation: 21998
+AddAssetForm.jsx:72 Calculated Rate: 19.998181818181816
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110000
+AddAssetForm.jsx:55 Useful Life: 5
+AddAssetForm.jsx:56 Salvage Value: 100
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 110000
+AddAssetForm.jsx:65 Parsed Useful Life: 5
+AddAssetForm.jsx:66 Parsed Salvage Value: 100
+AddAssetForm.jsx:71 Annual Depreciation: 21980
+AddAssetForm.jsx:72 Calculated Rate: 19.98181818181818
+chunk-V5LT2MCF.js?v=359dd23b:1861 The specified value "19.98%" cannot be parsed, or is out of range.
+set @ chunk-V5LT2MCF.js?v=359dd23b:1861
+updateWrapper @ chunk-V5LT2MCF.js?v=359dd23b:1984
+updateProperties @ chunk-V5LT2MCF.js?v=359dd23b:7771
+commitUpdate @ chunk-V5LT2MCF.js?v=359dd23b:8430
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17791
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17841
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17879
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17846
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17822
+commitMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17691
+commitRootImpl @ chunk-V5LT2MCF.js?v=359dd23b:19375
+commitRoot @ chunk-V5LT2MCF.js?v=359dd23b:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=359dd23b:18833
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=359dd23b:18746
+workLoop @ chunk-V5LT2MCF.js?v=359dd23b:197
+flushWork @ chunk-V5LT2MCF.js?v=359dd23b:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=359dd23b:384Understand this warning
+chunk-V5LT2MCF.js?v=359dd23b:2076 The specified value "19.98%" cannot be parsed, or is out of range.
+setDefaultValue @ chunk-V5LT2MCF.js?v=359dd23b:2076
+updateWrapper @ chunk-V5LT2MCF.js?v=359dd23b:1995
+updateProperties @ chunk-V5LT2MCF.js?v=359dd23b:7771
+commitUpdate @ chunk-V5LT2MCF.js?v=359dd23b:8430
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17791
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17841
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17879
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17846
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17822
+commitMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17691
+commitRootImpl @ chunk-V5LT2MCF.js?v=359dd23b:19375
+commitRoot @ chunk-V5LT2MCF.js?v=359dd23b:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=359dd23b:18833
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=359dd23b:18746
+workLoop @ chunk-V5LT2MCF.js?v=359dd23b:197
+flushWork @ chunk-V5LT2MCF.js?v=359dd23b:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=359dd23b:384Understand this warning
+chunk-V5LT2MCF.js?v=359dd23b:1861 The specified value "19.98%" cannot be parsed, or is out of range.
+set @ chunk-V5LT2MCF.js?v=359dd23b:1861
+updateWrapper @ chunk-V5LT2MCF.js?v=359dd23b:1984
+updateProperties @ chunk-V5LT2MCF.js?v=359dd23b:7771
+commitUpdate @ chunk-V5LT2MCF.js?v=359dd23b:8430
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17791
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17841
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17879
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17846
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17822
+commitMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17691
+commitRootImpl @ chunk-V5LT2MCF.js?v=359dd23b:19375
+commitRoot @ chunk-V5LT2MCF.js?v=359dd23b:19305
+performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=359dd23b:18923
+flushSyncCallbacks @ chunk-V5LT2MCF.js?v=359dd23b:9135
+flushSync @ chunk-V5LT2MCF.js?v=359dd23b:18987
+finishEventHandler @ chunk-V5LT2MCF.js?v=359dd23b:3569
+batchedUpdates @ chunk-V5LT2MCF.js?v=359dd23b:3582
+dispatchEventForPluginEventSystem @ chunk-V5LT2MCF.js?v=359dd23b:7176
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-V5LT2MCF.js?v=359dd23b:5478
+dispatchEvent @ chunk-V5LT2MCF.js?v=359dd23b:5472
+dispatchDiscreteEvent @ chunk-V5LT2MCF.js?v=359dd23b:5449Understand this warning
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110000
+AddAssetForm.jsx:55 Useful Life: 5
+AddAssetForm.jsx:56 Salvage Value: 1000
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 110000
+AddAssetForm.jsx:65 Parsed Useful Life: 5
+AddAssetForm.jsx:66 Parsed Salvage Value: 1000
+AddAssetForm.jsx:71 Annual Depreciation: 21800
+AddAssetForm.jsx:72 Calculated Rate: 19.818181818181817
+chunk-V5LT2MCF.js?v=359dd23b:1861 The specified value "19.82%" cannot be parsed, or is out of range.
+set @ chunk-V5LT2MCF.js?v=359dd23b:1861
+updateWrapper @ chunk-V5LT2MCF.js?v=359dd23b:1984
+updateProperties @ chunk-V5LT2MCF.js?v=359dd23b:7771
+commitUpdate @ chunk-V5LT2MCF.js?v=359dd23b:8430
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17791
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17841
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17879
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17846
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17822
+commitMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17691
+commitRootImpl @ chunk-V5LT2MCF.js?v=359dd23b:19375
+commitRoot @ chunk-V5LT2MCF.js?v=359dd23b:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=359dd23b:18833
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=359dd23b:18746
+workLoop @ chunk-V5LT2MCF.js?v=359dd23b:197
+flushWork @ chunk-V5LT2MCF.js?v=359dd23b:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=359dd23b:384Understand this warning
+chunk-V5LT2MCF.js?v=359dd23b:2076 The specified value "19.82%" cannot be parsed, or is out of range.
+setDefaultValue @ chunk-V5LT2MCF.js?v=359dd23b:2076
+updateWrapper @ chunk-V5LT2MCF.js?v=359dd23b:1995
+updateProperties @ chunk-V5LT2MCF.js?v=359dd23b:7771
+commitUpdate @ chunk-V5LT2MCF.js?v=359dd23b:8430
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17791
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17841
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17879
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17846
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17822
+commitMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17691
+commitRootImpl @ chunk-V5LT2MCF.js?v=359dd23b:19375
+commitRoot @ chunk-V5LT2MCF.js?v=359dd23b:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=359dd23b:18833
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=359dd23b:18746
+workLoop @ chunk-V5LT2MCF.js?v=359dd23b:197
+flushWork @ chunk-V5LT2MCF.js?v=359dd23b:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=359dd23b:384Understand this warning
+chunk-V5LT2MCF.js?v=359dd23b:1861 The specified value "19.82%" cannot be parsed, or is out of range.
+set @ chunk-V5LT2MCF.js?v=359dd23b:1861
+updateWrapper @ chunk-V5LT2MCF.js?v=359dd23b:1984
+updateProperties @ chunk-V5LT2MCF.js?v=359dd23b:7771
+commitUpdate @ chunk-V5LT2MCF.js?v=359dd23b:8430
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17791
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17841
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17765
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17879
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17846
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17727
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17924
+recursivelyTraverseMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17713
+commitMutationEffectsOnFiber @ chunk-V5LT2MCF.js?v=359dd23b:17822
+commitMutationEffects @ chunk-V5LT2MCF.js?v=359dd23b:17691
+commitRootImpl @ chunk-V5LT2MCF.js?v=359dd23b:19375
+commitRoot @ chunk-V5LT2MCF.js?v=359dd23b:19305
+performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=359dd23b:18923
+flushSyncCallbacks @ chunk-V5LT2MCF.js?v=359dd23b:9135
+flushSync @ chunk-V5LT2MCF.js?v=359dd23b:18987
+finishEventHandler @ chunk-V5LT2MCF.js?v=359dd23b:3569
+batchedUpdates @ chunk-V5LT2MCF.js?v=359dd23b:3582
+dispatchEventForPluginEventSystem @ chunk-V5LT2MCF.js?v=359dd23b:7176
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-V5LT2MCF.js?v=359dd23b:5478
+dispatchEvent @ chunk-V5LT2MCF.js?v=359dd23b:5472
+dispatchDiscreteEvent @ chunk-V5LT2MCF.js?v=359dd23b:5449Understand this warning
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110000
+AddAssetForm.jsx:55 Useful Life: 5
+AddAssetForm.jsx:56 Salvage Value: 10000
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 110000
+AddAssetForm.jsx:65 Parsed Useful Life: 5
+AddAssetForm.jsx:66 Parsed Salvage Value: 10000
+AddAssetForm.jsx:71 Annual Depreciation: 20000
+AddAssetForm.jsx:72 Calculated Rate: 18.181818181818183
+7The specified value "18.18%" cannot be parsed, or is out of range.Understand this warning
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110000
+AddAssetForm.jsx:55 Useful Life: 5
+AddAssetForm.jsx:56 Salvage Value: 10000
+AddAssetForm.jsx:57 Depreciation Method: Reducing Balance
+AddAssetForm.jsx:85 Depreciation method is not Straight Line. Clearing depreciation rate.
+AddAssetForm.jsx:53 Depreciation useEffect triggered:
+AddAssetForm.jsx:54 Amount: 110000
+AddAssetForm.jsx:55 Useful Life: 5
+AddAssetForm.jsx:56 Salvage Value: 10000
+AddAssetForm.jsx:57 Depreciation Method: Straight Line
+AddAssetForm.jsx:64 Parsed Purchase Amount: 110000
+AddAssetForm.jsx:65 Parsed Useful Life: 5
+AddAssetForm.jsx:66 Parsed Salvage Value: 10000
+AddAssetForm.jsx:71 Annual Depreciation: 20000
+AddAssetForm.jsx:72 Calculated Rate: 18.181818181818183
