@@ -54,6 +54,10 @@ const AddAssetForm = ({ addAsset }) => {
             <Input id="name" placeholder="e.g., Laptop, Office Desk" value={formData.name} onChange={handleChange} />
           </div>
           <div>
+            <Label htmlFor="tagSerialNumber">Tag/Serial Number</Label>
+            <Input id="tagSerialNumber" placeholder="e.g., SN123456" value={formData.tagSerialNumber} onChange={handleChange} />
+          </div>
+          <div>
             <Label htmlFor="category">Asset Category</Label>
             <Input id="category" placeholder="e.g., Computer, Furniture" value={formData.category} onChange={handleChange} />
           </div>

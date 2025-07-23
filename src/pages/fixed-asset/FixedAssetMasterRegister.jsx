@@ -145,6 +145,18 @@ const FixedAssetMasterRegister = ({ assets }) => {
             </TableHead>
             <TableHead>
               <div className="flex items-center">
+                Location
+                <ArrowUpDown className="ml-2 h-4 w-4 cursor-pointer" onClick={() => handleSort('assetLocation')} />
+              </div>
+              <Input
+                placeholder="Filter location..."
+                value={filters.assetLocation || ''}
+                onChange={(e) => handleFilterChange('assetLocation', e.target.value)}
+                className="mt-1"
+              />
+            </TableHead>
+            <TableHead>
+              <div className="flex items-center">
                 Purchase Date
                 <ArrowUpDown className="ml-2 h-4 w-4 cursor-pointer" onClick={() => handleSort('purchaseDate')} />
               </div>
@@ -283,6 +295,7 @@ const FixedAssetMasterRegister = ({ assets }) => {
               <TableCell>{asset.name}</TableCell>
               <TableCell>{asset.tagSerialNumber}</TableCell>
               <TableCell>{asset.category}</TableCell>
+              <TableCell>{asset.assetLocation}</TableCell>
               <TableCell>{asset.purchaseDate}</TableCell>
               <TableCell>{asset.purchaseDate}</TableCell>
               <TableCell>{asset.amount}</TableCell>
