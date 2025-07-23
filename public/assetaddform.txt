@@ -1,0 +1,39 @@
+Your React component AddAssetForm is almost perfect! Just a couple of notes to make sure the <Select> for depreciationMethod works correctly with your current state structure:
+
+Fix needed for <Select> depreciationMethod control
+Currently, you use this to update depreciationMethod:
+
+
+<Select onValueChange={(value) => setFormData((prevData) => ({ ...prevData, depreciationMethod: value }))} value={formData.depreciationMethod}>
+But you haven’t imported or used the Select subcomponents like <SelectTrigger>, <SelectContent>, <SelectItem>, and <SelectValue>. Also, you are missing their imports.
+
+To fix:
+Import these components at top:
+
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
+Update the Select JSX to use them properly:
+
+
+<Select onValueChange={(value) => setFormData((prevData) => ({ ...prevData, depreciationMethod: value }))} value={formData.depreciationMethod}>
+  <SelectTrigger id="depreciationMethod">
+    <SelectValue placeholder="Select method" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="Straight Line">Straight Line</SelectItem>
+    <SelectItem value="Reducing Balance">Reducing Balance</SelectItem>
+  </SelectContent>
+</Select>
+
+Optional suggestion:
+For Status, you might want to use a Select dropdown too, instead of a free text Input. Example:
+
+<Select onValueChange={(value) => setFormData((prevData) => ({ ...prevData, status: value }))} value={formData.status}>
+  <SelectTrigger id="status">
+    <SelectValue placeholder="Select status" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="Active">Active</SelectItem>
+    <SelectItem value="Sold">Sold</SelectItem>
+    <SelectItem value="Scrapped">Scrapped</SelectItem>
+  </SelectContent>
+</Select>
