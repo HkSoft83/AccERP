@@ -13,13 +13,16 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { DialogFooter, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { Save } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const accountTypes = {
-  "Asset": ["Current Assets", "Fixed Assets", "Tangible Assets", "Intangible Assets", "Long-term Assets", "Investments"],
-  "Liability": ["Current Liabilities", "Long-term Liabilities", "Provisions", "Accrued Liabilities"],
-  "Equity": ["Owner's Capital", "Owner's Drawings", "Retained Earnings", "Share Capital", "Reserves & Surplus"],
+  "Current Asset": ["Cash", "Bank A/C-Current", "Bank A/C-Saving", "Account Receivable", "Inventory", "Short-Term Investments","Prepaid Expenses","Loans & Advances (Short-Term)", "Other Current Assets"],
+  "Non-Current Asset": ["Fixed/Tangible Assets", "Intangible Assets", "Long-term Investments","Other Non-Current Assets"],
+  "Current Liability": ["A/C Payable", "Short-term Loan", "Accrued Expenses", "Unearned Revenue","Provisions", "Current Portion of Long-term Debt", "Other Current Liabilities"],
+  "Non-Current Liability": ["Long-term Loans","Bonds Payable", "Provisions", "Deferred Tax Liabilities", "Other Non-Current Liabilities"],
+  "Equity": ["Owner's Capital", "Owner's Drawings", "Retained Earnings", "Share Capital", "Reserves & Surplus","Others Equity"],
   "Income": ["Operating Income", "Non-operating Income", "Other Income"],
-  "Expense": ["Direct Expenses", "Indirect Expenses", "Operating Expenses", "Financial Expenses", "Depreciation & Amortization", "Cost of Goods Sold"],
+  "Expense": ["Operating Expenses","Non-Operating Expenses", "Others Expenses", "Cost of Goods Sold"],
 };
 
 const accountTypeOptions = Object.keys(accountTypes);
@@ -34,8 +37,8 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
   const [subAccountOf, setSubAccountOf] = useState(NO_PARENT_ACCOUNT_VALUE);
   const [openingBalance, setOpeningBalance] = useState('');
   const [openingBalanceDate, setOpeningBalanceDate] = useState(undefined);
+  const [isHeaderAccount, setIsHeaderAccount] = useState(false);
   const [originalId, setOriginalId] = useState(null);
-
 
   useEffect(() => {
     if (isEditMode && initialData) {
@@ -46,7 +49,8 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
       setSubAccountOf(initialData.subAccountOf || NO_PARENT_ACCOUNT_VALUE);
       setOpeningBalance(initialData.openingBalance?.toString() || '');
       setOpeningBalanceDate(initialData.openingBalanceDate ? new Date(initialData.openingBalanceDate) : undefined);
-      setOriginalId(initialData.id || initialData.accNum); 
+      setIsHeaderAccount(initialData.isHeader || false);
+      setOriginalId(initialData.id || initialData.accNum);
     } else {
       resetForm();
     }
@@ -60,6 +64,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
     setSubAccountOf(NO_PARENT_ACCOUNT_VALUE);
     setOpeningBalance('');
     setOpeningBalanceDate(undefined);
+    setIsHeaderAccount(false);
     setOriginalId(null);
   };
 
@@ -75,14 +80,15 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
     }
 
     const accountData = {
-      id: originalId || `acc-${Date.now()}`, 
+      id: originalId || `acc-${Date.now()}`,
       accName: accountName,
       accNum: accountNumber || (originalId ? originalId.split('-')[1] || String(Date.now()).slice(-4) : String(Date.now()).slice(-4)),
       accType: accountType,
       accSubtype: accountSubtype,
       subAccountOf: subAccountOf === NO_PARENT_ACCOUNT_VALUE ? null : subAccountOf,
-      openingBalance: parseFloat(openingBalance) || 0,
-      openingBalanceDate: openingBalanceDate ? openingBalanceDate.toISOString().split('T')[0] : null,
+      openingBalance: !isHeaderAccount ? parseFloat(openingBalance) || 0 : 0,
+      openingBalanceDate: !isHeaderAccount && openingBalanceDate ? openingBalanceDate.toISOString().split('T')[0] : null,
+      isHeader: isHeaderAccount,
     };
     
     onSave(accountData, isEditMode);
@@ -101,9 +107,15 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
 
   return (
     <form onSubmit={(e) => handleSubmit(e, true)} className="space-y-4 py-2">
-       <DialogHeader className="hidden">
-        <DialogTitle>{isEditMode ? 'Edit Account' : 'Add New Account'}</DialogTitle>
-        <DialogDescription>
+       <DialogHeader>
+        <div className="flex justify-between items-center">
+          <DialogTitle>{isEditMode ? 'Edit Account' : 'Add New Account'}</DialogTitle>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="isHeader" checked={isHeaderAccount} onCheckedChange={setIsHeaderAccount} />
+            <Label htmlFor="isHeader">This is a Header Account</Label>
+          </div>
+        </div>
+        <DialogDescription className="hidden">
           {isEditMode ? 'Update the details of the existing account.' : 'Fill in the details to create a new account.'}
         </DialogDescription>
       </DialogHeader>
@@ -126,7 +138,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
           onChange={(e) => setAccountNumber(e.target.value)}
           placeholder="e.g., 1010"
           className="mt-1"
-          disabled={isEditMode} 
+          disabled={isEditMode}
         />
          {isEditMode && <p className="text-xs text-muted-foreground">Account number cannot be changed after creation.</p>}
       </div>
@@ -172,31 +184,35 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
           </SelectContent>
         </Select>
       </div>
-      <div>
-        <Label htmlFor="openingBalance">Opening Balance</Label>
-        <Input
-          id="openingBalance"
-          type="number"
-          value={openingBalance}
-          onChange={(e) => setOpeningBalance(e.target.value)}
-          placeholder="0.00"
-          className="mt-1"
-          disabled={isEditMode}
-        />
-        {isEditMode && <p className="text-xs text-muted-foreground">Opening balance cannot be changed after creation.</p>}
-      </div>
-      <div>
-        <Label htmlFor="openingBalanceDate">Opening Balance As of Date</Label>
-        <div>
-        <DatePicker 
-            date={openingBalanceDate} 
-            setDate={setOpeningBalanceDate} 
-            className="mt-1 w-full" 
-            disabled={isEditMode}
-        />
-        </div>
-         {isEditMode && <p className="text-xs text-muted-foreground">Opening balance date cannot be changed after creation.</p>}
-      </div>
+      {!isHeaderAccount && (
+        <>
+          <div>
+            <Label htmlFor="openingBalance">Opening Balance</Label>
+            <Input
+              id="openingBalance"
+              type="number"
+              value={openingBalance}
+              onChange={(e) => setOpeningBalance(e.target.value)}
+              placeholder="0.00"
+              className="mt-1"
+              disabled={isEditMode}
+            />
+            {isEditMode && <p className="text-xs text-muted-foreground">Opening balance cannot be changed after creation.</p>}
+          </div>
+          <div>
+            <Label htmlFor="openingBalanceDate">Opening Balance As of Date</Label>
+            <div>
+              <DatePicker
+                date={openingBalanceDate}
+                setDate={setOpeningBalanceDate}
+                className="mt-1 w-full"
+                disabled={isEditMode}
+              />
+            </div>
+             {isEditMode && <p className="text-xs text-muted-foreground">Opening balance date cannot be changed after creation.</p>}
+          </div>
+        </>
+      )}
       <DialogFooter className="pt-6">
         <DialogClose asChild>
             <Button variant="outline" onClick={onCancel}>Cancel</Button>
