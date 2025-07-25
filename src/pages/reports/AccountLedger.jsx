@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import ReconciliationReport from './ReconciliationReport';
 
 const mockTransactions = [
 	{ date: '2023-01-01', description: 'Opening Balance', debit: 5000.0, credit: 0, balance: 5000.0 },
@@ -18,6 +19,11 @@ const AccountLedger = ({ account, onBack }) => {
         const [selectedTx, setSelectedTx] = useState([]);
         const [startDate, setStartDate] = useState('');
         const [endDate, setEndDate] = useState('');
+        const [reconciliationResult, setReconciliationResult] = useState(null);
+
+		if (reconciliationResult) {
+			return <ReconciliationReport result={reconciliationResult} onBack={() => setReconciliationResult(null)} />;
+		}
 
         // Filter mock transactions for the selected account (for demonstration purposes)
         // In a real application, you would fetch transactions specific to the account.
@@ -142,7 +148,20 @@ const AccountLedger = ({ account, onBack }) => {
 												variant="primary"
 												className="mt-2"
 												disabled={difference !== 0}
-												onClick={() => setShowReconcilePage(false)}
+												onClick={() => {
+                                                    const result = {
+                                                        accountName: account.accName,
+                                                        statementEndingDate,
+                                                        endingBalance: Number(endingBalance),
+                                                        clearedBalance,
+                                                        clearedPayments,
+                                                        clearedDeposits,
+                                                        beginningBalance,
+                                                        reconciledTransactions: selectedTx.map(txIndex => transactions[txIndex]),
+                                                    };
+                                                    setReconciliationResult(result);
+                                                    setShowReconcilePage(false);
+                                                }}
 										>
 												Finish Reconciliation
 										</Button>
@@ -269,9 +288,10 @@ const AccountLedger = ({ account, onBack }) => {
                                                 variant="outline"
                                                 className="ml-2"
                                                 onClick={() => {
-                                                        setShowReconcile(false);
-                                                        setEndingBalance('');
-                                                        setStatementEndingDate('');
+                                                    setShowReconcile(false);
+                                                    setEndingBalance('');
+                                                    setStatementEndingDate('');
+                                                    setSelectedTx([]);
                                                 }}
                                         >
                                                 Cancel
