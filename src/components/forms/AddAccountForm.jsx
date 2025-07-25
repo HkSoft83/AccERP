@@ -178,7 +178,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={NO_PARENT_ACCOUNT_VALUE}>None</SelectItem>
-            {existingAccounts.filter(acc => acc.accNum !== originalId).map(acc => (
+            {existingAccounts.filter(acc => acc.accNum !== originalId && acc.isHeader && acc.accType === accountType && acc.accSubtype === accountSubtype).map(acc => (
               <SelectItem key={acc.accNum} value={acc.accNum}>{acc.accName} ({acc.accNum})</SelectItem>
             ))}
           </SelectContent>

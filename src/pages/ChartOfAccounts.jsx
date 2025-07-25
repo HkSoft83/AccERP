@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { PlusCircle, Search, Edit, Trash2, ArrowUpDown, FileDown } from 'lucide-react';
+import { PlusCircle, Search, Edit, Trash2, ArrowUpDown, FileDown, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
@@ -30,12 +30,17 @@ import AddAccountForm from '@/components/forms/AddAccountForm';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const initialAccountsData = [
-  { sl: 1, id: 'acc-1001', accNum: '1001', accName: 'Cash on Hand', accType: 'Asset', accSubtype: 'Current Assets', balance: 5000.00, openingBalance: 5000.00, openingBalanceDate: '2023-01-01', subAccountOf: null },
-  { sl: 2, id: 'acc-1002', accNum: '1002', accName: 'Accounts Receivable', accType: 'Asset', accSubtype: 'Current Assets', balance: 12500.00, openingBalance: 12500.00, openingBalanceDate: '2023-01-01', subAccountOf: null },
-  { sl: 3, id: 'acc-2001', accNum: '2001', accName: 'Accounts Payable', accType: 'Liability', accSubtype: 'Current Liabilities', balance: 7200.00, openingBalance: 7200.00, openingBalanceDate: '2023-01-01', subAccountOf: null },
-  { sl: 4, id: 'acc-4001', accName: 'Sales Revenue', accType: 'Income', accSubtype: 'Operating Income', balance: 25000.00, openingBalance: 25000.00, openingBalanceDate: '2023-01-01', subAccountOf: null },
-  { sl: 5, id: 'acc-1003', accNum: '1003', accName: 'Petty Cash', accType: 'Asset', accSubtype: 'Current Assets', balance: 500.00, openingBalance: 500.00, openingBalanceDate: '2023-01-01', subAccountOf: '1001' },
-  { sl: 6, id: 'acc-5001', accNum: '5001', accName: 'Office Expenses', accType: 'Expense', accSubtype: 'Operating Expenses', balance: 1200.00, openingBalance: 1200.00, openingBalanceDate: '2023-01-01', subAccountOf: null },
+  { sl: 1, id: 'acc-1001', accNum: '1001', accName: 'Cash on Hand', accType: 'Asset', accSubtype: 'Current Assets', balance: 5000.00, openingBalance: 5000.00, openingBalanceDate: '2023-01-01', subAccountOf: null, isHeader: false },
+  { sl: 2, id: 'acc-1002', accNum: '1002', accName: 'Accounts Receivable', accType: 'Asset', accSubtype: 'Current Assets', balance: 12500.00, openingBalance: 12500.00, openingBalanceDate: '2023-01-01', subAccountOf: null, isHeader: false },
+  { sl: 3, id: 'acc-2001', accNum: '2001', accName: 'Accounts Payable', accType: 'Liability', accSubtype: 'Current Liabilities', balance: 7200.00, openingBalance: 7200.00, openingBalanceDate: '2023-01-01', subAccountOf: null, isHeader: false },
+  { sl: 4, id: 'acc-4001', accName: 'Sales Revenue', accType: 'Income', accSubtype: 'Operating Income', balance: 25000.00, openingBalance: 25000.00, openingBalanceDate: '2023-01-01', subAccountOf: null, isHeader: false },
+  { sl: 5, id: 'acc-1003', accNum: '1003', accName: 'Petty Cash', accType: 'Asset', accSubtype: 'Current Assets', balance: 500.00, openingBalance: 500.00, openingBalanceDate: '2023-01-01', subAccountOf: '1001', isHeader: false },
+  { sl: 6, id: 'acc-5001', accNum: '5001', accName: 'Office Expenses', accType: 'Expense', accSubtype: 'Operating Expenses', balance: 1200.00, openingBalance: 1200.00, openingBalanceDate: '2023-01-01', subAccountOf: null, isHeader: false },
+  // New Header Account for testing
+  { sl: 7, id: 'acc-1000', accNum: '1000', accName: 'Current Assets (Header)', accType: 'Asset', accSubtype: 'Current Assets', balance: 0.00, openingBalance: 0.00, openingBalanceDate: null, subAccountOf: null, isHeader: true },
+  // New sub-account for the new header
+  { sl: 8, id: 'acc-1004', accNum: '1004', accName: 'Bank Account A', accType: 'Asset', accSubtype: 'Current Assets', balance: 10000.00, openingBalance: 10000.00, openingBalanceDate: '2023-01-01', subAccountOf: '1000', isHeader: false },
+  { sl: 9, id: 'acc-1005', accNum: '1005', accName: 'Bank Account B', accType: 'Asset', accSubtype: 'Current Assets', balance: 7000.00, openingBalance: 7000.00, openingBalanceDate: '2023-01-01', subAccountOf: '1000', isHeader: false },
 ];
 
 const formatAccountForDisplay = (account) => ({
@@ -74,6 +79,33 @@ const ChartOfAccounts = () => {
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
   const [accountToDelete, setAccountToDelete] = useState(null);
   const [selectedAccountForLedger, setSelectedAccountForLedger] = useState(null);
+  const [expandedAccounts, setExpandedAccounts] = useState({});
+
+  // Helper to get all direct and indirect sub-accounts
+  const getAllSubAccounts = (parentId, allAccounts) => {
+    let subAccounts = allAccounts.filter(acc => acc.subAccountOf === parentId);
+    let allDescendants = [...subAccounts];
+    subAccounts.forEach(subAcc => {
+      allDescendants = allDescendants.concat(getAllSubAccounts(subAcc.accNum, allAccounts));
+    });
+    return allDescendants;
+  };
+
+  // Helper to calculate total balance for a header account
+  const calculateTotalBalance = (headerAccount, allAccounts) => {
+    if (!headerAccount.isHeader) return headerAccount.balance;
+
+    const descendants = getAllSubAccounts(headerAccount.accNum, allAccounts);
+    const totalSubBalance = descendants.reduce((sum, acc) => sum + (acc.balance || 0), 0);
+    return totalSubBalance;
+  };
+
+  const toggleExpand = (accNum) => {
+    setExpandedAccounts(prev => ({
+      ...prev,
+      [accNum]: !prev[accNum]
+    }));
+  };
 
   useEffect(() => {
     const storedAccounts = localStorage.getItem('chartOfAccounts');
@@ -118,6 +150,16 @@ const ChartOfAccounts = () => {
   const handleDeleteAccount = (accountId) => {
     const account = accounts.find(acc => acc.id === accountId);
     if (account) {
+      // Check if it's a header account with sub-accounts
+      const hasSubAccounts = accounts.some(acc => acc.subAccountOf === account.accNum);
+      if (account.isHeader && hasSubAccounts) {
+        toast({
+          title: "Deletion Blocked",
+          description: `Cannot delete header account "${account.accName}" because it has sub-accounts. Please delete sub-accounts first.`, 
+          variant: "destructive",
+        });
+        return;
+      }
       setAccountToDelete(account);
       setIsConfirmDeleteModalOpen(true);
     }
@@ -148,19 +190,71 @@ const ChartOfAccounts = () => {
     setSortConfig({ key, direction });
   };
 
-  const sortedAndFilteredAccounts = useMemo(() => {
-    let sortableItems = [...accounts];
+  const displayedAccounts = useMemo(() => {
+    let processedAccounts = [...accounts];
+
+    // Apply search filter first
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      sortableItems = sortableItems.filter(account =>
+      processedAccounts = processedAccounts.filter(account =>
         Object.values(account).some(val => String(val).toLowerCase().includes(term))
       );
     }
+
+    // Build a hierarchical structure and flatten for display
+    const accountMap = new Map(processedAccounts.map(acc => [acc.accNum, { ...acc, children: [] }]));
+
+    // Identify root accounts (those not sub-accounts of anything, or whose parent is not in the filtered list)
+    const rootAccounts = [];
+    accountMap.forEach(acc => {
+      if (!acc.subAccountOf || !accountMap.has(acc.subAccountOf)) {
+        rootAccounts.push(acc);
+      } else {
+        const parent = accountMap.get(acc.subAccountOf);
+        if (parent) {
+          parent.children.push(acc);
+        } else {
+          // If parent is not found (e.g., filtered out), treat as root
+          rootAccounts.push(acc);
+        }
+      }
+    });
+
+    // Sort children within each parent
+    accountMap.forEach(acc => {
+      acc.children.sort((a, b) => a.accName.localeCompare(b.accName)); // Sort children by name
+    });
+
+    // Flatten the hierarchy for display, respecting expansion
+    const flattenAccounts = (accList, level = 0) => {
+      let flat = [];
+      accList.forEach(acc => {
+        const isExpanded = expandedAccounts[acc.accNum];
+        const hasChildren = acc.children.length > 0;
+
+        // Calculate balance for header accounts
+        let displayBalance = acc.balance;
+        if (acc.isHeader && hasChildren && !isExpanded) {
+          displayBalance = calculateTotalBalance(acc, accounts); // Use original 'accounts' for full hierarchy
+        }
+
+        flat.push({ ...acc, level, isExpanded, hasChildren, displayBalanceFormatted: (displayBalance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }) });
+
+        if (isExpanded && hasChildren) {
+          flat = flat.concat(flattenAccounts(acc.children, level + 1));
+        }
+      });
+      return flat;
+    };
+
+    let finalDisplayed = flattenAccounts(rootAccounts.sort((a, b) => a.accName.localeCompare(b.accName))); // Sort root accounts
+
+    // Apply final sort based on sortConfig
     if (sortConfig !== null) {
-      sortableItems.sort((a, b) => {
+      finalDisplayed.sort((a, b) => {
         let aValue = a[sortConfig.key];
         let bValue = b[sortConfig.key];
-        const numKeys = ['balance', 'sl', 'openingBalance'];
+        const numKeys = ['balance', 'sl', 'openingBalance']; // Note: 'balance' here refers to the original balance, not displayBalance
         if (numKeys.includes(sortConfig.key)) {
           aValue = parseFloat(aValue) || 0;
           bValue = parseFloat(bValue) || 0;
@@ -173,8 +267,9 @@ const ChartOfAccounts = () => {
         return 0;
       });
     }
-    return sortableItems;
-  }, [searchTerm, sortConfig, accounts]);
+
+    return finalDisplayed;
+  }, [searchTerm, sortConfig, accounts, expandedAccounts]);
 
 
   return (
@@ -276,47 +371,61 @@ const ChartOfAccounts = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedAndFilteredAccounts.map((account) => (
-                    <tr key={account.id} className="bg-card dark:bg-dark-card border-b border-border dark:border-dark-border last:border-b-0 hover:bg-muted/30 dark:hover:bg-dark-muted/30 transition-colors duration-150">
-                      <td className="px-4 py-3">{account.sl}</td>
-                      <td className="px-4 py-3 text-xs font-mono">{account.accNum}</td>
-                      <td 
-                        className="px-4 py-3 font-medium text-secondary dark:text-dark-secondary hover:underline cursor-pointer"
-                        onClick={() => setSelectedAccountForLedger(account)}
-                      >
-                        {account.accName}
-                      </td>
-                      <td className="px-4 py-3">{account.accType}</td>
-                      <td className="px-4 py-3">{account.accSubtype}</td>
-                      <td 
-                        className="px-4 py-3 text-right font-semibold hover:underline cursor-pointer text-primary dark:text-dark-primary"
-                        onClick={() => setSelectedAccountForLedger(account)}
-                      >
-                        {account.balanceFormatted}
-                      </td>
-                      <td className="px-4 py-3 text-center space-x-1">
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className="text-secondary dark:text-dark-secondary hover:text-accent dark:hover:text-dark-accent h-8 w-8"
-                          onClick={() => handleOpenModal(account)}
+                  {displayedAccounts.map((account) => (
+                    <React.Fragment key={account.id}>
+                      <tr className={`border-b border-border dark:border-dark-border last:border-b-0 hover:bg-muted/30 dark:hover:bg-dark-muted/30 transition-colors duration-150 ${account.isHeader ? 'bg-blue-50 dark:bg-blue-950 font-semibold text-base text-blue-800 dark:text-blue-200' : 'bg-card dark:bg-dark-card text-sm text-foreground dark:text-dark-foreground'}`}>
+                        <td className="px-4 py-3" style={{ paddingLeft: `${16 + account.level * 20}px` }}>
+                          {account.isHeader && account.hasChildren && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-6 w-6 mr-1"
+                              onClick={() => toggleExpand(account.accNum)}
+                            >
+                              {account.isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                            </Button>
+                          )}
+                          {account.sl}
+                        </td>
+                        <td className="px-4 py-3 text-xs font-mono">{account.accNum}</td>
+                        <td
+                          className="px-4 py-3 font-medium text-secondary dark:text-dark-secondary hover:underline cursor-pointer"
+                          onClick={() => setSelectedAccountForLedger(account)}
                         >
-                          <Edit size={16} />
-                        </Button>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className="text-destructive dark:text-red-400 hover:text-destructive/80 dark:hover:text-red-300 h-8 w-8"
-                          onClick={() => handleDeleteAccount(account.id)}
+                          {account.accName}
+                        </td>
+                        <td className="px-4 py-3">{account.accType}</td>
+                        <td className="px-4 py-3">{account.accSubtype}</td>
+                        <td
+                          className="px-4 py-3 text-right font-semibold hover:underline cursor-pointer text-primary dark:text-dark-primary"
+                          onClick={() => setSelectedAccountForLedger(account)}
                         >
-                          <Trash2 size={16} />
-                        </Button>
-                      </td>
-                    </tr>
+                          {account.displayBalanceFormatted}
+                        </td>
+                        <td className="px-4 py-3 text-center space-x-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-secondary dark:text-dark-secondary hover:text-accent dark:hover:text-dark-accent h-8 w-8"
+                            onClick={() => handleOpenModal(account)}
+                          >
+                            <Edit size={16} />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-destructive dark:text-red-400 hover:text-destructive/80 dark:hover:text-red-300 h-8 w-8"
+                            onClick={() => handleDeleteAccount(account.id)}
+                          >
+                            <Trash2 size={16} />
+                          </Button>
+                        </td>
+                      </tr>
+                    </React.Fragment>
                   ))}
-                   {sortedAndFilteredAccounts.length === 0 && (
+                   {displayedAccounts.length === 0 && (
                     <tr>
-                      <td colSpan="6" className="text-center py-10 text-muted-foreground dark:text-dark-muted-foreground">
+                      <td colSpan="7" className="text-center py-10 text-muted-foreground dark:text-dark-muted-foreground">
                         {searchTerm ? `No accounts found for "${searchTerm}".` : "No accounts found. Get started by adding an account!"}
                       </td>
                     </tr>
