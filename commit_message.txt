@@ -1,0 +1,1 @@
+feat: Visual differentiation for header and sub-accounts in ChartOfAccounts
