@@ -170,6 +170,21 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
           </Select>
         </div>
       )}
+      {accountType && (
+        <div>
+          <Label htmlFor="accountSubtype">Account Sub-Type <span className="text-red-500">*</span></Label>
+          <Select onValueChange={setAccountSubtype} value={accountSubtype} required>
+            <SelectTrigger id="accountSubtype" className="w-full mt-1">
+              <SelectValue placeholder="Select account sub-type" />
+            </SelectTrigger>
+            <SelectContent>
+              {accountTypes[accountType]?.map(subtype => (
+                <SelectItem key={subtype} value={subtype}>{subtype}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
       <div>
         <Label htmlFor="subAccountOf">Sub-Account of</Label>
         <Select onValueChange={setSubAccountOf} value={subAccountOf}>
