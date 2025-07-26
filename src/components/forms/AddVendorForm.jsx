@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription, DialogClose, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Save, Settings } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 
 const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const { toast } = useToast();
@@ -17,6 +18,10 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [nid, setNid] = useState('');
+  const [email, setEmail] = useState('');
+  const [bankDetails, setBankDetails] = useState('');
+  const [creditLimit, setCreditLimit] = useState('');
+  const [notes, setNotes] = useState('');
   const [openingBalance, setOpeningBalance] = useState('');
   const [openingBalanceDate, setOpeningBalanceDate] = useState(undefined);
   const [originalId, setOriginalId] = useState(null);
@@ -54,6 +59,10 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       setPhoneNumber(initialData.phoneNumber || '');
       setAddress(initialData.address || '');
       setNid(initialData.nid || '');
+      setEmail(initialData.email || '');
+      setBankDetails(initialData.bankDetails || '');
+      setCreditLimit(initialData.creditLimit || '');
+      setNotes(initialData.notes || '');
       setOpeningBalance(initialData.openingBalance?.toString() || '');
       setOpeningBalanceDate(initialData.openingBalanceDate ? new Date(initialData.openingBalanceDate) : undefined);
       setOriginalId(initialData.id || initialData.vendorNumber);
@@ -73,6 +82,10 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
     setPhoneNumber('');
     setAddress('');
     setNid('');
+    setEmail('');
+    setBankDetails('');
+    setCreditLimit('');
+    setNotes('');
     setOpeningBalance('');
     setOpeningBalanceDate(undefined);
     setOriginalId(null);
@@ -103,6 +116,10 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       phoneNumber,
       address,
       nid,
+      email,
+      bankDetails,
+      creditLimit,
+      notes,
       openingBalance: parseFloat(openingBalance) || 0,
       openingBalanceDate: openingBalanceDate ? openingBalanceDate.toISOString().split('T')[0] : null,
       customFields,
@@ -233,6 +250,48 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
           value={nid}
           onChange={(e) => setNid(e.target.value)}
           placeholder="e.g., 1234567890123"
+          className="mt-1"
+        />
+      </div>
+      <div>
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="e.g., john.doe@example.com"
+          className="mt-1"
+        />
+      </div>
+      <div>
+        <Label htmlFor="bankDetails">Bank Details</Label>
+        <Textarea
+          id="bankDetails"
+          value={bankDetails}
+          onChange={(e) => setBankDetails(e.target.value)}
+          placeholder="e.g., Bank Name, Account Number, IFSC Code"
+          className="mt-1"
+        />
+      </div>
+      <div>
+        <Label htmlFor="creditLimit">Credit Limit</Label>
+        <Input
+          id="creditLimit"
+          type="number"
+          value={creditLimit}
+          onChange={(e) => setCreditLimit(e.target.value)}
+          placeholder="e.g., 5000"
+          className="mt-1"
+        />
+      </div>
+      <div>
+        <Label htmlFor="notes">Notes</Label>
+        <Textarea
+          id="notes"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="e.g., Any additional notes about the vendor"
           className="mt-1"
         />
       </div>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { format, parseISO } from 'date-fns';
-import { Printer, Search, FilterX } from 'lucide-react';
+import { Printer, Search, FilterX, Pencil, X, Save } from 'lucide-react';
 import { DatePicker } from '@/components/ui/date-picker';
 
 const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
@@ -14,6 +14,8 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
   const [endDate, setEndDate] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [vendorDetails, setVendorDetails] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedDetails, setEditedDetails] = useState({});
 
   useEffect(() => {
     const storedVendors = JSON.parse(localStorage.getItem('vendors')) || [];
@@ -79,6 +81,12 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
     setTransactions(vendorTransactions);
   }, [vendorId]);
 
+  useEffect(() => {
+    if (vendorDetails) {
+      setEditedDetails(vendorDetails);
+    }
+  }, [vendorDetails]);
+
   const processedTransactions = useMemo(() => {
     if (!vendorDetails) return [];
 
@@ -129,37 +137,66 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
     setSearchTerm('');
   };
 
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditedDetails(vendorDetails);
+  };
+
+  const handleSave = () => {
+    setVendorDetails(editedDetails);
+    setIsEditing(false);
+    // Here you would typically call an API to save the changes
+  };
+
+  const handleViewAttachments = () => {
+    console.log('View Attachments clicked for vendor:', vendorId);
+    // Placeholder for attachment viewing logic
+  };
+
+  const handleViewPurchaseOrders = () => {
+    console.log('View Purchase Orders clicked for vendor:', vendorId);
+    // Placeholder for purchase order viewing logic
+  };
+
   return (
     <Card className="shadow-xl border-border dark:border-dark-border">
       
       <CardContent className="p-4 md:p-6 space-y-4">
         {vendorDetails && (
-          <div className="p-3 bg-primary/5 dark:bg-dark-primary/10 rounded-md border border-primary/20 dark:border-dark-primary/20 mb-4">
-            <h3 className="text-lg font-semibold text-primary dark:text-dark-primary">{vendorDetails.name}</h3>
+          <div className="relative p-3 bg-primary/5 dark:bg-dark-primary/10 rounded-md border border-primary/20 dark:border-dark-primary/20 mb-4">
+            {isEditing ? (
+              <div className="absolute top-2 right-2 flex space-x-2">
+                <Button variant="outline" size="icon" onClick={handleSave}><Save className="h-4 w-4" /></Button>
+                <Button variant="outline" size="icon" onClick={handleCancel}><X className="h-4 w-4" /></Button>
+              </div>
+            ) : (
+              <Button variant="outline" size="icon" className="absolute top-2 right-2" onClick={handleEdit}><Pencil className="h-4 w-4" /></Button>
+            )}
+            <h3 className="text-lg font-semibold text-primary dark:text-dark-primary">{isEditing ? <Input value={editedDetails.name} onChange={(e) => setEditedDetails({...editedDetails, name: e.target.value})} /> : vendorDetails.name}</h3>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
               Vendor ID: {vendorDetails.vendorNumber || vendorDetails.id}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Address: {vendorDetails.address || 'N/A'}
+              Address: {isEditing ? <Input value={editedDetails.address} onChange={(e) => setEditedDetails({...editedDetails, address: e.target.value})} /> : vendorDetails.address || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Phone: {vendorDetails.phoneNumber || 'N/A'} | Email: {vendorDetails.email || 'N/A'}
+              Phone: {isEditing ? <Input value={editedDetails.phoneNumber} onChange={(e) => setEditedDetails({...editedDetails, phoneNumber: e.target.value})} /> : vendorDetails.phoneNumber || 'N/A'} | Email: {isEditing ? <Input value={editedDetails.email} onChange={(e) => setEditedDetails({...editedDetails, email: e.target.value})} /> : vendorDetails.email || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Credit Limit: {vendorDetails.creditLimit ? parseFloat(vendorDetails.creditLimit).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : 'N/A'}
+              Credit Limit: {isEditing ? <Input type="number" value={editedDetails.creditLimit} onChange={(e) => setEditedDetails({...editedDetails, creditLimit: e.target.value})} /> : vendorDetails.creditLimit ? parseFloat(vendorDetails.creditLimit).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Bank Account: {vendorDetails.bankAccountNo || 'N/A'}
+              Bank Account: {isEditing ? <Input value={editedDetails.bankAccountNo} onChange={(e) => setEditedDetails({...editedDetails, bankAccountNo: e.target.value})} /> : vendorDetails.bankAccountNo || 'N/A'}
             </p>
-            <div className="flex items-center space-x-2 mt-2">
-              <Button variant="outline" size="sm">View Attachments</Button>
-              <Button variant="outline" size="sm">Purchase Orders</Button>
-            </div>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground mt-2">
-              Notes: {vendorDetails.notes || 'N/A'}
+              Notes: {isEditing ? <Input value={editedDetails.notes} onChange={(e) => setEditedDetails({...editedDetails, notes: e.target.value})} /> : vendorDetails.notes || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Opening Balance: {parseFloat(vendorDetails.openingBalance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 })} as of {vendorDetails.openingBalanceDate ? format(parseISO(vendorDetails.openingBalanceDate), 'dd-MMM-yyyy') : 'N/A'}
+              Opening Balance: {isEditing ? <Input type="number" value={editedDetails.openingBalance} onChange={(e) => setEditedDetails({...editedDetails, openingBalance: e.target.value})} /> : parseFloat(vendorDetails.openingBalance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 })} as of {isEditing ? <DatePicker date={editedDetails.openingBalanceDate ? parseISO(editedDetails.openingBalanceDate) : null} setDate={(date) => setEditedDetails({...editedDetails, openingBalanceDate: date.toISOString()})} /> : vendorDetails.openingBalanceDate ? format(parseISO(vendorDetails.openingBalanceDate), 'dd-MMM-yyyy') : 'N/A'}
             </p>
           </div>
         )}
