@@ -50,11 +50,75 @@ performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18746
 workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
 flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
 performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this warning
-Vendor.jsx:49  GET http://localhost:5173/src/components/vendor/VendorProfileLedger.jsx?t=1753526421749 net::ERR_ABORTED 500 (Internal Server Error)Understand this error
-2chunk-GHX6QOSA.js?v=6b390099:903 Uncaught TypeError: Failed to fetch dynamically imported module: http://localhost:5173/src/pages/Vendor.jsx?t=1753524085312Understand this error
-vendor:93 The above error occurred in one of your React components:
+chunk-VTOHP5L6.js?v=6b390099:67 Uncaught Error: `DialogPortal` must be used within `Dialog`
+    at useContext2 (chunk-VTOHP5L6.js?v=6b390099:67:13)
+    at DialogPortal (chunk-Y3U75K3Y.js?v=6b390099:109:19)
+    at renderWithHooks (chunk-V5LT2MCF.js?v=6b390099:11568:26)
+    at mountIndeterminateComponent (chunk-V5LT2MCF.js?v=6b390099:14946:21)
+    at beginWork (chunk-V5LT2MCF.js?v=6b390099:15934:22)
+    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=6b390099:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=6b390099:3699:24)
+    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=6b390099:3733:39)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=6b390099:19793:15)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=6b390099:19226:20)
+useContext2 @ chunk-VTOHP5L6.js?v=6b390099:67
+DialogPortal @ chunk-Y3U75K3Y.js?v=6b390099:109
+renderWithHooks @ chunk-V5LT2MCF.js?v=6b390099:11568
+mountIndeterminateComponent @ chunk-V5LT2MCF.js?v=6b390099:14946
+beginWork @ chunk-V5LT2MCF.js?v=6b390099:15934
+callCallback2 @ chunk-V5LT2MCF.js?v=6b390099:3674
+invokeGuardedCallbackDev @ chunk-V5LT2MCF.js?v=6b390099:3699
+invokeGuardedCallback @ chunk-V5LT2MCF.js?v=6b390099:3733
+beginWork$1 @ chunk-V5LT2MCF.js?v=6b390099:19793
+performUnitOfWork @ chunk-V5LT2MCF.js?v=6b390099:19226
+workLoopConcurrent @ chunk-V5LT2MCF.js?v=6b390099:19217
+renderRootConcurrent @ chunk-V5LT2MCF.js?v=6b390099:19192
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18706
+workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
+flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this error
+chunk-VTOHP5L6.js?v=6b390099:67 Uncaught Error: `DialogPortal` must be used within `Dialog`
+    at useContext2 (chunk-VTOHP5L6.js?v=6b390099:67:13)
+    at DialogPortal (chunk-Y3U75K3Y.js?v=6b390099:109:19)
+    at renderWithHooks (chunk-V5LT2MCF.js?v=6b390099:11568:26)
+    at mountIndeterminateComponent (chunk-V5LT2MCF.js?v=6b390099:14946:21)
+    at beginWork (chunk-V5LT2MCF.js?v=6b390099:15934:22)
+    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=6b390099:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=6b390099:3699:24)
+    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=6b390099:3733:39)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=6b390099:19793:15)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=6b390099:19226:20)
+useContext2 @ chunk-VTOHP5L6.js?v=6b390099:67
+DialogPortal @ chunk-Y3U75K3Y.js?v=6b390099:109
+renderWithHooks @ chunk-V5LT2MCF.js?v=6b390099:11568
+mountIndeterminateComponent @ chunk-V5LT2MCF.js?v=6b390099:14946
+beginWork @ chunk-V5LT2MCF.js?v=6b390099:15934
+callCallback2 @ chunk-V5LT2MCF.js?v=6b390099:3674
+invokeGuardedCallbackDev @ chunk-V5LT2MCF.js?v=6b390099:3699
+invokeGuardedCallback @ chunk-V5LT2MCF.js?v=6b390099:3733
+beginWork$1 @ chunk-V5LT2MCF.js?v=6b390099:19793
+performUnitOfWork @ chunk-V5LT2MCF.js?v=6b390099:19226
+workLoopSync @ chunk-V5LT2MCF.js?v=6b390099:19165
+renderRootSync @ chunk-V5LT2MCF.js?v=6b390099:19144
+recoverFromConcurrentError @ chunk-V5LT2MCF.js?v=6b390099:18764
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18712
+workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
+flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this error
+order:93 The above error occurred in the <DialogPortal> component:
 
-    at Lazy
+    at DialogPortal (http://localhost:5173/node_modules/.vite/deps/chunk-Y3U75K3Y.js?v=6b390099:108:11)
+    at _c3 (http://localhost:5173/src/components/ui/dialog.jsx:49:12)
+    at Provider (http://localhost:5173/node_modules/.vite/deps/chunk-VTOHP5L6.js?v=6b390099:53:15)
+    at Dialog (http://localhost:5173/node_modules/.vite/deps/chunk-Y3U75K3Y.js?v=6b390099:48:5)
+    at AlertDialog (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-alert-dialog.js?v=6b390099:47:11)
+    at div
+    at _c9 (http://localhost:5173/src/components/ui/card.jsx:100:12)
+    at div
+    at _c (http://localhost:5173/src/components/ui/card.jsx:20:11)
+    at div
+    at PurchaseOrder (http://localhost:5173/src/pages/purchase/PurchaseOrder.jsx?t=1753537375714:30:21)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4103:5)
     at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4103:5)
     at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4510:26)
     at div
@@ -76,7 +140,7 @@ vendor:93 The above error occurred in one of your React components:
 Consider adding an error boundary to your tree to customize error handling behavior.
 Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
 overrideMethod @ hook.js:608
-console.error @ vendor:93
+console.error @ order:93
 logCapturedError @ chunk-V5LT2MCF.js?v=6b390099:14052
 update.callback @ chunk-V5LT2MCF.js?v=6b390099:14072
 callCallback @ chunk-V5LT2MCF.js?v=6b390099:11268
@@ -92,4 +156,28 @@ performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18746
 workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
 flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
 performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this error
-chunk-V5LT2MCF.js?v=6b390099:19441 Uncaught TypeError: Failed to fetch dynamically imported module: http://localhost:5173/src/pages/Vendor.jsx?t=1753524085312Understand this error
+chunk-V5LT2MCF.js?v=6b390099:19441 Uncaught Error: `DialogPortal` must be used within `Dialog`
+    at useContext2 (chunk-VTOHP5L6.js?v=6b390099:67:13)
+    at DialogPortal (chunk-Y3U75K3Y.js?v=6b390099:109:19)
+    at renderWithHooks (chunk-V5LT2MCF.js?v=6b390099:11568:26)
+    at mountIndeterminateComponent (chunk-V5LT2MCF.js?v=6b390099:14946:21)
+    at beginWork (chunk-V5LT2MCF.js?v=6b390099:15934:22)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=6b390099:19781:22)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=6b390099:19226:20)
+    at workLoopSync (chunk-V5LT2MCF.js?v=6b390099:19165:13)
+    at renderRootSync (chunk-V5LT2MCF.js?v=6b390099:19144:15)
+    at recoverFromConcurrentError (chunk-V5LT2MCF.js?v=6b390099:18764:28)
+useContext2 @ chunk-VTOHP5L6.js?v=6b390099:67
+DialogPortal @ chunk-Y3U75K3Y.js?v=6b390099:109
+renderWithHooks @ chunk-V5LT2MCF.js?v=6b390099:11568
+mountIndeterminateComponent @ chunk-V5LT2MCF.js?v=6b390099:14946
+beginWork @ chunk-V5LT2MCF.js?v=6b390099:15934
+beginWork$1 @ chunk-V5LT2MCF.js?v=6b390099:19781
+performUnitOfWork @ chunk-V5LT2MCF.js?v=6b390099:19226
+workLoopSync @ chunk-V5LT2MCF.js?v=6b390099:19165
+renderRootSync @ chunk-V5LT2MCF.js?v=6b390099:19144
+recoverFromConcurrentError @ chunk-V5LT2MCF.js?v=6b390099:18764
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18712
+workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
+flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this error

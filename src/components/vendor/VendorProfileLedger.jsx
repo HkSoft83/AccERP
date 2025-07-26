@@ -404,9 +404,7 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose, onEditVendor }) =>
                     <Label htmlFor="noteReminderTime" className="text-right">Reminder Time</Label>
                     <DatePicker date={noteReminderTime} setDate={(newDate) => {
                       if (newDate) {
-                        const currentHours = noteReminderTime ? noteReminderTime.getHours() : 10;
-                        const currentMinutes = noteReminderTime ? noteReminderTime.getMinutes() : 0;
-                        newDate.setHours(currentHours, currentMinutes, 0, 0);
+                        newDate.setHours(10, 0, 0, 0); // Always set to 10:00 AM
                       }
                       setNoteReminderTime(newDate);
                     }} id="noteReminderTime" className="col-span-3" />
