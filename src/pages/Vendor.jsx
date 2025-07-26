@@ -32,10 +32,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import VendorProfileLedger from '@/components/vendor/VendorProfileLedger';
 
 const initialVendorsData = [
-  { id: 'vend-001', name: 'Supplier Alpha Inc.', proprietorName: 'Mr. A', vendorNumber: 'V001', address: '123 Supply St', phoneNumber: '555-111-2222', balance: 1500.00, openingBalance: 1500.00, openingBalanceDate: '2023-01-01' },
-  { id: 'vend-002', name: 'Service Provider Beta', proprietorName: 'Ms. B', vendorNumber: 'V002', address: '456 Service Ave', phoneNumber: '555-333-4444', balance: 0.00, openingBalance: 0.00, openingBalanceDate: '2023-01-01' },
-  { id: 'vend-003', name: 'Materials Inc.', proprietorName: 'Dr. M', vendorNumber: 'V003', address: '789 Material Rd', phoneNumber: '555-555-6666', balance: 3250.50, openingBalance: 3250.50, openingBalanceDate: '2023-01-01' },
-  { id: 'vend-004', name: 'Vendor Gamma Co.', proprietorName: 'Prof. G', vendorNumber: 'V004', address: '012 Gamma Blvd', phoneNumber: '555-777-8888', balance: -500.00, openingBalance: -500.00, openingBalanceDate: '2023-01-01' },
+  { id: 'vend-001', name: 'Supplier Alpha Inc.', displayName: 'Alpha Inc.', proprietorName: 'Mr. A', vendorNumber: 'V001', address: '123 Supply St', phoneNumber: '555-111-2222', balance: 1500.00, openingBalance: 1500.00, openingBalanceDate: '2023-01-01' },
+  { id: 'vend-002', name: 'Service Provider Beta', displayName: 'Beta Services', proprietorName: 'Ms. B', vendorNumber: 'V002', address: '456 Service Ave', phoneNumber: '555-333-4444', balance: 0.00, openingBalance: 0.00, openingBalanceDate: '2023-01-01' },
+  { id: 'vend-003', name: 'Materials Inc.', displayName: 'Materials Inc.', proprietorName: 'Dr. M', vendorNumber: 'V003', address: '789 Material Rd', phoneNumber: '555-555-6666', balance: 3250.50, openingBalance: 3250.50, openingBalanceDate: '2023-01-01' },
+  { id: 'vend-004', name: 'Vendor Gamma Co.', displayName: 'Gamma Co.', proprietorName: 'Prof. G', vendorNumber: 'V004', address: '012 Gamma Blvd', phoneNumber: '555-777-8888', balance: -500.00, openingBalance: -500.00, openingBalanceDate: '2023-01-01' },
 ];
 
 const formatVendorForDisplay = (vendor) => ({
@@ -157,7 +157,8 @@ const Vendor = () => {
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       sortableItems = sortableItems.filter(vendor =>
-        Object.values(vendor).some(val => String(val).toLowerCase().includes(term))
+        Object.values(vendor).some(val => String(val).toLowerCase().includes(term)) ||
+        vendor.displayName?.toLowerCase().includes(term)
       );
     }
     if (sortConfig !== null) {
@@ -282,7 +283,8 @@ const Vendor = () => {
                 <table className="w-full min-w-[600px] text-sm text-left text-foreground dark:text-dark-foreground">
                   <thead className="text-xs text-primary dark:text-dark-primary uppercase bg-muted/50 dark:bg-dark-muted/50">
                     <tr>
-                      <SortableHeader columnKey="name" sortConfig={sortConfig} requestSort={requestSort} className="min-w-[250px]">Vendor Name</SortableHeader>
+                      <SortableHeader columnKey="name" sortConfig={sortConfig} requestSort={requestSort} className="min-w-[150px]">Vendor Name</SortableHeader>
+                      <SortableHeader columnKey="displayName" sortConfig={sortConfig} requestSort={requestSort} className="min-w-[150px]">Display Name</SortableHeader>
                       <SortableHeader columnKey="address" sortConfig={sortConfig} requestSort={requestSort}>Address</SortableHeader>
                       <SortableHeader columnKey="phoneNumber" sortConfig={sortConfig} requestSort={requestSort}>Phone Number</SortableHeader>
                       <SortableHeader columnKey="balance" sortConfig={sortConfig} requestSort={requestSort} isTextRight={true}>Balance</SortableHeader>
@@ -298,6 +300,7 @@ const Vendor = () => {
                         >
                           {vendor.name}
                         </td>
+                        <td className="px-4 py-3">{vendor.displayName}</td>
                         <td className="px-4 py-3">{vendor.address}</td>
                         <td className="px-4 py-3">{vendor.phoneNumber}</td>
                         <td className="px-4 py-3 text-right font-semibold cursor-pointer hover:underline"

@@ -135,6 +135,14 @@ const AddProductForm = ({ onSave, onCancel, initialData, isEditMode, allProducts
     setUnits(units.map(unit => ({ ...unit, isBase: unit.id === idToSetAsBase })));
   };
 
+  const handleUnitNameChange = (id, newName) => {
+    setUnits(prevUnits =>
+      prevUnits.map(unit =>
+        unit.id === id ? { ...unit, name: newName } : unit
+      )
+    );
+  };
+
   const getBaseUnitName = () => {
     const baseUnit = units.find(u => u.isBase);
     return baseUnit ? baseUnit.name : 'N/A';
@@ -429,7 +437,15 @@ const AddProductForm = ({ onSave, onCancel, initialData, isEditMode, allProducts
                         <Button variant="ghost" size="icon" onClick={() => handleSetBaseUnit(unit.id)} className={`mr-2 h-7 w-7 ${unit.isBase ? 'text-yellow-500 dark:text-yellow-400' : 'text-muted-foreground dark:text-dark-muted-foreground'}`}>
                           <Star size={18} fill={unit.isBase ? "currentColor" : "none"}/>
                         </Button>
-                        <span className="font-medium text-foreground dark:text-dark-foreground">{unit.name}</span>
+                        {unit.isBase ? (
+                          <Input
+                            value={unit.name}
+                            onChange={(e) => handleUnitNameChange(unit.id, e.target.value)}
+                            className="w-24 h-8 text-sm"
+                          />
+                        ) : (
+                          <span className="font-medium text-foreground dark:text-dark-foreground">{unit.name}</span>
+                        )}
                         <span className="text-sm text-muted-foreground dark:text-dark-muted-foreground ml-2">({unit.factor} to Base)</span>
                       </div>
                       <Button type="button" variant="ghost" size="icon" onClick={() => handleRemoveUnit(unit.id)} className="text-destructive dark:text-red-400 hover:text-destructive/80 h-7 w-7">

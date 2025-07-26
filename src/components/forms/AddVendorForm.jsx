@@ -11,6 +11,7 @@ import { Save, Settings } from 'lucide-react';
 const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const { toast } = useToast();
   const [vendorName, setVendorName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [proprietorName, setProprietorName] = useState('');
   const [vendorNumber, setVendorNumber] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -47,6 +48,7 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   useEffect(() => {
     if (isEditMode && initialData) {
       setVendorName(initialData.name || '');
+      setDisplayName(initialData.displayName || '');
       setProprietorName(initialData.proprietorName || '');
       setVendorNumber(initialData.vendorNumber || '');
       setPhoneNumber(initialData.phoneNumber || '');
@@ -65,6 +67,7 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
 
   const resetForm = () => {
     setVendorName('');
+    setDisplayName('');
     setProprietorName('');
     setVendorNumber('');
     setPhoneNumber('');
@@ -94,6 +97,7 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
     const vendorData = {
       id: originalId || `vend-${Date.now()}`,
       name: vendorName,
+      displayName,
       proprietorName,
       vendorNumber: vendorNumber || (originalId ? originalId.split('-')[1] || String(Date.now()).slice(-4) : `V${String(Date.now()).slice(-4)}`),
       phoneNumber,
@@ -168,6 +172,16 @@ const AddVendorForm = ({ onSave, onCancel, initialData, isEditMode }) => {
           placeholder="e.g., Supplier Alpha Inc."
           className="mt-1"
           required
+        />
+      </div>
+      <div>
+        <Label htmlFor="displayName">Display Name</Label>
+        <Input
+          id="displayName"
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
+          placeholder="e.g., Alpha Inc."
+          className="mt-1"
         />
       </div>
       <div>
