@@ -30,10 +30,10 @@ import AddCustomerForm from '@/components/forms/AddCustomerForm';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const initialCustomersData = [
-  { id: 'cust-001', name: 'Client Omega Corp.', proprietorName: 'Mr. O', customerNumber: 'C001', address: '123 Omega St', balance: 2800.00, openingBalance: 2800.00, openingBalanceDate: '2023-01-01' },
-  { id: 'cust-002', name: 'Customer Zeta Ltd.', proprietorName: 'Ms. Z', customerNumber: 'C002', address: '456 Zeta Ave', balance: 0.00, openingBalance: 0.00, openingBalanceDate: '2023-01-01' },
-  { id: 'cust-003', name: 'Patron Gamma Solutions', proprietorName: 'Dr. G', customerNumber: 'C003', address: '789 Gamma Rd', balance: 5120.75, openingBalance: 5120.75, openingBalanceDate: '2023-01-01' },
-  { id: 'cust-004', name: 'Client Alpha Services', proprietorName: 'Prof. A', customerNumber: 'C004', address: '012 Alpha Blvd', balance: -300.00, openingBalance: -300.00, openingBalanceDate: '2023-01-01' },
+  { id: 'cust-001', name: 'Client Omega Corp.', displayName: 'Omega Corp.', proprietorName: 'Mr. O', customerNumber: 'C001', address: '123 Omega St', balance: 2800.00, openingBalance: 2800.00, openingBalanceDate: '2023-01-01' },
+  { id: 'cust-002', name: 'Customer Zeta Ltd.', displayName: 'Zeta Ltd.', proprietorName: 'Ms. Z', customerNumber: 'C002', address: '456 Zeta Ave', balance: 0.00, openingBalance: 0.00, openingBalanceDate: '2023-01-01' },
+  { id: 'cust-003', name: 'Patron Gamma Solutions', displayName: 'Gamma Solutions', proprietorName: 'Dr. G', customerNumber: 'C003', address: '789 Gamma Rd', balance: 5120.75, openingBalance: 5120.75, openingBalanceDate: '2023-01-01' },
+  { id: 'cust-004', name: 'Client Alpha Services', displayName: 'Alpha Services', proprietorName: 'Prof. A', customerNumber: 'C004', address: '012 Alpha Blvd', balance: -300.00, openingBalance: -300.00, openingBalanceDate: '2023-01-01' },
 ];
 
 const formatCustomerForDisplay = (customer) => ({
@@ -145,7 +145,8 @@ const CustomerCenter = () => {
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       sortableItems = sortableItems.filter(customer =>
-        Object.values(customer).some(val => String(val).toLowerCase().includes(term))
+        Object.values(customer).some(val => String(val).toLowerCase().includes(term)) ||
+        customer.displayName?.toLowerCase().includes(term)
       );
     }
     if (sortConfig !== null) {
@@ -252,7 +253,10 @@ const CustomerCenter = () => {
             <table className="w-full min-w-[600px] text-sm text-left text-foreground dark:text-dark-foreground">
               <thead className="text-xs text-primary dark:text-dark-primary uppercase bg-muted/50 dark:bg-dark-muted/50">
                 <tr>
-                  <SortableHeader columnKey="name" sortConfig={sortConfig} requestSort={requestSort} className="min-w-[250px]">Customer Name</SortableHeader>
+                  <SortableHeader columnKey="name" sortConfig={sortConfig} requestSort={requestSort} className="min-w-[150px]">Customer Name</SortableHeader>
+                  <SortableHeader columnKey="displayName" sortConfig={sortConfig} requestSort={requestSort} className="min-w-[150px]">Display Name</SortableHeader>
+                  <SortableHeader columnKey="address" sortConfig={sortConfig} requestSort={requestSort}>Address</SortableHeader>
+                  <SortableHeader columnKey="phoneNumber" sortConfig={sortConfig} requestSort={requestSort}>Phone Number</SortableHeader>
                   <SortableHeader columnKey="balance" sortConfig={sortConfig} requestSort={requestSort} isTextRight={true}>Balance</SortableHeader>
                   <th scope="col" className="px-4 py-3 text-center w-28">Actions</th>
                 </tr>
@@ -266,6 +270,9 @@ const CustomerCenter = () => {
                     >
                       {customer.name}
                     </td>
+                    <td className="px-4 py-3">{customer.displayName}</td>
+                    <td className="px-4 py-3">{customer.address}</td>
+                    <td className="px-4 py-3">{customer.phoneNumber}</td>
                     <td className="px-4 py-3 text-right font-semibold">{customer.balanceFormatted}</td>
                     <td className="px-4 py-3 text-center space-x-1">
                       <Button 

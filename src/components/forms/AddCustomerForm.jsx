@@ -10,6 +10,7 @@ import { Save } from 'lucide-react';
 const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const { toast } = useToast();
   const [customerName, setCustomerName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [proprietorName, setProprietorName] = useState('');
   const [customerNumber, setCustomerNumber] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -25,6 +26,7 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   useEffect(() => {
     if (isEditMode && initialData) {
       setCustomerName(initialData.name || '');
+      setDisplayName(initialData.displayName || '');
       setProprietorName(initialData.proprietorName || '');
       setCustomerNumber(initialData.customerNumber || '');
       setPhoneNumber(initialData.phoneNumber || '');
@@ -43,6 +45,7 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
 
   const resetForm = () => {
     setCustomerName('');
+    setDisplayName('');
     setProprietorName('');
     setCustomerNumber('');
     setPhoneNumber('');
@@ -70,6 +73,7 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
     const customerData = {
       id: originalId || `cust-${Date.now()}`,
       name: customerName,
+      displayName,
       proprietorName,
       customerNumber: customerNumber || (originalId ? originalId.split('-')[1] || String(Date.now()).slice(-4) : `C${String(Date.now()).slice(-4)}`),
       phoneNumber,
@@ -113,6 +117,16 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
           placeholder="e.g., Client Omega Corp."
           className="mt-1"
           required
+        />
+      </div>
+      <div>
+        <Label htmlFor="displayName">Display Name</Label>
+        <Input
+          id="displayName"
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
+          placeholder="e.g., Omega Corp."
+          className="mt-1"
         />
       </div>
       <div>
