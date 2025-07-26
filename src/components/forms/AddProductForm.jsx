@@ -239,7 +239,9 @@ const AddProductForm = ({ onSave, onCancel, initialData, isEditMode, allProducts
         <Label htmlFor="productType" className="font-semibold">Product/Service Type <span className="text-destructive">*</span></Label>
         <Select onValueChange={setProductType} value={productType} disabled={isEditMode}>
           <SelectTrigger id="productType">
-            <SelectValue placeholder="Select a product type" />
+            <SelectValue placeholder="Select a product type">
+              {productType ? productTypes.find((type) => type.value === productType)?.label : ""}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {productTypes.map((type) => (

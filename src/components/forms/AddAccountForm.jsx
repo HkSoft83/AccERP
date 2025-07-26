@@ -18,7 +18,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 const accountTypes = {
   "Current Asset": ["Cash", "Bank A/C-Current", "Bank A/C-Saving", "Account Receivable", "Inventory", "Short-Term Investments","Prepaid Expenses","Loans & Advances (Short-Term)", "Other Current Assets"],
   "Non-Current Asset": ["Fixed/Tangible Assets", "Intangible Assets", "Long-term Investments","Other Non-Current Assets"],
-  "Current Liability": ["A/C Payable", "Short-term Loan", "Accrued Expenses", "Unearned Revenue","Provisions", "Current Portion of Long-term Debt", "Other Current Liabilities"],
+  "Current Liability": ["A/C Payable", "Short-term Loan", "Accrued Expenses","Credit Card", "Unearned Revenue","Provisions", "Current Portion of Long-term Debt", "Other Current Liabilities"],
   "Non-Current Liability": ["Long-term Loans","Bonds Payable", "Provisions", "Deferred Tax Liabilities", "Other Non-Current Liabilities"],
   "Equity": ["Owner's Capital", "Owner's Drawings", "Retained Earnings", "Share Capital", "Reserves & Surplus","Others Equity"],
   "Income": ["Operating Income", "Non-operating Income", "Other Income"],
@@ -28,7 +28,7 @@ const accountTypes = {
 const accountTypeOptions = Object.keys(accountTypes);
 const NO_PARENT_ACCOUNT_VALUE = "__none__";
 
-const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, isEditMode }) => {
+const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, isEditMode, initialSubAccountData }) => {
   const { toast } = useToast();
   const [accountName, setAccountName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
@@ -39,6 +39,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
   const [openingBalanceDate, setOpeningBalanceDate] = useState(undefined);
   const [isHeaderAccount, setIsHeaderAccount] = useState(false);
   const [originalId, setOriginalId] = useState(null);
+  const [displaySubAccountOf, setDisplaySubAccountOf] = useState("Select parent account (optional)");
 
   useEffect(() => {
     if (isEditMode && initialData) {
@@ -51,10 +52,35 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
       setOpeningBalanceDate(initialData.openingBalanceDate ? new Date(initialData.openingBalanceDate) : undefined);
       setIsHeaderAccount(initialData.isHeader || false);
       setOriginalId(initialData.id || initialData.accNum);
+      // For edit mode, also set the display string if a subAccountOf exists
+      const parentAccount = existingAccounts.find(acc => acc.accNum === initialData.subAccountOf);
+      if (parentAccount) {
+        setDisplaySubAccountOf(`${parentAccount.accName} (${parentAccount.accNum})`);
+      } else {
+        setDisplaySubAccountOf("Select parent account (optional)");
+      }
+    } else if (initialSubAccountData) {
+      setSubAccountOf(initialSubAccountData.subAccountOf || NO_PARENT_ACCOUNT_VALUE);
+      setAccountType(initialSubAccountData.accType || '');
+      setAccountSubtype(initialSubAccountData.accSubtype || '');
+      // Find the parent account and set the display string
+      const parentAccount = existingAccounts.find(acc => acc.accNum === initialSubAccountData.subAccountOf);
+      if (parentAccount) {
+        setDisplaySubAccountOf(`${parentAccount.accName} (${parentAccount.accNum})`);
+      } else {
+        setDisplaySubAccountOf("Select parent account (optional)");
+      }
+      // Reset other fields for a new sub-account
+      setAccountName('');
+      setAccountNumber('');
+      setOpeningBalance('');
+      setOpeningBalanceDate(undefined);
+      setIsHeaderAccount(false);
+      setOriginalId(null);
     } else {
       resetForm();
     }
-  }, [initialData, isEditMode]);
+  }, [initialData, isEditMode, initialSubAccountData, existingAccounts]);
 
   const resetForm = () => {
     setAccountName('');
@@ -174,8 +200,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
         <Label htmlFor="subAccountOf">Sub-Account of</Label>
         <Select onValueChange={setSubAccountOf} value={subAccountOf}>
           <SelectTrigger id="subAccountOf" className="w-full mt-1">
-            <SelectValue placeholder="Select parent account (optional)" />
-          </SelectTrigger>
+            <SelectValue>{displaySubAccountOf}</SelectValue>
           <SelectContent>
             <SelectItem value={NO_PARENT_ACCOUNT_VALUE}>None</SelectItem>
             {existingAccounts.filter(acc => acc.accNum !== originalId && acc.isHeader && acc.accType === accountType && acc.accSubtype === accountSubtype).map(acc => (

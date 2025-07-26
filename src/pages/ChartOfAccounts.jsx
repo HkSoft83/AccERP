@@ -120,8 +120,19 @@ const ChartOfAccounts = () => {
     localStorage.setItem('chartOfAccounts', JSON.stringify(updatedAccounts.map(({balanceFormatted, ...rest}) => rest))); // Don't store formatted balance
   };
 
-  const handleOpenModal = (account = null) => {
-    setAccountToEdit(account);
+  const [initialSubAccountData, setInitialSubAccountData] = useState(null);
+
+  const handleOpenModal = (account = null, type = 'add_new') => {
+    if (type === 'edit') {
+      setAccountToEdit(account);
+      setInitialSubAccountData(null);
+    } else if (type === 'add_sub_account') {
+      setAccountToEdit(null);
+      setInitialSubAccountData(account);
+    } else { // 'add_new'
+      setAccountToEdit(null);
+      setInitialSubAccountData(null);
+    }
     setIsModalOpen(true);
   };
 
@@ -291,7 +302,7 @@ const ChartOfAccounts = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="bg-card dark:bg-dark-card shadow-lg rounded-md border border-border dark:border-dark-border">
-                    <DropdownMenuItem onClick={() => handleOpenModal(null)} className="text-foreground dark:text-dark-foreground hover:bg-primary/10 dark:hover:bg-dark-primary/10 cursor-pointer">
+                    <DropdownMenuItem onClick={() => handleOpenModal(null, 'add_new')} className="text-foreground dark:text-dark-foreground hover:bg-primary/10 dark:hover:bg-dark-primary/10 cursor-pointer">
                       Add New
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleImportExcel} className="text-foreground dark:text-dark-foreground hover:bg-primary/10 dark:hover:bg-dark-primary/10 cursor-pointer">
@@ -319,6 +330,7 @@ const ChartOfAccounts = () => {
                   onCancel={handleCloseModal} 
                   initialData={accountToEdit}
                   isEditMode={!!accountToEdit}
+                  initialSubAccountData={initialSubAccountData}
                 />
               </DialogContent>
             </Dialog>
@@ -393,6 +405,19 @@ const ChartOfAccounts = () => {
                           onClick={() => setSelectedAccountForLedger(account)}
                         >
                           {account.accName}
+                          {account.isHeader && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-6 w-6 ml-2 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevent row click from triggering
+                                handleOpenModal({ subAccountOf: account.accNum, accType: account.accType, accSubtype: account.accSubtype }, 'add_sub_account');
+                              }}
+                            >
+                              <PlusCircle size={16} />
+                            </Button>
+                          )}
                         </td>
                         <td className="px-4 py-3">{account.accType}</td>
                         <td className="px-4 py-3">{account.accSubtype}</td>
