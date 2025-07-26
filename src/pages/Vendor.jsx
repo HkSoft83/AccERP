@@ -257,6 +257,7 @@ const Vendor = () => {
                     vendorId={selectedVendorForLedger.id} 
                     vendorName={selectedVendorForLedger.name} 
                     onClose={handleCloseLedger} 
+                    onEditVendor={handleOpenModal}
                   />
                 </div>
               </DialogContent>

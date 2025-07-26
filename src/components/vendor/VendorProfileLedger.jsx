@@ -9,7 +9,7 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 
-const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
+const VendorProfileLedger = ({ vendorId, vendorName, onClose, onEditVendor }) => {
   const { toast } = useToast();
   const [transactions, setTransactions] = useState([]);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
@@ -17,8 +17,7 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
   const [endDate, setEndDate] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [vendorDetails, setVendorDetails] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedDetails, setEditedDetails] = useState({});
+  
 
   useEffect(() => {
     const storedVendors = JSON.parse(localStorage.getItem('vendors')) || [];
@@ -84,11 +83,7 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
     setTransactions(vendorTransactions);
   }, [vendorId]);
 
-  useEffect(() => {
-    if (vendorDetails) {
-      setEditedDetails(vendorDetails);
-    }
-  }, [vendorDetails]);
+  
 
   const processedTransactions = useMemo(() => {
     if (!vendorDetails) return [];
@@ -140,25 +135,7 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
     setSearchTerm('');
   };
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    setEditedDetails(vendorDetails);
-  };
-
-  const handleSave = () => {
-    const storedVendors = JSON.parse(localStorage.getItem('vendors')) || [];
-    const updatedVendors = storedVendors.map(v => 
-      v.id === vendorId ? { ...v, ...editedDetails } : v
-    );
-    localStorage.setItem('vendors', JSON.stringify(updatedVendors));
-    setVendorDetails(editedDetails);
-    setIsEditing(false);
-    toast({ title: 'Success', description: 'Vendor details updated successfully.' });
-  };
+  
 
   const handleViewAttachments = () => {
     console.log('View Attachments clicked for vendor:', vendorId);
@@ -176,39 +153,30 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
       <CardContent className="p-4 md:p-6 space-y-4">
         {vendorDetails && (
           <div className="relative p-3 bg-primary/5 dark:bg-dark-primary/10 rounded-md border border-primary/20 dark:border-dark-primary/20 mb-4">
-            {isEditing ? (
-              <div className="absolute top-2 right-2 flex space-x-2">
-                <Button variant="outline" size="icon" onClick={handleSave}><Save className="h-4 w-4" /></Button>
-                <Button variant="outline" size="icon" onClick={handleCancel}><X className="h-4 w-4" /></Button>
-              </div>
-            ) : (
-              <Button variant="outline" size="icon" className="absolute top-2 right-2" onClick={handleEdit}><Pencil className="h-4 w-4" /></Button>
-            )}
-            <h3 className="text-lg font-semibold text-primary dark:text-dark-primary">{isEditing ? <Input value={editedDetails.name} onChange={(e) => setEditedDetails({...editedDetails, name: e.target.value})} /> : vendorDetails.name}</h3>
+            
+            <h3 className="text-lg font-semibold text-primary dark:text-dark-primary">{vendorDetails.name}</h3>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
               Vendor ID: {vendorDetails.vendorNumber || vendorDetails.id}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Address: {isEditing ? <Input value={editedDetails.address} onChange={(e) => setEditedDetails({...editedDetails, address: e.target.value})} /> : vendorDetails.address || 'N/A'}
+              Address: {vendorDetails.address || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Phone: {isEditing ? <Input value={editedDetails.phoneNumber} onChange={(e) => setEditedDetails({...editedDetails, phoneNumber: e.target.value})} /> : vendorDetails.phoneNumber || 'N/A'} | Email: {isEditing ? <Input type="email" value={editedDetails.email} onChange={(e) => setEditedDetails({...editedDetails, email: e.target.value})} /> : vendorDetails.email || 'N/A'}
+              Phone: {vendorDetails.phoneNumber || 'N/A'} | Email: {vendorDetails.email || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Credit Limit: {isEditing ? <Input type="number" value={editedDetails.creditLimit} onChange={(e) => setEditedDetails({...editedDetails, creditLimit: e.target.value})} /> : vendorDetails.creditLimit ? parseFloat(vendorDetails.creditLimit).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : 'N/A'}
+              Credit Limit: {vendorDetails.creditLimit ? parseFloat(vendorDetails.creditLimit).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Bank Details: {isEditing ? <Textarea value={editedDetails.bankDetails} onChange={(e) => setEditedDetails({...editedDetails, bankDetails: e.target.value})} /> : vendorDetails.bankDetails || 'N/A'}
+              Bank Details: {vendorDetails.bankDetails || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground mt-2">
-              Notes: {isEditing ? <Textarea value={editedDetails.notes} onChange={(e) => setEditedDetails({...editedDetails, notes: e.target.value})} /> : vendorDetails.notes || 'N/A'}
+              Notes: {vendorDetails.notes || 'N/A'}
             </p>
-            <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Opening Balance: {isEditing ? <Input type="number" value={editedDetails.openingBalance} onChange={(e) => setEditedDetails({...editedDetails, openingBalance: e.target.value})} /> : parseFloat(vendorDetails.openingBalance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 })} as of {isEditing ? <DatePicker date={editedDetails.openingBalanceDate ? parseISO(editedDetails.openingBalanceDate) : null} setDate={(date) => setEditedDetails({...editedDetails, openingBalanceDate: date.toISOString()})} /> : vendorDetails.openingBalanceDate ? format(parseISO(vendorDetails.openingBalanceDate), 'dd-MMM-yyyy') : 'N/A'}
-            </p>
+            
           </div>
         )}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
           <div className="space-y-1">
             <label htmlFor="startDate" className="text-sm font-medium text-muted-foreground dark:text-dark-muted-foreground">From Date</label>
             <DatePicker date={startDate} setDate={setStartDate} id="startDate" placeholder="Start Date"/>
@@ -217,8 +185,6 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
             <label htmlFor="endDate" className="text-sm font-medium text-muted-foreground dark:text-dark-muted-foreground">To Date</label>
             <DatePicker date={endDate} setDate={setEndDate} id="endDate" placeholder="End Date"/>
           </div>
-        </div>
-        <div className="flex flex-col sm:flex-row gap-2 items-center pt-2">
           <div className="relative flex-grow w-full sm:w-auto">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground dark:text-dark-muted-foreground" />
             <Input
