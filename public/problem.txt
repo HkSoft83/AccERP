@@ -1,47 +1,95 @@
-[plugin:vite:react-babel] D:\B-Important\Programming\Github\AccERP\src\components\vendor\VendorProfileLedger.jsx: Identifier 'Textarea' has already been declared. (10:9)
-  13 |
-D:/B-Important/Programming/Github/AccERP/src/components/vendor/VendorProfileLedger.jsx:10:9
-8  |  import { Printer, Search, FilterX, Pencil, X, Save } from 'lucide-react';
-9  |  import { DatePicker } from '@/components/ui/date-picker';
-10 |  import { Textarea } from '@/components/ui/textarea';
-   |           ^
-11 |  import { useToast } from '@/components/ui/use-toast';
-12 |  import { glob } from '@/lib/utils';
-    at constructor (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:360:19)
-    at JSXParserMixin.raise (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:6613:19)
-    at ScopeHandler.checkRedeclarationInScope (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:1620:19)
-    at ScopeHandler.declareName (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:1586:12)
-    at JSXParserMixin.declareNameFromIdentifier (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:7542:16)
-    at JSXParserMixin.checkIdentifier (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:7538:12)
-    at JSXParserMixin.checkLVal (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:7479:12)
-    at JSXParserMixin.finishImportSpecifier (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:14138:10)
-    at JSXParserMixin.parseImportSpecifier (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:14295:17)
-    at JSXParserMixin.parseNamedImportSpecifiers (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:14274:36)
-    at JSXParserMixin.parseImportSpecifiersAndAfter (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:14114:37)
-    at JSXParserMixin.parseImport (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:14107:17)
-    at JSXParserMixin.parseStatementContent (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12752:27)
-    at JSXParserMixin.parseStatementLike (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12644:17)
-    at JSXParserMixin.parseModuleItem (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12621:17)
-    at JSXParserMixin.parseBlockOrModuleBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13192:36)
-    at JSXParserMixin.parseBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13185:10)
-    at JSXParserMixin.parseProgram (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12514:10)
-    at JSXParserMixin.parseTopLevel (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12504:25)
-    at JSXParserMixin.parse (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:14364:10)
-    at parse (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:14398:38)
-    at parser (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\parser\index.js:41:34)
-    at parser.next (<anonymous>)
-    at normalizeFile (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
-    at normalizeFile.next (<anonymous>)
-    at run (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\transformation\index.js:22:50)
-    at run.next (<anonymous>)
-    at transform (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\transform.js:22:33)
-    at transform.next (<anonymous>)
-    at step (D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:261:32)
-    at D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:273:13
-    at async.call.result.err.err (D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:223:11)
-    at D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:189:28
-    at D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
-    at D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:113:33
-    at step (D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:287:14)
-    at D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:273:13
-    at async.call.result.err.err (D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:223:11
+main.jsx is executing
+main.jsx:9 Root element: <div id=​"root">​…​</div>​
+hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
+    at BrowserRouter (react-router-dom.js?v=6b390099:5266:5)
+    at ThemeProvider (ThemeContext.jsx:7:33)
+    at App (<anonymous>)
+overrideMethod @ hook.js:608
+warnOnce @ react-router-dom.js?v=6b390099:4409
+logDeprecation @ react-router-dom.js?v=6b390099:4412
+logV6DeprecationWarnings @ react-router-dom.js?v=6b390099:4415
+(anonymous) @ react-router-dom.js?v=6b390099:5290
+commitHookEffectListMount @ chunk-V5LT2MCF.js?v=6b390099:16936
+commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=6b390099:18184
+commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=6b390099:18157
+commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=6b390099:18147
+commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=6b390099:18137
+flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=6b390099:19518
+flushPassiveEffects @ chunk-V5LT2MCF.js?v=6b390099:19475
+performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18896
+flushSyncCallbacks @ chunk-V5LT2MCF.js?v=6b390099:9135
+commitRootImpl @ chunk-V5LT2MCF.js?v=6b390099:19460
+commitRoot @ chunk-V5LT2MCF.js?v=6b390099:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=6b390099:18811
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18746
+workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
+flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this warning
+hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
+    at BrowserRouter (react-router-dom.js?v=6b390099:5266:5)
+    at ThemeProvider (ThemeContext.jsx:7:33)
+    at App (<anonymous>)
+overrideMethod @ hook.js:608
+warnOnce @ react-router-dom.js?v=6b390099:4409
+logDeprecation @ react-router-dom.js?v=6b390099:4412
+logV6DeprecationWarnings @ react-router-dom.js?v=6b390099:4418
+(anonymous) @ react-router-dom.js?v=6b390099:5290
+commitHookEffectListMount @ chunk-V5LT2MCF.js?v=6b390099:16936
+commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=6b390099:18184
+commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=6b390099:18157
+commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=6b390099:18147
+commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=6b390099:18137
+flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=6b390099:19518
+flushPassiveEffects @ chunk-V5LT2MCF.js?v=6b390099:19475
+performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18896
+flushSyncCallbacks @ chunk-V5LT2MCF.js?v=6b390099:9135
+commitRootImpl @ chunk-V5LT2MCF.js?v=6b390099:19460
+commitRoot @ chunk-V5LT2MCF.js?v=6b390099:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=6b390099:18811
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18746
+workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
+flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this warning
+Vendor.jsx:49  GET http://localhost:5173/src/components/vendor/VendorProfileLedger.jsx?t=1753526421749 net::ERR_ABORTED 500 (Internal Server Error)Understand this error
+2chunk-GHX6QOSA.js?v=6b390099:903 Uncaught TypeError: Failed to fetch dynamically imported module: http://localhost:5173/src/pages/Vendor.jsx?t=1753524085312Understand this error
+vendor:93 The above error occurred in one of your React components:
+
+    at Lazy
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4103:5)
+    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4510:26)
+    at div
+    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=6b390099:278:40)
+    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=6b390099:7103:24)
+    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=6b390099:7169:26)
+    at main
+    at div
+    at div
+    at Layout (http://localhost:5173/src/components/Layout.jsx:313:51)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4103:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4574:5)
+    at Suspense
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4517:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:5266:5)
+    at ThemeProvider (http://localhost:5173/src/contexts/ThemeContext.jsx:25:33)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+overrideMethod @ hook.js:608
+console.error @ vendor:93
+logCapturedError @ chunk-V5LT2MCF.js?v=6b390099:14052
+update.callback @ chunk-V5LT2MCF.js?v=6b390099:14072
+callCallback @ chunk-V5LT2MCF.js?v=6b390099:11268
+commitUpdateQueue @ chunk-V5LT2MCF.js?v=6b390099:11285
+commitLayoutEffectOnFiber @ chunk-V5LT2MCF.js?v=6b390099:17115
+commitLayoutMountEffects_complete @ chunk-V5LT2MCF.js?v=6b390099:18008
+commitLayoutEffects_begin @ chunk-V5LT2MCF.js?v=6b390099:17997
+commitLayoutEffects @ chunk-V5LT2MCF.js?v=6b390099:17948
+commitRootImpl @ chunk-V5LT2MCF.js?v=6b390099:19381
+commitRoot @ chunk-V5LT2MCF.js?v=6b390099:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=6b390099:18788
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18746
+workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
+flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this error
+chunk-V5LT2MCF.js?v=6b390099:19441 Uncaught TypeError: Failed to fetch dynamically imported module: http://localhost:5173/src/pages/Vendor.jsx?t=1753524085312Understand this error
