@@ -15,11 +15,10 @@ import { useToast } from '@/components/ui/use-toast';
 import { PlusCircle, Trash2, Save, FileText, PackagePlus as PackageIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 
-const initialVendors = [
-  { id: 'vend001', name: 'Supplier Alpha' },
-  { id: 'vend002', name: 'Service Provider Beta' },
-  { id: 'vend003', name: 'Materials Inc.' },
-];
+const getVendorsFromStorage = () => {
+  const storedVendors = localStorage.getItem('vendors');
+  return storedVendors ? JSON.parse(storedVendors) : [];
+};
 
 const getProductsFromStorage = () => {
   const storedProducts = localStorage.getItem('products');
@@ -50,6 +49,7 @@ const getProductsFromStorage = () => {
 const AddPurchaseOrderForm = ({ onSave, onCancel }) => {
   const { toast } = useToast();
   const [vendor, setVendor] = useState('');
+  const [availableVendors, setAvailableVendors] = useState([]);
   const [orderDate, setOrderDate] = useState(new Date());
   const [expectedDeliveryDate, setExpectedDeliveryDate] = useState(new Date(new Date().setDate(new Date().getDate() + 7)));
   const [orderNumber, setOrderNumber] = useState(`PO-${String(Date.now()).slice(-6)}`);
@@ -66,6 +66,7 @@ const AddPurchaseOrderForm = ({ onSave, onCancel }) => {
     setAvailableProducts(getProductsFromStorage());
     const storedCustomers = JSON.parse(localStorage.getItem('customers') || '[]');
     setAvailableCustomers(storedCustomers);
+    setAvailableVendors(getVendorsFromStorage());
   }, []);
 
   useEffect(() => {
@@ -228,7 +229,7 @@ const AddPurchaseOrderForm = ({ onSave, onCancel }) => {
               <Label htmlFor="vendor" className="font-semibold">Vendor <span className="text-destructive dark:text-red-400">*</span></Label>
               <Select onValueChange={setVendor} value={vendor}>
                 <SelectTrigger id="vendor"><SelectValue placeholder="Select vendor" /></SelectTrigger>
-                <SelectContent>{initialVendors.map(v => (<SelectItem key={v.id} value={v.id}>{v.name}</SelectItem>))}</SelectContent>
+                <SelectContent>{availableVendors.map(v => (<SelectItem key={v.id} value={v.id}>{v.name}</SelectItem>))}</SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
