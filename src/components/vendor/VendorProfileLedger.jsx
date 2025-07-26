@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { format, parseISO } from 'date-fns';
 import { Printer, Search, FilterX, Pencil, X, Save } from 'lucide-react';
 import { DatePicker } from '@/components/ui/date-picker';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
 
 const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
+  const { toast } = useToast();
   const [transactions, setTransactions] = useState([]);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [startDate, setStartDate] = useState(null);
@@ -147,9 +150,14 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
   };
 
   const handleSave = () => {
+    const storedVendors = JSON.parse(localStorage.getItem('vendors')) || [];
+    const updatedVendors = storedVendors.map(v => 
+      v.id === vendorId ? { ...v, ...editedDetails } : v
+    );
+    localStorage.setItem('vendors', JSON.stringify(updatedVendors));
     setVendorDetails(editedDetails);
     setIsEditing(false);
-    // Here you would typically call an API to save the changes
+    toast({ title: 'Success', description: 'Vendor details updated successfully.' });
   };
 
   const handleViewAttachments = () => {
@@ -184,16 +192,16 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose }) => {
               Address: {isEditing ? <Input value={editedDetails.address} onChange={(e) => setEditedDetails({...editedDetails, address: e.target.value})} /> : vendorDetails.address || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Phone: {isEditing ? <Input value={editedDetails.phoneNumber} onChange={(e) => setEditedDetails({...editedDetails, phoneNumber: e.target.value})} /> : vendorDetails.phoneNumber || 'N/A'} | Email: {isEditing ? <Input value={editedDetails.email} onChange={(e) => setEditedDetails({...editedDetails, email: e.target.value})} /> : vendorDetails.email || 'N/A'}
+              Phone: {isEditing ? <Input value={editedDetails.phoneNumber} onChange={(e) => setEditedDetails({...editedDetails, phoneNumber: e.target.value})} /> : vendorDetails.phoneNumber || 'N/A'} | Email: {isEditing ? <Input type="email" value={editedDetails.email} onChange={(e) => setEditedDetails({...editedDetails, email: e.target.value})} /> : vendorDetails.email || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
               Credit Limit: {isEditing ? <Input type="number" value={editedDetails.creditLimit} onChange={(e) => setEditedDetails({...editedDetails, creditLimit: e.target.value})} /> : vendorDetails.creditLimit ? parseFloat(vendorDetails.creditLimit).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
-              Bank Account: {isEditing ? <Input value={editedDetails.bankAccountNo} onChange={(e) => setEditedDetails({...editedDetails, bankAccountNo: e.target.value})} /> : vendorDetails.bankAccountNo || 'N/A'}
+              Bank Details: {isEditing ? <Textarea value={editedDetails.bankDetails} onChange={(e) => setEditedDetails({...editedDetails, bankDetails: e.target.value})} /> : vendorDetails.bankDetails || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground mt-2">
-              Notes: {isEditing ? <Input value={editedDetails.notes} onChange={(e) => setEditedDetails({...editedDetails, notes: e.target.value})} /> : vendorDetails.notes || 'N/A'}
+              Notes: {isEditing ? <Textarea value={editedDetails.notes} onChange={(e) => setEditedDetails({...editedDetails, notes: e.target.value})} /> : vendorDetails.notes || 'N/A'}
             </p>
             <p className="text-sm text-muted-foreground dark:text-dark-muted-foreground">
               Opening Balance: {isEditing ? <Input type="number" value={editedDetails.openingBalance} onChange={(e) => setEditedDetails({...editedDetails, openingBalance: e.target.value})} /> : parseFloat(vendorDetails.openingBalance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 })} as of {isEditing ? <DatePicker date={editedDetails.openingBalanceDate ? parseISO(editedDetails.openingBalanceDate) : null} setDate={(date) => setEditedDetails({...editedDetails, openingBalanceDate: date.toISOString()})} /> : vendorDetails.openingBalanceDate ? format(parseISO(vendorDetails.openingBalanceDate), 'dd-MMM-yyyy') : 'N/A'}
