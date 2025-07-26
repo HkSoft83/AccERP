@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, ShoppingCart, Eye, Edit, Trash2 } from 'lucide-react';
+import { PlusCircle, ShoppingCart, Eye, Edit, Trash2, FileText } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -11,6 +12,7 @@ import { format } from 'date-fns';
 
 const PurchaseOrder = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [vendors, setVendors] = useState([]);
@@ -63,6 +65,11 @@ const PurchaseOrder = () => {
       setIsConfirmDeleteModalOpen(false);
       setOrderToDelete(null);
     }
+  };
+
+  const handleConvertToBill = (order) => {
+    navigate('/purchase/bill', { state: { purchaseOrder: order } });
+    toast({ title: "Converting to Bill", description: `Redirecting to Purchase Bill for Order ${order.orderNumber}.` });
   };
   return (
     <div className="space-y-6">
@@ -191,6 +198,7 @@ const PurchaseOrder = () => {
                           <Button variant="ghost" size="icon" className="text-blue-600 hover:text-blue-800" onClick={() => handleViewOrder(order)}><Eye size={18} /></Button>
                           <Button variant="ghost" size="icon" className="text-green-600 hover:text-green-800" onClick={() => handleEditOrder(order)}><Edit size={18} /></Button>
                           <Button variant="ghost" size="icon" className="text-red-600 hover:text-red-800" onClick={() => handleDeleteOrder(order)}><Trash2 size={18} /></Button>
+                          <Button variant="ghost" size="icon" className="text-purple-600 hover:text-purple-800" onClick={() => handleConvertToBill(order)} title="Convert to Bill"><FileText size={18} /></Button>
                         </TableCell>
                       </TableRow>
                     );

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -49,18 +50,47 @@ const getProductsFromStorage = () => {
 };
 
 
+const getVendorsFromStorage = () => {
+  const storedVendors = localStorage.getItem('vendors');
+  return storedVendors ? JSON.parse(storedVendors) : [];
+};
+
 const PurchaseBill = () => {
   const { toast } = useToast();
-  const [vendor, setVendor] = useState('');
-  const [billDate, setBillDate] = useState(new Date());
-  const [dueDate, setDueDate] = useState(new Date(new Date().setDate(new Date().getDate() + 30)));
-  const [billNumber, setBillNumber] = useState(`BILL-${String(Date.now()).slice(-6)}`);
-  const [notes, setNotes] = useState('');
+  const location = useLocation();
+  const { purchaseOrder } = location.state || {};
+
+  const [vendor, setVendor] = useState(purchaseOrder?.vendor || '');
+  const [billDate, setBillDate] = useState(purchaseOrder?.orderDate ? new Date(purchaseOrder.orderDate) : new Date());
+  const [dueDate, setDueDate] = useState(purchaseOrder?.expectedDeliveryDate ? new Date(purchaseOrder.expectedDeliveryDate) : new Date(new Date().setDate(new Date().getDate() + 30)));
+  const [billNumber, setBillNumber] = useState(`BILL-${String(Date.now()).slice(-6)}${purchaseOrder ? '-PO' + purchaseOrder.orderNumber : ''}`);
+  const [notes, setNotes] = useState(purchaseOrder?.memo || purchaseOrder?.notes || '');
   const [availableProducts, setAvailableProducts] = useState([]);
+  const [availableVendors, setAvailableVendors] = useState([]);
 
   useEffect(() => {
     setAvailableProducts(getProductsFromStorage());
-  }, []);
+    setAvailableVendors(getVendorsFromStorage());
+    if (purchaseOrder) {
+      const mappedLineItems = purchaseOrder.lineItems.map(item => {
+        const product = getProductsFromStorage().find(p => p.id === item.productId);
+        return {
+          id: Date.now() + Math.random(), // Unique ID for each line item
+          productId: item.productId,
+          productDetails: product,
+          quantityInput: item.quantityInput,
+          quantityUnitId: item.quantityUnitId,
+          quantityInBase: item.quantityUnitFactor ? item.quantityInput * item.quantityUnitFactor : item.quantityInput,
+          billingUnitId: item.billingUnitId,
+          rateForBillingUnit: item.rateForBillingUnit,
+          discountPercent: item.discountPercent || 0,
+          discountAmount: item.discountAmount || 0,
+          totalPrice: item.totalPrice,
+        };
+      });
+      setLineItems(mappedLineItems);
+    }
+  }, [purchaseOrder]);
   
   const [lineItems, setLineItems] = useState([
     { 
@@ -243,6 +273,7 @@ const PurchaseBill = () => {
 
     const billData = {
       vendor, billNumber, billDate, dueDate, 
+      purchaseOrderId: purchaseOrder?.orderNumber || null, // Link to the original purchase order
       lineItems: finalLineItems.map(li => ({
             productId: li.productId, productName: li.productDetails?.name,
             quantityInput: li.quantityInput, quantityUnitId: li.quantityUnitId,
@@ -298,9 +329,9 @@ const PurchaseBill = () => {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <Label htmlFor="vendor" className="font-semibold">Vendor <span className="text-destructive dark:text-red-400">*</span></Label>
-              <Select onValueChange={setVendor} value={vendor}>
+              <Select onValueChange={setVendor} value={vendor} disabled={!!purchaseOrder}>
                 <SelectTrigger id="vendor"><SelectValue placeholder="Select vendor" /></SelectTrigger>
-                <SelectContent>{initialVendors.map(v => (<SelectItem key={v.id} value={v.id}>{v.name}</SelectItem>))}</SelectContent>
+                <SelectContent>{availableVendors.map(v => (<SelectItem key={v.id} value={v.id}>{v.name}</SelectItem>))}</SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
