@@ -290,7 +290,6 @@ const ProductsServices = () => {
                         <td className="px-4 py-3">{product.name}</td>
                         <td className="px-4 py-3">{product.productType}</td>
                         <td className="px-4 py-3">{product.baseUnitName}</td>
-                        <td className="px-4 py-3 text-right">{product.avgCostFormatted}</td>
                         <td 
                         className="px-4 py-3 text-right font-semibold hover:underline cursor-pointer text-primary dark:text-dark-primary"
                         onClick={() => toast({ title: `Product Ledger: ${product.name}`, description: "Detailed product ledger view coming soon."})}
