@@ -1,183 +1,59 @@
-main.jsx is executing
-main.jsx:9 Root element: <div id=​"root">​…​</div>​
-hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=6b390099:5266:5)
-    at ThemeProvider (ThemeContext.jsx:7:33)
-    at App (<anonymous>)
-overrideMethod @ hook.js:608
-warnOnce @ react-router-dom.js?v=6b390099:4409
-logDeprecation @ react-router-dom.js?v=6b390099:4412
-logV6DeprecationWarnings @ react-router-dom.js?v=6b390099:4415
-(anonymous) @ react-router-dom.js?v=6b390099:5290
-commitHookEffectListMount @ chunk-V5LT2MCF.js?v=6b390099:16936
-commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=6b390099:18184
-commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=6b390099:18157
-commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=6b390099:18147
-commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=6b390099:18137
-flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=6b390099:19518
-flushPassiveEffects @ chunk-V5LT2MCF.js?v=6b390099:19475
-performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18896
-flushSyncCallbacks @ chunk-V5LT2MCF.js?v=6b390099:9135
-commitRootImpl @ chunk-V5LT2MCF.js?v=6b390099:19460
-commitRoot @ chunk-V5LT2MCF.js?v=6b390099:19305
-finishConcurrentRender @ chunk-V5LT2MCF.js?v=6b390099:18811
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18746
-workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
-flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this warning
-hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=6b390099:5266:5)
-    at ThemeProvider (ThemeContext.jsx:7:33)
-    at App (<anonymous>)
-overrideMethod @ hook.js:608
-warnOnce @ react-router-dom.js?v=6b390099:4409
-logDeprecation @ react-router-dom.js?v=6b390099:4412
-logV6DeprecationWarnings @ react-router-dom.js?v=6b390099:4418
-(anonymous) @ react-router-dom.js?v=6b390099:5290
-commitHookEffectListMount @ chunk-V5LT2MCF.js?v=6b390099:16936
-commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=6b390099:18184
-commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=6b390099:18157
-commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=6b390099:18147
-commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=6b390099:18137
-flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=6b390099:19518
-flushPassiveEffects @ chunk-V5LT2MCF.js?v=6b390099:19475
-performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18896
-flushSyncCallbacks @ chunk-V5LT2MCF.js?v=6b390099:9135
-commitRootImpl @ chunk-V5LT2MCF.js?v=6b390099:19460
-commitRoot @ chunk-V5LT2MCF.js?v=6b390099:19305
-finishConcurrentRender @ chunk-V5LT2MCF.js?v=6b390099:18811
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18746
-workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
-flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this warning
-chunk-VTOHP5L6.js?v=6b390099:67 Uncaught Error: `DialogPortal` must be used within `Dialog`
-    at useContext2 (chunk-VTOHP5L6.js?v=6b390099:67:13)
-    at DialogPortal (chunk-Y3U75K3Y.js?v=6b390099:109:19)
-    at renderWithHooks (chunk-V5LT2MCF.js?v=6b390099:11568:26)
-    at mountIndeterminateComponent (chunk-V5LT2MCF.js?v=6b390099:14946:21)
-    at beginWork (chunk-V5LT2MCF.js?v=6b390099:15934:22)
-    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=6b390099:3674:22)
-    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=6b390099:3699:24)
-    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=6b390099:3733:39)
-    at beginWork$1 (chunk-V5LT2MCF.js?v=6b390099:19793:15)
-    at performUnitOfWork (chunk-V5LT2MCF.js?v=6b390099:19226:20)
-useContext2 @ chunk-VTOHP5L6.js?v=6b390099:67
-DialogPortal @ chunk-Y3U75K3Y.js?v=6b390099:109
-renderWithHooks @ chunk-V5LT2MCF.js?v=6b390099:11568
-mountIndeterminateComponent @ chunk-V5LT2MCF.js?v=6b390099:14946
-beginWork @ chunk-V5LT2MCF.js?v=6b390099:15934
-callCallback2 @ chunk-V5LT2MCF.js?v=6b390099:3674
-invokeGuardedCallbackDev @ chunk-V5LT2MCF.js?v=6b390099:3699
-invokeGuardedCallback @ chunk-V5LT2MCF.js?v=6b390099:3733
-beginWork$1 @ chunk-V5LT2MCF.js?v=6b390099:19793
-performUnitOfWork @ chunk-V5LT2MCF.js?v=6b390099:19226
-workLoopConcurrent @ chunk-V5LT2MCF.js?v=6b390099:19217
-renderRootConcurrent @ chunk-V5LT2MCF.js?v=6b390099:19192
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18706
-workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
-flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this error
-chunk-VTOHP5L6.js?v=6b390099:67 Uncaught Error: `DialogPortal` must be used within `Dialog`
-    at useContext2 (chunk-VTOHP5L6.js?v=6b390099:67:13)
-    at DialogPortal (chunk-Y3U75K3Y.js?v=6b390099:109:19)
-    at renderWithHooks (chunk-V5LT2MCF.js?v=6b390099:11568:26)
-    at mountIndeterminateComponent (chunk-V5LT2MCF.js?v=6b390099:14946:21)
-    at beginWork (chunk-V5LT2MCF.js?v=6b390099:15934:22)
-    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=6b390099:3674:22)
-    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=6b390099:3699:24)
-    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=6b390099:3733:39)
-    at beginWork$1 (chunk-V5LT2MCF.js?v=6b390099:19793:15)
-    at performUnitOfWork (chunk-V5LT2MCF.js?v=6b390099:19226:20)
-useContext2 @ chunk-VTOHP5L6.js?v=6b390099:67
-DialogPortal @ chunk-Y3U75K3Y.js?v=6b390099:109
-renderWithHooks @ chunk-V5LT2MCF.js?v=6b390099:11568
-mountIndeterminateComponent @ chunk-V5LT2MCF.js?v=6b390099:14946
-beginWork @ chunk-V5LT2MCF.js?v=6b390099:15934
-callCallback2 @ chunk-V5LT2MCF.js?v=6b390099:3674
-invokeGuardedCallbackDev @ chunk-V5LT2MCF.js?v=6b390099:3699
-invokeGuardedCallback @ chunk-V5LT2MCF.js?v=6b390099:3733
-beginWork$1 @ chunk-V5LT2MCF.js?v=6b390099:19793
-performUnitOfWork @ chunk-V5LT2MCF.js?v=6b390099:19226
-workLoopSync @ chunk-V5LT2MCF.js?v=6b390099:19165
-renderRootSync @ chunk-V5LT2MCF.js?v=6b390099:19144
-recoverFromConcurrentError @ chunk-V5LT2MCF.js?v=6b390099:18764
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18712
-workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
-flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this error
-order:93 The above error occurred in the <DialogPortal> component:
-
-    at DialogPortal (http://localhost:5173/node_modules/.vite/deps/chunk-Y3U75K3Y.js?v=6b390099:108:11)
-    at _c3 (http://localhost:5173/src/components/ui/dialog.jsx:49:12)
-    at Provider (http://localhost:5173/node_modules/.vite/deps/chunk-VTOHP5L6.js?v=6b390099:53:15)
-    at Dialog (http://localhost:5173/node_modules/.vite/deps/chunk-Y3U75K3Y.js?v=6b390099:48:5)
-    at AlertDialog (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-alert-dialog.js?v=6b390099:47:11)
-    at div
-    at _c9 (http://localhost:5173/src/components/ui/card.jsx:100:12)
-    at div
-    at _c (http://localhost:5173/src/components/ui/card.jsx:20:11)
-    at div
-    at PurchaseOrder (http://localhost:5173/src/pages/purchase/PurchaseOrder.jsx?t=1753537375714:30:21)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4103:5)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4103:5)
-    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4510:26)
-    at div
-    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=6b390099:278:40)
-    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=6b390099:7103:24)
-    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=6b390099:7169:26)
-    at main
-    at div
-    at div
-    at Layout (http://localhost:5173/src/components/Layout.jsx:313:51)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4103:5)
-    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4574:5)
-    at Suspense
-    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:4517:15)
-    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=6b390099:5266:5)
-    at ThemeProvider (http://localhost:5173/src/contexts/ThemeContext.jsx:25:33)
-    at App
-
-Consider adding an error boundary to your tree to customize error handling behavior.
-Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
-overrideMethod @ hook.js:608
-console.error @ order:93
-logCapturedError @ chunk-V5LT2MCF.js?v=6b390099:14052
-update.callback @ chunk-V5LT2MCF.js?v=6b390099:14072
-callCallback @ chunk-V5LT2MCF.js?v=6b390099:11268
-commitUpdateQueue @ chunk-V5LT2MCF.js?v=6b390099:11285
-commitLayoutEffectOnFiber @ chunk-V5LT2MCF.js?v=6b390099:17115
-commitLayoutMountEffects_complete @ chunk-V5LT2MCF.js?v=6b390099:18008
-commitLayoutEffects_begin @ chunk-V5LT2MCF.js?v=6b390099:17997
-commitLayoutEffects @ chunk-V5LT2MCF.js?v=6b390099:17948
-commitRootImpl @ chunk-V5LT2MCF.js?v=6b390099:19381
-commitRoot @ chunk-V5LT2MCF.js?v=6b390099:19305
-finishConcurrentRender @ chunk-V5LT2MCF.js?v=6b390099:18788
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18746
-workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
-flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this error
-chunk-V5LT2MCF.js?v=6b390099:19441 Uncaught Error: `DialogPortal` must be used within `Dialog`
-    at useContext2 (chunk-VTOHP5L6.js?v=6b390099:67:13)
-    at DialogPortal (chunk-Y3U75K3Y.js?v=6b390099:109:19)
-    at renderWithHooks (chunk-V5LT2MCF.js?v=6b390099:11568:26)
-    at mountIndeterminateComponent (chunk-V5LT2MCF.js?v=6b390099:14946:21)
-    at beginWork (chunk-V5LT2MCF.js?v=6b390099:15934:22)
-    at beginWork$1 (chunk-V5LT2MCF.js?v=6b390099:19781:22)
-    at performUnitOfWork (chunk-V5LT2MCF.js?v=6b390099:19226:20)
-    at workLoopSync (chunk-V5LT2MCF.js?v=6b390099:19165:13)
-    at renderRootSync (chunk-V5LT2MCF.js?v=6b390099:19144:15)
-    at recoverFromConcurrentError (chunk-V5LT2MCF.js?v=6b390099:18764:28)
-useContext2 @ chunk-VTOHP5L6.js?v=6b390099:67
-DialogPortal @ chunk-Y3U75K3Y.js?v=6b390099:109
-renderWithHooks @ chunk-V5LT2MCF.js?v=6b390099:11568
-mountIndeterminateComponent @ chunk-V5LT2MCF.js?v=6b390099:14946
-beginWork @ chunk-V5LT2MCF.js?v=6b390099:15934
-beginWork$1 @ chunk-V5LT2MCF.js?v=6b390099:19781
-performUnitOfWork @ chunk-V5LT2MCF.js?v=6b390099:19226
-workLoopSync @ chunk-V5LT2MCF.js?v=6b390099:19165
-renderRootSync @ chunk-V5LT2MCF.js?v=6b390099:19144
-recoverFromConcurrentError @ chunk-V5LT2MCF.js?v=6b390099:18764
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=6b390099:18712
-workLoop @ chunk-V5LT2MCF.js?v=6b390099:197
-flushWork @ chunk-V5LT2MCF.js?v=6b390099:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=6b390099:384Understand this error
+[plugin:vite:react-babel] D:\B-Important\Programming\Github\AccERP\src\components\vendor\VendorProfileLedger.jsx: Expected corresponding JSX closing tag for <Tabs>. (370:10)
+  373 |               <Table className="min-w-[800px]">
+D:/B-Important/Programming/Github/AccERP/src/components/vendor/VendorProfileLedger.jsx:370:10
+368|              )}
+369|            </TabsContent>
+370|            </TabsContent>
+   |            ^
+371|            <TabsContent value="purchase-orders" className="space-y-4 pt-4">
+372|              <div className="overflow-x-auto rounded-lg border border-border dark:border-dark-border shadow-md">
+    at constructor (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:360:19)
+    at JSXParserMixin.raise (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:6613:19)
+    at JSXParserMixin.jsxParseElementAt (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:4733:16)
+    at JSXParserMixin.jsxParseElementAt (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:4704:32)
+    at JSXParserMixin.jsxParseElementAt (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:4704:32)
+    at JSXParserMixin.jsxParseElement (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:4755:17)
+    at JSXParserMixin.parseExprAtom (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:4765:19)
+    at JSXParserMixin.parseExprSubscripts (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10992:23)
+    at JSXParserMixin.parseUpdate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10977:21)
+    at JSXParserMixin.parseMaybeUnary (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10957:23)
+    at JSXParserMixin.parseMaybeUnaryOrPrivate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10810:61)
+    at JSXParserMixin.parseExprOps (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10815:23)
+    at JSXParserMixin.parseMaybeConditional (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10792:23)
+    at JSXParserMixin.parseMaybeAssign (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10745:21)
+    at D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10714:39
+    at JSXParserMixin.allowInAnd (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12334:12)
+    at JSXParserMixin.parseMaybeAssignAllowIn (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10714:17)
+    at JSXParserMixin.parseParenAndDistinguishExpression (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11591:28)
+    at JSXParserMixin.parseExprAtom (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11242:23)
+    at JSXParserMixin.parseExprAtom (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:4770:20)
+    at JSXParserMixin.parseExprSubscripts (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10992:23)
+    at JSXParserMixin.parseUpdate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10977:21)
+    at JSXParserMixin.parseMaybeUnary (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10957:23)
+    at JSXParserMixin.parseMaybeUnaryOrPrivate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10810:61)
+    at JSXParserMixin.parseExprOps (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10815:23)
+    at JSXParserMixin.parseMaybeConditional (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10792:23)
+    at JSXParserMixin.parseMaybeAssign (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10745:21)
+    at JSXParserMixin.parseExpressionBase (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10698:23)
+    at D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10694:39
+    at JSXParserMixin.allowInAnd (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12329:16)
+    at JSXParserMixin.parseExpression (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10694:17)
+    at JSXParserMixin.parseReturnStatement (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13018:28)
+    at JSXParserMixin.parseStatementContent (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12675:21)
+    at JSXParserMixin.parseStatementLike (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12644:17)
+    at JSXParserMixin.parseStatementListItem (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12624:17)
+    at JSXParserMixin.parseBlockOrModuleBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13192:61)
+    at JSXParserMixin.parseBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13185:10)
+    at JSXParserMixin.parseBlock (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13173:10)
+    at JSXParserMixin.parseFunctionBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12018:24)
+    at JSXParserMixin.parseArrowExpression (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11993:10)
+    at JSXParserMixin.parseParenAndDistinguishExpression (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11603:12)
+    at JSXParserMixin.parseExprAtom (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:11242:23)
+    at JSXParserMixin.parseExprAtom (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:4770:20)
+    at JSXParserMixin.parseExprSubscripts (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10992:23)
+    at JSXParserMixin.parseUpdate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10977:21)
+    at JSXParserMixin.parseMaybeUnary (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10957:23)
+    at JSXParserMixin.parseMaybeUnaryOrPrivate (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10810:61)
+    at JSXParserMixin.parseExprOps (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10815:23)
+    at JSXParserMixin.parseMaybeConditional (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:10792:23)
+    at JSXParserMixin.parseMaybeAssign (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\i

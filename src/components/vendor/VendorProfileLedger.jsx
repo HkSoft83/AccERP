@@ -4,13 +4,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { format, parseISO } from 'date-fns';
-import { Printer, Search, FilterX, Pencil, PlusCircle, Edit, Trash2 } from 'lucide-react';
+import { Printer, Search, FilterX, Pencil, PlusCircle, Eye, Edit, Trash2 } from 'lucide-react';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Label } from '@/components/ui/label';
+import AddPurchaseOrderForm from '@/components/forms/AddPurchaseOrderForm';
 
 const VendorProfileLedger = ({ vendorId, vendorName, onClose, onEditVendor }) => {
   const { toast } = useToast();
@@ -26,6 +28,12 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose, onEditVendor }) =>
   const [noteTitle, setNoteTitle] = useState('');
   const [noteDescription, setNoteDescription] = useState('');
   const [noteReminderTime, setNoteReminderTime] = useState(null);
+  const [vendorPurchaseOrders, setVendorPurchaseOrders] = useState([]);
+  const [orderToView, setOrderToView] = useState(null);
+  const [orderToEdit, setOrderToEdit] = useState(null);
+  const [orderToDelete, setOrderToDelete] = useState(null);
+  const [isPurchaseOrderModalOpen, setIsPurchaseOrderModalOpen] = useState(false);
+  const [isConfirmDeletePurchaseOrderModalOpen, setIsConfirmDeletePurchaseOrderModalOpen] = useState(false);
 
   useEffect(() => {
     if (noteToEdit) {
@@ -89,6 +97,42 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose, onEditVendor }) =>
     localStorage.setItem(`vendor_${vendorId}_notes`, JSON.stringify(updatedNotes));
     setNotes(updatedNotes);
     toast({ title: 'Success', description: 'Note deleted successfully.' });
+  };
+
+  const handleViewPurchaseOrder = (order) => {
+    setOrderToView(order);
+    setIsPurchaseOrderModalOpen(true);
+  };
+
+  const handleEditPurchaseOrder = (order) => {
+    setOrderToEdit(order);
+    setIsPurchaseOrderModalOpen(true);
+  };
+
+  const handleDeletePurchaseOrder = (order) => {
+    setOrderToDelete(order);
+    setIsConfirmDeletePurchaseOrderModalOpen(true);
+  };
+
+  const confirmDeletePurchaseOrder = () => {
+    if (orderToDelete) {
+      const allPurchaseOrders = JSON.parse(localStorage.getItem('purchaseOrders') || '[]');
+      const updatedOrders = allPurchaseOrders.filter(order => order.orderNumber !== orderToDelete.orderNumber);
+      localStorage.setItem('purchaseOrders', JSON.stringify(updatedOrders));
+      setVendorPurchaseOrders(updatedOrders.filter(order => order.vendor === vendorId)); // Update vendor-specific list
+      toast({ title: "Order Deleted", description: `Purchase Order ${orderToDelete.orderNumber} has been deleted.`, variant: "destructive" });
+      setIsConfirmDeletePurchaseOrderModalOpen(false);
+      setOrderToDelete(null);
+    }
+  };
+
+  const handleSavePurchaseOrder = () => {
+    const storedPurchaseOrders = JSON.parse(localStorage.getItem('purchaseOrders') || '[]');
+    const filteredOrders = storedPurchaseOrders.filter(order => order.vendor === vendorId);
+    setVendorPurchaseOrders(filteredOrders);
+    setIsPurchaseOrderModalOpen(false);
+    setOrderToEdit(null);
+    setOrderToView(null);
   };
   
 
@@ -210,15 +254,13 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose, onEditVendor }) =>
 
   
 
-  const handleViewAttachments = () => {
-    console.log('View Attachments clicked for vendor:', vendorId);
-    // Placeholder for attachment viewing logic
-  };
-
-  const handleViewPurchaseOrders = () => {
-    console.log('View Purchase Orders clicked for vendor:', vendorId);
-    // Placeholder for purchase order viewing logic
-  };
+  useEffect(() => {
+    if (vendorId) {
+      const storedPurchaseOrders = JSON.parse(localStorage.getItem('purchaseOrders')) || [];
+      const filteredOrders = storedPurchaseOrders.filter(order => order.vendor === vendorId);
+      setVendorPurchaseOrders(filteredOrders);
+    }
+  }, [vendorId]);
 
   return (
     <Card className="shadow-xl border-border dark:border-dark-border">
@@ -324,11 +366,133 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose, onEditVendor }) =>
                 { filteredTransactions[filteredTransactions.length -1].balance >= 0 ? " (Payable)" : " (Receivable)"}
               </div>
             )}
+          )}
           </TabsContent>
-          <TabsContent value="purchase-orders">
-            <div className="p-4 text-muted-foreground dark:text-dark-muted-foreground">
-              Purchase Orders content will go here.
+          <TabsContent value="purchase-orders" className="space-y-4 pt-4">
+            <div className="overflow-x-auto rounded-lg border border-border dark:border-dark-border shadow-md">
+              <Table className="min-w-[800px]">
+                <TableHeader className="bg-muted/50 dark:bg-dark-muted/50">
+                  <TableRow>
+                    <TableHead className="px-4 py-3 text-left text-xs font-medium text-muted-foreground dark:text-dark-muted-foreground uppercase tracking-wider">Order No.</TableHead>
+                    <TableHead className="px-4 py-3 text-left text-xs font-medium text-muted-foreground dark:text-dark-muted-foreground uppercase tracking-wider">Order Date</TableHead>
+                    <TableHead className="px-4 py-3 text-left text-xs font-medium text-muted-foreground dark:text-dark-muted-foreground uppercase tracking-wider">Memo</TableHead>
+                    <TableHead className="px-4 py-3 text-right text-xs font-medium text-muted-foreground dark:text-dark-muted-foreground uppercase tracking-wider">Total Amount</TableHead>
+                    <TableHead className="px-4 py-3 text-left text-xs font-medium text-muted-foreground dark:text-dark-muted-foreground uppercase tracking-wider">Status</TableHead>
+                    <TableHead className="px-4 py-3 text-center text-xs font-medium text-muted-foreground dark:text-dark-muted-foreground uppercase tracking-wider">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody className="bg-card dark:bg-dark-card divide-y divide-border dark:divide-dark-border">
+                  {vendorPurchaseOrders.length > 0 ? (
+                    vendorPurchaseOrders.map((order) => {
+                      const totalAmount = order.lineItems.reduce((sum, item) => sum + (item.rateForBillingUnit * item.quantityInput), 0);
+                      return (
+                        <TableRow key={order.orderNumber}>
+                          <TableCell className="px-4 py-3 text-muted-foreground dark:text-dark-muted-foreground">{order.orderNumber}</TableCell>
+                          <TableCell className="px-4 py-3 text-muted-foreground dark:text-dark-muted-foreground">{format(new Date(order.orderDate), 'dd-MMM-yyyy')}</TableCell>
+                          <TableCell className="px-4 py-3 text-muted-foreground dark:text-dark-muted-foreground">{order.memo || '-'}</TableCell>
+                          <TableCell className="px-4 py-3 text-right font-semibold text-foreground dark:text-dark-foreground">{totalAmount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</TableCell>
+                          <TableCell className="px-4 py-3">
+                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.isDraft ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
+                              {order.isDraft ? 'Draft' : 'Finalized'}
+                            </span>
+                          </TableCell>
+                          <TableCell className="px-4 py-3 text-center space-x-2">
+                            <Button variant="ghost" size="icon" className="text-blue-600 hover:text-blue-800" onClick={() => handleViewPurchaseOrder(order)}><Eye size={18} /></Button>
+                            <Button variant="ghost" size="icon" className="text-green-600 hover:text-green-800" onClick={() => handleEditPurchaseOrder(order)}><Edit size={18} /></Button>
+                            <Button variant="ghost" size="icon" className="text-red-600 hover:text-red-800" onClick={() => handleDeletePurchaseOrder(order)}><Trash2 size={18} /></Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={6} className="h-24 text-center text-muted-foreground dark:text-dark-muted-foreground">
+                        No purchase orders found for this vendor.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
             </div>
+
+            <Dialog open={isPurchaseOrderModalOpen || !!orderToView} onOpenChange={(open) => {
+              if (!open) {
+                setIsPurchaseOrderModalOpen(false);
+                setOrderToView(null);
+                setOrderToEdit(null);
+              }
+            }}>
+              <DialogContent className="sm:max-w-[1200px] h-[90vh] bg-card dark:bg-dark-card text-foreground dark:text-dark-foreground border-border dark:border-dark-border shadow-2xl rounded-lg">
+                <DialogHeader>
+                  <DialogTitle className="text-primary dark:text-dark-primary text-2xl font-semibold">
+                    {orderToView ? 'Purchase Order Details' : orderToEdit ? 'Edit Purchase Order' : 'Create New Purchase Order'}
+                  </DialogTitle>
+                  <DialogDescription className="text-muted-foreground dark:text-dark-muted-foreground">
+                    {orderToView ? 'Details of the selected purchase order.' : orderToEdit ? 'Edit the details of the purchase order.' : 'Fill in the details to create a new purchase order.'}
+                  </DialogDescription>
+                </DialogHeader>
+                {orderToView ? (
+                  <div className="space-y-4 py-4">
+                    <p><strong>Order Number:</strong> {orderToView.orderNumber}</p>
+                    <p><strong>Supplier:</strong> {vendorName || 'N/A'}</p>
+                    <p><strong>Order Date:</strong> {format(new Date(orderToView.orderDate), 'dd-MMM-yyyy')}</p>
+                    <p><strong>Expected Delivery Date:</strong> {format(new Date(orderToView.expectedDeliveryDate), 'dd-MMM-yyyy')}</p>
+                    <p><strong>Memo:</strong> {orderToView.memo || 'N/A'}</p>
+                    <p><strong>Shipping Address:</strong> {orderToView.shippingAddress || 'N/A'}</p>
+                    <p><strong>Drop Ship To:</strong> {orderToView.dropShipToCustomer ? (vendorName || 'N/A') : 'N/A'}</p>
+                    <h4 className="font-semibold mt-4">Line Items:</h4>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Product</TableHead>
+                          <TableHead>Quantity</TableHead>
+                          <TableHead>Rate</TableHead>
+                          <TableHead>Discount</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {orderToView.lineItems.map((item, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{item.productName}</TableCell>
+                            <TableCell>{item.quantityInput} {item.quantityUnitName}</TableCell>
+                            <TableCell>{item.rateForBillingUnit} per {item.billingUnitName}</TableCell>
+                            <TableCell>{item.discountPercent > 0 ? `${item.discountPercent}%` : item.discountAmount > 0 ? `${item.discountAmount}` : 'N/A'}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                    <p><strong>Notes:</strong> {orderToView.notes || 'N/A'}</p>
+                  </div>
+                ) : (
+                  <AddPurchaseOrderForm
+                    onSave={handleSavePurchaseOrder}
+                    onCancel={() => {
+                      setIsPurchaseOrderModalOpen(false);
+                      setOrderToEdit(null);
+                    }}
+                    initialData={orderToEdit}
+                  />
+                )}
+              </DialogContent>
+            </Dialog>
+
+            <AlertDialog open={isConfirmDeletePurchaseOrderModalOpen} onOpenChange={setIsConfirmDeletePurchaseOrderModalOpen}>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete the purchase order
+                    "{orderToDelete?.orderNumber}".
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <Button variant="outline" onClick={() => setIsConfirmDeletePurchaseOrderModalOpen(false)}>Cancel</Button>
+                  <Button variant="destructive" onClick={confirmDeletePurchaseOrder}>
+                    Yes, delete order
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </TabsContent>
           
             <TabsContent value="notes">
