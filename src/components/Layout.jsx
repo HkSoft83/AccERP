@@ -20,6 +20,7 @@ const navItems = [
       { name: 'Sales Invoice', path: '/sales/invoice' },
       { name: 'Sales Return', path: '/sales/return' },
       { name: 'Sales Order', path: '/sales/order' },
+      { name: 'Estimate', path: '/sales/estimate' },
     ]
   },
   {

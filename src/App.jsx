@@ -15,6 +15,7 @@ const CustomerCenter = lazy(() => import('@/pages/CustomerCenter'));
 const SalesInvoice = lazy(() => import('@/pages/sales/SalesInvoice'));
 const SalesReturn = lazy(() => import('@/pages/sales/SalesReturn'));
 const SalesOrder = lazy(() => import('@/pages/sales/SalesOrder'));
+const Estimate = lazy(() => import('@/pages/sales/Estimate'));
 
 const PurchaseBill = lazy(() => import('@/pages/purchase/PurchaseBill'));
 const PurchaseOrder = lazy(() => import('@/pages/purchase/PurchaseOrder'));
@@ -69,6 +70,7 @@ function App() {
                 <Route path="invoice" element={<SalesInvoice />} />
                 <Route path="return" element={<SalesReturn />} />
                 <Route path="order" element={<SalesOrder />} />
+                <Route path="estimate" element={<Estimate />} />
               </Route>
 
               <Route path="purchase">
