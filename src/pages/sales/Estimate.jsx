@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
+import { Textarea } from '@/components/ui/textarea';
 
 const getProductsFromStorage = () => {
   const storedProducts = localStorage.getItem('products');
@@ -43,10 +44,15 @@ const getProductsFromStorage = () => {
 
 const Estimate = () => {
   const { toast } = useToast();
-  const [estimateDetails, setEstimateDetails] = useState({
-    estimateNumber: `EST-${String(Date.now()).slice(-6)}`,
-    estimateDate: null,
-    expiryDate: null,
+  const [estimateDetails, setEstimateDetails] = useState(() => {
+    const today = new Date();
+    const expiry = new Date();
+    expiry.setDate(today.getDate() + 7);
+    return {
+      estimateNumber: `EST-${String(Date.now()).slice(-6)}`,
+      estimateDate: today,
+      expiryDate: expiry,
+    };
   });
 
   const [myCompany, setMyCompany] = useState({
@@ -83,6 +89,8 @@ const Estimate = () => {
       totalPrice: 0
     },
   ]);
+
+  const [description, setDescription] = useState('');
 
   const calculateLineItemTotal = useCallback((item) => {
     let calculatedQuantityInBase = parseFloat(item.quantityInput) || 0;
@@ -165,6 +173,58 @@ const Estimate = () => {
   };
 
   const overallTotal = lineItems.reduce((sum, item) => sum + (item.totalPrice || 0), 0);
+
+  const handleSaveEstimate = (isDraft) => {
+    if (!estimateDetails.estimateNumber || !estimateDetails.estimateDate || !estimateDetails.expiryDate) {
+      toast({ title: "Validation Error", description: "Estimate Number, Date, and Expiry Date are required.", variant: "destructive" });
+      return;
+    }
+    if (!customer.id) {
+      toast({ title: "Validation Error", description: "Please select a customer.", variant: "destructive" });
+      return;
+    }
+    if (lineItems.some(item => !item.productId || item.quantityInput === 0)) {
+      toast({ title: "Validation Error", description: "Please ensure all line items have a product and valid quantity.", variant: "destructive" });
+      return;
+    }
+    if (lineItems.length === 0 || lineItems.every(item => item.quantityInput === 0)) {
+      toast({ title: "Validation Error", description: "Cannot save an empty estimate or an estimate with all zero quantities.", variant: "destructive" });
+      return;
+    }
+
+    const finalLineItems = lineItems.filter(li => li.quantityInput > 0);
+
+    const estimateData = {
+      id: estimateDetails.estimateNumber, // Using estimate number as ID for simplicity
+      estimateDetails,
+      myCompany,
+      customer,
+      lineItems: finalLineItems.map(li => ({
+        productId: li.productId, productName: li.productDetails?.name,
+        quantityInput: li.quantityInput, quantityUnitId: li.quantityUnitId,
+        quantityUnitName: li.productDetails?.units.find(u => u.id === li.quantityUnitId)?.name,
+        quantityUnitFactor: li.productDetails?.units.find(u => u.id === li.quantityUnitId)?.factor,
+        billingUnitId: li.billingUnitId,
+        billingUnitName: li.productDetails?.units.find(u => u.id === li.billingUnitId)?.name,
+        billingUnitFactor: li.productDetails?.units.find(u => u.id === li.billingUnitId)?.factor,
+        rateForBillingUnit: li.rateForBillingUnit,
+        totalPrice: li.totalPrice,
+      })),
+      overallTotal,
+      isDraft,
+      createdAt: new Date().toISOString(),
+    };
+
+    const existingEstimates = JSON.parse(localStorage.getItem('estimates') || '[]');
+    const updatedEstimates = [...existingEstimates.filter(est => est.id !== estimateData.id), estimateData];
+    localStorage.setItem('estimates', JSON.stringify(updatedEstimates));
+
+    toast({ title: "Estimate Saved", description: `Estimate ${estimateData.id} has been ${isDraft ? 'saved as draft' : 'finalized'}.`, className: 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-200 border-green-300 dark:border-green-600' });
+
+    if (!isDraft) {
+      window.print();
+    }
+  };
 
   return (
     <div className="space-y-6 p-1">
@@ -327,20 +387,33 @@ const Estimate = () => {
             <PlusCircle size={18} className="mr-2" /> Add Line Item
           </Button>
 
-          {/* Overall Total */}
-          <div className="flex justify-end">
-            <div className="w-full md:w-1/3 border-t border-border dark:border-dark-border pt-4">
-              <div className="flex justify-between font-bold text-lg">
-                <span>Overall Total:</span>
-                <span>{(overallTotal || 0).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</span>
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            {/* Description Box */}
+            <div>
+              <Label htmlFor="description" className="font-semibold">Description / Notes</Label>
+              <Textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Add any additional notes or descriptions here..."
+                className="mt-1 min-h-[100px]"
+              />
+            </div>
+            {/* Overall Total */}
+            <div className="flex justify-end md:justify-start md:col-start-2">
+              <div className="w-full md:w-1/2 border-t border-border dark:border-dark-border pt-4">
+                <div className="flex justify-between font-bold text-lg">
+                  <span>Overall Total:</span>
+                  <span>{(overallTotal || 0).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Save/Print Buttons */}
           <div className="flex justify-end space-x-2 mt-8">
-            <Button variant="outline">Save Draft</Button>
-            <Button>Finalize & Print</Button>
+            <Button variant="outline" onClick={() => handleSaveEstimate(true)}>Save Draft</Button>
+            <Button onClick={() => handleSaveEstimate(false)}>Finalize & Print</Button>
           </div>
         </CardContent>
       </Card>
