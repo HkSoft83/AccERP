@@ -37,7 +37,6 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
   const [subAccountOf, setSubAccountOf] = useState(NO_PARENT_ACCOUNT_VALUE);
   const [openingBalance, setOpeningBalance] = useState('');
   const [openingBalanceDate, setOpeningBalanceDate] = useState(undefined);
-  const [isHeaderAccount, setIsHeaderAccount] = useState(false);
   const [originalId, setOriginalId] = useState(null);
   const [displaySubAccountOf, setDisplaySubAccountOf] = useState("Select parent account (optional)");
 
@@ -50,7 +49,6 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
       setSubAccountOf(initialData.subAccountOf || NO_PARENT_ACCOUNT_VALUE);
       setOpeningBalance(initialData.openingBalance?.toString() || '');
       setOpeningBalanceDate(initialData.openingBalanceDate ? new Date(initialData.openingBalanceDate) : undefined);
-      setIsHeaderAccount(initialData.isHeader || false);
       setOriginalId(initialData.id || initialData.accNum);
       // For edit mode, also set the display string if a subAccountOf exists
       const parentAccount = existingAccounts.find(acc => acc.accNum === initialData.subAccountOf);
@@ -90,12 +88,12 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
     setSubAccountOf(NO_PARENT_ACCOUNT_VALUE);
     setOpeningBalance('');
     setOpeningBalanceDate(undefined);
-    setIsHeaderAccount(false);
     setOriginalId(null);
   };
 
   const handleSubmit = (e, closeAfterSave = true) => {
     e.preventDefault();
+
     if (!accountName || !accountType) {
       toast({
         title: "Validation Error",
@@ -112,9 +110,9 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
       accType: accountType,
       accSubtype: accountSubtype,
       subAccountOf: subAccountOf === NO_PARENT_ACCOUNT_VALUE ? null : subAccountOf,
-      openingBalance: !isHeaderAccount ? parseFloat(openingBalance) || 0 : 0,
-      openingBalanceDate: !isHeaderAccount && openingBalanceDate ? openingBalanceDate.toISOString().split('T')[0] : null,
-      isHeader: isHeaderAccount,
+      openingBalance: parseFloat(openingBalance) || 0,
+      openingBalanceDate: openingBalanceDate ? openingBalanceDate.toISOString().split('T')[0] : null,
+      isHeader: false,
     };
     
     onSave(accountData, isEditMode);
@@ -136,10 +134,6 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
        <DialogHeader>
         <div className="flex justify-between items-center">
           <DialogTitle>{isEditMode ? 'Edit Account' : 'Add New Account'}</DialogTitle>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="isHeader" checked={isHeaderAccount} onCheckedChange={setIsHeaderAccount} />
-            <Label htmlFor="isHeader">This is a Header Account</Label>
-          </div>
         </div>
         <DialogDescription className="hidden">
           {isEditMode ? 'Update the details of the existing account.' : 'Fill in the details to create a new account.'}
@@ -210,35 +204,31 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
           </SelectContent>
         </Select>
       </div>
-      {!isHeaderAccount && (
+      <div>
+        <Label htmlFor="openingBalance">Opening Balance</Label>
+        <Input
+          id="openingBalance"
+          type="number"
+          value={openingBalance}
+          onChange={(e) => setOpeningBalance(e.target.value)}
+          placeholder="0.00"
+          className="mt-1"
+          disabled={isEditMode}
+        />
+        {isEditMode && <p className="text-xs text-muted-foreground">Opening balance cannot be changed after creation.</p>}
+      </div>
+      <div>
+        <Label htmlFor="openingBalanceDate">Opening Balance As of Date</Label>
         <div>
-          <div>
-            <Label htmlFor="openingBalance">Opening Balance</Label>
-            <Input
-              id="openingBalance"
-              type="number"
-              value={openingBalance}
-              onChange={(e) => setOpeningBalance(e.target.value)}
-              placeholder="0.00"
-              className="mt-1"
-              disabled={isEditMode}
-            />
-            {isEditMode && <p className="text-xs text-muted-foreground">Opening balance cannot be changed after creation.</p>}
-          </div>
-          <div>
-            <Label htmlFor="openingBalanceDate">Opening Balance As of Date</Label>
-            <div>
-              <DatePicker
-                date={openingBalanceDate}
-                setDate={setOpeningBalanceDate}
-                className="mt-1 w-full"
-                disabled={isEditMode}
-              />
-            </div>
-             {isEditMode && <p className="text-xs text-muted-foreground">Opening balance date cannot be changed after creation.</p>}
-          </div>
+          <DatePicker
+            date={openingBalanceDate}
+            setDate={setOpeningBalanceDate}
+            className="mt-1 w-full"
+            disabled={isEditMode}
+          />
         </div>
-      )}
+         {isEditMode && <p className="text-xs text-muted-foreground">Opening balance date cannot be changed after creation.</p>}
+      </div>
       <DialogFooter className="pt-6">
         <DialogClose asChild>
             <Button variant="outline" onClick={onCancel}>Cancel</Button>
