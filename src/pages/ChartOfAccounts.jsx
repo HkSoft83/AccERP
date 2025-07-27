@@ -92,12 +92,10 @@ const ChartOfAccounts = () => {
   };
 
   // Helper to calculate total balance for a header account
-  const calculateTotalBalance = (headerAccount, allAccounts) => {
-    if (!headerAccount.isHeader) return headerAccount.balance;
-
-    const descendants = getAllSubAccounts(headerAccount.accNum, allAccounts);
-    const totalSubBalance = descendants.reduce((sum, acc) => sum + (acc.balance || 0), 0);
-    return totalSubBalance;
+  const calculateTotalBalance = (account, allAccounts) => {
+    const descendants = getAllSubAccounts(account.accNum, allAccounts);
+    const totalDescendantBalance = descendants.reduce((sum, acc) => sum + (acc.balance || 0), 0);
+    return (account.balance || 0) + totalDescendantBalance;
   };
 
   const toggleExpand = (accNum) => {
@@ -212,11 +210,32 @@ const ChartOfAccounts = () => {
       );
     }
 
+    const sortAccounts = (accountsToSort) => {
+      if (!sortConfig) return accountsToSort;
+
+      const sorted = [...accountsToSort].sort((a, b) => {
+        let aValue = a[sortConfig.key];
+        let bValue = b[sortConfig.key];
+        const numKeys = ['balance', 'sl', 'openingBalance'];
+        if (numKeys.includes(sortConfig.key)) {
+          aValue = parseFloat(aValue) || 0;
+          bValue = parseFloat(bValue) || 0;
+        } else if (typeof aValue === 'string') {
+          aValue = aValue.toLowerCase();
+          bValue = bValue.toLowerCase();
+        }
+        if (aValue < bValue) return sortConfig.direction === 'ascending' ? -1 : 1;
+        if (aValue > bValue) return sortConfig.direction === 'ascending' ? 1 : -1;
+        return 0;
+      });
+      return sorted;
+    };
+
     // Build a hierarchical structure and flatten for display
     const accountMap = new Map(processedAccounts.map(acc => [acc.accNum, { ...acc, children: [] }]));
 
     // Identify root accounts (those not sub-accounts of anything, or whose parent is not in the filtered list)
-    const rootAccounts = [];
+    let rootAccounts = [];
     accountMap.forEach(acc => {
       if (!acc.subAccountOf || !accountMap.has(acc.subAccountOf)) {
         rootAccounts.push(acc);
@@ -231,10 +250,11 @@ const ChartOfAccounts = () => {
       }
     });
 
-    // Sort children within each parent
+    // Sort children within each parent and root accounts
     accountMap.forEach(acc => {
-      acc.children.sort((a, b) => a.accName.localeCompare(b.accName)); // Sort children by name
+      acc.children = sortAccounts(acc.children);
     });
+    rootAccounts = sortAccounts(rootAccounts);
 
     // Flatten the hierarchy for display, respecting expansion
     const flattenAccounts = (accList, level = 0) => {
@@ -243,9 +263,9 @@ const ChartOfAccounts = () => {
         const isExpanded = expandedAccounts[acc.accNum];
         const hasChildren = acc.children.length > 0;
 
-        // Calculate balance for header accounts
+        // Calculate balance for collapsed accounts with children
         let displayBalance = acc.balance;
-        if (acc.isHeader && hasChildren && !isExpanded) {
+        if (hasChildren && !isExpanded) {
           displayBalance = calculateTotalBalance(acc, accounts); // Use original 'accounts' for full hierarchy
         }
 
@@ -258,26 +278,9 @@ const ChartOfAccounts = () => {
       return flat;
     };
 
-    let finalDisplayed = flattenAccounts(rootAccounts.sort((a, b) => a.accName.localeCompare(b.accName))); // Sort root accounts
+    let finalDisplayed = flattenAccounts(rootAccounts);
 
-    // Apply final sort based on sortConfig
-    if (sortConfig !== null) {
-      finalDisplayed.sort((a, b) => {
-        let aValue = a[sortConfig.key];
-        let bValue = b[sortConfig.key];
-        const numKeys = ['balance', 'sl', 'openingBalance']; // Note: 'balance' here refers to the original balance, not displayBalance
-        if (numKeys.includes(sortConfig.key)) {
-          aValue = parseFloat(aValue) || 0;
-          bValue = parseFloat(bValue) || 0;
-        } else if (typeof aValue === 'string') {
-          aValue = aValue.toLowerCase();
-          bValue = bValue.toLowerCase();
-        }
-        if (aValue < bValue) return sortConfig.direction === 'ascending' ? -1 : 1;
-        if (aValue > bValue) return sortConfig.direction === 'ascending' ? 1 : -1;
-        return 0;
-      });
-    }
+    
 
     return finalDisplayed;
   }, [searchTerm, sortConfig, accounts, expandedAccounts]);
@@ -387,7 +390,7 @@ const ChartOfAccounts = () => {
                     <React.Fragment key={account.id}>
                       <tr className={`border-b border-border dark:border-dark-border last:border-b-0 hover:bg-muted/30 dark:hover:bg-dark-muted/30 transition-colors duration-150 ${account.isHeader ? 'bg-blue-50 dark:bg-blue-950 font-semibold text-base text-blue-800 dark:text-blue-200' : 'bg-card dark:bg-dark-card text-sm text-foreground dark:text-dark-foreground'}`}>
                         <td className="px-4 py-3" style={{ paddingLeft: `${16 + account.level * 20}px` }}>
-                          {account.isHeader && account.hasChildren && (
+                          {account.hasChildren && (
                             <Button
                               variant="ghost"
                               size="icon"
@@ -432,7 +435,7 @@ const ChartOfAccounts = () => {
                             variant="ghost"
                             size="icon"
                             className="text-secondary dark:text-dark-secondary hover:text-accent dark:hover:text-dark-accent h-8 w-8"
-                            onClick={() => handleOpenModal(account)}
+                            onClick={() => handleOpenModal(account, 'edit')}
                           >
                             <Edit size={16} />
                           </Button>
