@@ -259,9 +259,10 @@ const ChartOfAccounts = () => {
     });
     rootAccounts = sortAccounts(rootAccounts);
 
-    // Flatten the hierarchy for display, respecting expansion
-    const flattenAccounts = (accList, level = 0) => {
+    // Flatten the hierarchy for display, respecting expansion and generating hierarchical SL
+    const flattenAccounts = (accList, level = 0, parentSl = '') => {
       let flat = [];
+      let currentSlIndex = 1;
       accList.forEach(acc => {
         const isExpanded = expandedAccounts[acc.accNum];
         const hasChildren = acc.children.length > 0;
@@ -272,11 +273,13 @@ const ChartOfAccounts = () => {
           displayBalance = calculateTotalBalance(acc, accounts); // Use original 'accounts' for full hierarchy
         }
 
-        flat.push({ ...acc, level, isExpanded, hasChildren, displayBalanceFormatted: (displayBalance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }) });
+        const displaySl = parentSl ? `${parentSl}.${currentSlIndex}` : `${currentSlIndex}`;
+        flat.push({ ...acc, level, isExpanded, hasChildren, displaySl, displayBalanceFormatted: (displayBalance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }) });
 
         if (isExpanded && hasChildren) {
-          flat = flat.concat(flattenAccounts(acc.children, level + 1));
+          flat = flat.concat(flattenAccounts(acc.children, level + 1, displaySl));
         }
+        currentSlIndex++;
       });
       return flat;
     };
@@ -405,12 +408,13 @@ const ChartOfAccounts = () => {
                               {account.isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                             </Button>
                           )}
-                          {account.sl}
+                          {account.displaySl}
                         </td>
                         <td className="px-4 py-3 text-xs font-mono">{account.accNum}</td>
                         <td
                           className="px-4 py-3 font-medium text-secondary dark:text-dark-secondary hover:underline cursor-pointer"
                           onClick={() => setSelectedAccountForLedger(account)}
+                          style={{ paddingLeft: `${16 + account.level * 20}px` }}
                         >
                           {account.accName}
                           <Button
