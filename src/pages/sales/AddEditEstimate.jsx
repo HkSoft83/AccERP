@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PlusCircle, Trash2 } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Select,
   SelectContent,
@@ -44,6 +45,8 @@ const getProductsFromStorage = () => {
 
 const Estimate = () => {
   const { toast } = useToast();
+  const { id } = useParams(); // Get ID from URL for editing
+  const navigate = useNavigate();
   const [estimateDetails, setEstimateDetails] = useState(() => {
     const today = new Date();
     const expiry = new Date();
@@ -75,7 +78,60 @@ const Estimate = () => {
     setAvailableProducts(getProductsFromStorage());
     const storedCustomers = JSON.parse(localStorage.getItem('customers') || '[]');
     setAvailableCustomers(storedCustomers);
-  }, []);
+
+    if (id) {
+      const storedEstimates = JSON.parse(localStorage.getItem('estimates') || '[]');
+      const existingEstimate = storedEstimates.find(est => est.id === id);
+      if (existingEstimate) {
+        setEstimateDetails({
+          estimateNumber: existingEstimate.estimateDetails.estimateNumber,
+          estimateDate: new Date(existingEstimate.estimateDetails.estimateDate),
+          expiryDate: new Date(existingEstimate.estimateDetails.expiryDate),
+        });
+        setMyCompany(existingEstimate.myCompany);
+        setCustomer(existingEstimate.customer);
+        setLineItems(existingEstimate.lineItems.map(item => ({
+          ...item,
+          productDetails: getProductsFromStorage().find(p => p.id === item.productId) || null,
+        })));
+        setDescription(existingEstimate.description || '');
+      } else {
+        toast({ title: "Estimate Not Found", description: "The estimate you are trying to edit does not exist.", variant: "destructive" });
+        navigate('/sales/estimate'); // Redirect to list if not found
+      }
+    } else {
+      // Reset form for new estimate
+      setEstimateDetails(() => {
+        const today = new Date();
+        const expiry = new Date();
+        expiry.setDate(today.getDate() + 7);
+        return {
+          estimateNumber: `EST-${String(Date.now()).slice(-6)}`,
+          estimateDate: today,
+          expiryDate: expiry,
+        };
+      });
+      setMyCompany({
+        name: 'My Company Name',
+        address: '123 Business Rd, City, Country',
+        logo: '',
+      });
+      setCustomer({ id: '', name: '', address: '' });
+      setLineItems([
+        { 
+          id: Date.now(), 
+          productId: '', 
+          productDetails: null,
+          quantityInput: 1,
+          quantityUnitId: '',
+          billingUnitId: '', 
+          rateForBillingUnit: 0, 
+          totalPrice: 0
+        },
+      ]);
+      setDescription('');
+    }
+  }, [id, navigate]);
 
   const [lineItems, setLineItems] = useState([
     { 
@@ -196,7 +252,11 @@ const Estimate = () => {
 
     const estimateData = {
       id: estimateDetails.estimateNumber, // Using estimate number as ID for simplicity
-      estimateDetails,
+      estimateDetails: {
+        ...estimateDetails,
+        estimateDate: estimateDetails.estimateDate?.toISOString(),
+        expiryDate: estimateDetails.expiryDate?.toISOString(),
+      },
       myCompany,
       customer,
       lineItems: finalLineItems.map(li => ({
@@ -212,6 +272,7 @@ const Estimate = () => {
       })),
       overallTotal,
       isDraft,
+      description,
       createdAt: new Date().toISOString(),
     };
 
@@ -224,6 +285,7 @@ const Estimate = () => {
     if (!isDraft) {
       window.print();
     }
+    navigate('/sales/estimate'); // Navigate back to list after save/finalize
   };
 
   return (
@@ -231,7 +293,7 @@ const Estimate = () => {
       <Card className="shadow-lg border-border dark:border-dark-border">
         <CardHeader className="bg-card dark:bg-dark-card rounded-t-lg p-4 md:p-6 border-b border-border dark:border-dark-border">
           <CardTitle className="text-2xl md:text-3xl font-bold text-primary dark:text-dark-primary">
-            Create Estimate
+            {id ? 'Edit Estimate' : 'Create Estimate'}
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
