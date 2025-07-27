@@ -121,17 +121,20 @@ const ChartOfAccounts = () => {
   const [initialSubAccountData, setInitialSubAccountData] = useState(null);
 
   const handleOpenModal = (account = null, type = 'add_new') => {
+    console.log("handleOpenModal called with:", { account, type });
     if (type === 'edit') {
       setAccountToEdit(account);
       setInitialSubAccountData(null);
-    } else if (type === 'add_sub_account') {
+      setIsModalOpen(true);
+    } else if (type === 'add_child_account') {
       setAccountToEdit(null);
       setInitialSubAccountData(account);
+      setIsModalOpen(true);
     } else { // 'add_new'
       setAccountToEdit(null);
       setInitialSubAccountData(null);
+      setIsModalOpen(true);
     }
-    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -328,6 +331,7 @@ const ChartOfAccounts = () => {
                   </DialogDescription>
                 </DialogHeader>
                 <AddAccountForm 
+                  key={accountToEdit?.id || initialSubAccountData?.accNum || 'new'}
                   existingAccounts={accounts} 
                   onSave={handleSaveAccount} 
                   onCancel={handleCloseModal} 
@@ -408,19 +412,18 @@ const ChartOfAccounts = () => {
                           onClick={() => setSelectedAccountForLedger(account)}
                         >
                           {account.accName}
-                          {account.isHeader && (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-6 w-6 ml-2 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
-                              onClick={(e) => {
-                                e.stopPropagation(); // Prevent row click from triggering
-                                handleOpenModal({ subAccountOf: account.accNum, accType: account.accType, accSubtype: account.accSubtype }, 'add_sub_account');
-                              }}
-                            >
-                              <PlusCircle size={16} />
-                            </Button>
-                          )}
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 ml-2 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent row click from triggering
+                              handleOpenModal(account, 'add_child_account');
+                            }}
+                          >
+                            <PlusCircle size={16} />
+                          </Button>
+                          
                         </td>
                         <td className="px-4 py-3">{account.accType}</td>
                         <td className="px-4 py-3">{account.accSubtype}</td>

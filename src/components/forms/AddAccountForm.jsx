@@ -41,6 +41,11 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
   const [displaySubAccountOf, setDisplaySubAccountOf] = useState("Select parent account (optional)");
 
   useEffect(() => {
+    console.log("AddAccountForm useEffect triggered.");
+    console.log("initialData:", initialData);
+    console.log("isEditMode:", isEditMode);
+    console.log("initialSubAccountData:", initialSubAccountData);
+
     if (isEditMode && initialData) {
       setAccountName(initialData.accName || '');
       setAccountNumber(initialData.accNum || '');
@@ -57,26 +62,23 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
       } else {
         setDisplaySubAccountOf("Select parent account (optional)");
       }
+      console.log("After edit mode setting: accountType=", accountType, "accountSubtype=", accountSubtype, "subAccountOf=", subAccountOf, "displaySubAccountOf=", displaySubAccountOf);
     } else if (initialSubAccountData) {
-      setSubAccountOf(initialSubAccountData.subAccountOf || NO_PARENT_ACCOUNT_VALUE);
+      setSubAccountOf(initialSubAccountData.accNum || NO_PARENT_ACCOUNT_VALUE);
       setAccountType(initialSubAccountData.accType || '');
       setAccountSubtype(initialSubAccountData.accSubtype || '');
-      // Find the parent account and set the display string
-      const parentAccount = existingAccounts.find(acc => acc.accNum === initialSubAccountData.subAccountOf);
-      if (parentAccount) {
-        setDisplaySubAccountOf(`${parentAccount.accName} (${parentAccount.accNum})`);
-      } else {
-        setDisplaySubAccountOf("Select parent account (optional)");
-      }
+      // Set the display string for the parent account
+      setDisplaySubAccountOf(`${initialSubAccountData.accName} (${initialSubAccountData.accNum})`);
       // Reset other fields for a new sub-account
       setAccountName('');
       setAccountNumber('');
       setOpeningBalance('');
       setOpeningBalanceDate(undefined);
-      setIsHeaderAccount(false);
       setOriginalId(null);
-    } else {
+      console.log("After add_child_account setting: accountType=", accountType, "accountSubtype=", accountSubtype, "subAccountOf=", subAccountOf, "displaySubAccountOf=", displaySubAccountOf);
+    } else { // 'add_new'
       resetForm();
+      console.log("After add_new setting: accountType=", accountType, "accountSubtype=", accountSubtype, "subAccountOf=", subAccountOf, "displaySubAccountOf=", displaySubAccountOf);
     }
   }, [initialData, isEditMode, initialSubAccountData, existingAccounts]);
 
@@ -131,6 +133,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
 
   return (
     <form onSubmit={(e) => handleSubmit(e, true)} className="space-y-4 py-2">
+       {console.log("Rendering AddAccountForm with:", { accountType, accountSubtype, subAccountOf })}
        <DialogHeader>
         <div className="flex justify-between items-center">
           <DialogTitle>{isEditMode ? 'Edit Account' : 'Add New Account'}</DialogTitle>
@@ -166,7 +169,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
         <Label htmlFor="accountType">Account Type <span className="text-red-500">*</span></Label>
         <Select onValueChange={(value) => { setAccountType(value); setAccountSubtype(''); }} value={accountType} required>
           <SelectTrigger id="accountType" className="w-full mt-1">
-            <SelectValue placeholder="Select account type" />
+            <SelectValue placeholder="Select account type" value={accountType} />
           </SelectTrigger>
           <SelectContent>
             {accountTypeOptions.map(type => (
@@ -175,26 +178,25 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
           </SelectContent>
         </Select>
       </div>
-      {accountType && (
-        <div>
-          <Label htmlFor="accountSubtype">Account Sub-Type <span className="text-red-500">*</span></Label>
-          <Select onValueChange={setAccountSubtype} value={accountSubtype} required>
-            <SelectTrigger id="accountSubtype" className="w-full mt-1">
-              <SelectValue placeholder="Select account sub-type" />
-            </SelectTrigger>
-            <SelectContent>
-              {accountTypes[accountType]?.map(subtype => (
-                <SelectItem key={subtype} value={subtype}>{subtype}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      )}
+      <div>
+        <Label htmlFor="accountSubtype">Account Sub-Type <span className="text-red-500">*</span></Label>
+        <Select onValueChange={setAccountSubtype} value={accountSubtype} required>
+          <SelectTrigger id="accountSubtype" className="w-full mt-1">
+            <SelectValue placeholder="Select account sub-type" value={accountSubtype} />
+          </SelectTrigger>
+          <SelectContent>
+            {accountTypes[accountType]?.map(subtype => (
+              <SelectItem key={subtype} value={subtype}>{subtype}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <div>
         <Label htmlFor="subAccountOf">Sub-Account of</Label>
         <Select onValueChange={setSubAccountOf} value={subAccountOf}>
           <SelectTrigger id="subAccountOf" className="w-full mt-1">
-            <SelectValue>{displaySubAccountOf}</SelectValue>
+            <SelectValue placeholder="Select parent account">
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={NO_PARENT_ACCOUNT_VALUE}>None</SelectItem>

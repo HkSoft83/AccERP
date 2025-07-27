@@ -1,188 +1,38 @@
-[plugin:vite:react-babel] D:\B-Important\Programming\Github\AccERP\src\components\forms\AddAccountForm.jsx: Unterminated JSX contents. (256:11)
-  259 |
-D:/B-Important/Programming/Github/AccERP/src/components/forms/AddAccountForm.jsx:256:11
-254|          </Button>
-255|        </DialogFooter>
-256|      </form>
-   |             ^
-257|    );
-258|  };
-
 main.jsx is executing
-main.jsx:9 Root element: <div id=​"root">​…​</div>​<div class=​"flex h-screen bg-gray-50 dark:​bg-gray-900 text-gray-900 dark:​text-gray-100">​…​</div>​flex<div class=​"fixed inset-y-0 left-0 z-30 bg-white dark:​bg-gray-800 shadow-xl border-r border-gray-200 dark:​border-gray-700 flex flex-col" style=​"width:​ 256px;​ min-width:​ 16rem;​ max-width:​ 16rem;​">​…​</div>​flex<div class=​"flex-1 flex flex-col overflow-hidden" style=​"margin-left:​ 16rem;​ transition:​ margin-left 0.3s;​">​…​</div>​flex<header class=​"h-20 bg-white dark:​bg-gray-800 shadow-md flex items-center justify-between px-6 border-b border-gray-200 dark:​border-gray-700">​…​</header>​flex<main class=​"flex-1 overflow-x-hidden overflow-y-auto p-6 bg-gray-50 dark:​bg-gray-900">​…​</main>​scroll<div style=​"opacity:​ 0;​ transform:​ translateY(20px)​ scale(0.98)​ translateZ(0px)​;​">​…​</div>​<div class=​"space-y-6 p-1">​…​</div>​<div class=​"rounded-lg border bg-card text-card-foreground shadow-lg border-border dark:​border-dark-border">​…​</div>​<div class=​"flex flex-col space-y-1.5 bg-card dark:​bg-dark-card rounded-t-lg p-4 md:​p-6 border-b border-border dark:​border-dark-border">​…​</div>​flex<div class=​"p-4 md:​p-6">​…​</div>​<div class=​"mb-6 flex items-center space-x-2 p-3 bg-background dark:​bg-dark-background rounded-lg shadow-sm border border-border dark:​border-dark-border">​…​</div>​flex<input type=​"text" class=​"flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background file:​border-0 file:​bg-transparent file:​text-sm file:​font-medium placeholder:​text-muted-foreground focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​cursor-not-allowed disabled:​opacity-50 flex-grow focus:​ring-accent dark:​focus:​ring-dark-accent border-input dark:​border-dark-input focus:​border-primary dark:​focus:​border-dark-primary" placeholder=​"Search accounts (Sl No, Name, Type...)​" value>​flex<button class=​"inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:​outline-none focus-visible:​ring-2 focus-visible:​ring-ring focus-visible:​ring-offset-2 disabled:​pointer-events-none disabled:​opacity-50 h-10 px-4 py-2 bg-primary text-primary-foreground hover:​bg-primary-hover dark:​bg-dark-primary dark:​text-dark-primary-foreground dark:​hover:​bg-dark-primary-hover">​…​</button>​flex</div>​<div class=​"overflow-x-auto rounded-lg border border-border dark:​border-dark-border shadow-md">​…​</div>​scroll</div>​</div>​</div>​</div>​</main>​</div>​<div role=​"region" aria-label=​"Notifications (F8)​" tabindex=​"-1" style=​"pointer-events:​ none;​">​…​</div>​</div>​<div role=​"region" aria-label=​"Notifications (F8)​" tabindex=​"-1" style=​"pointer-events:​ none;​">​…​</div>​</div>​
+main.jsx:9 Root element: <div id=​"root">​</div>​
 hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=3d401e30:5266:5)
+    at BrowserRouter (react-router-dom.js?v=dd22e15c:5266:5)
     at ThemeProvider (ThemeContext.jsx:7:33)
     at App (<anonymous>)
-overrideMethod @ hook.js:608
-warnOnce @ react-router-dom.js?v=3d401e30:4409
-logDeprecation @ react-router-dom.js?v=3d401e30:4412
-logV6DeprecationWarnings @ react-router-dom.js?v=3d401e30:4415
-(anonymous) @ react-router-dom.js?v=3d401e30:5290
-commitHookEffectListMount @ chunk-V5LT2MCF.js?v=3d401e30:16936
-commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=3d401e30:18184
-commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=3d401e30:18157
-commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=3d401e30:18147
-commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=3d401e30:18137
-flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=3d401e30:19518
-flushPassiveEffects @ chunk-V5LT2MCF.js?v=3d401e30:19475
-performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=3d401e30:18896
-flushSyncCallbacks @ chunk-V5LT2MCF.js?v=3d401e30:9135
-commitRootImpl @ chunk-V5LT2MCF.js?v=3d401e30:19460
-commitRoot @ chunk-V5LT2MCF.js?v=3d401e30:19305
-finishConcurrentRender @ chunk-V5LT2MCF.js?v=3d401e30:18811
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=3d401e30:18746
-workLoop @ chunk-V5LT2MCF.js?v=3d401e30:197
-flushWork @ chunk-V5LT2MCF.js?v=3d401e30:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=3d401e30:384Understand this warning
+overrideMethod @ hook.js:608Understand this warning
 hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=3d401e30:5266:5)
+    at BrowserRouter (react-router-dom.js?v=dd22e15c:5266:5)
     at ThemeProvider (ThemeContext.jsx:7:33)
     at App (<anonymous>)
-overrideMethod @ hook.js:608
-warnOnce @ react-router-dom.js?v=3d401e30:4409
-logDeprecation @ react-router-dom.js?v=3d401e30:4412
-logV6DeprecationWarnings @ react-router-dom.js?v=3d401e30:4418
-(anonymous) @ react-router-dom.js?v=3d401e30:5290
-commitHookEffectListMount @ chunk-V5LT2MCF.js?v=3d401e30:16936
-commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=3d401e30:18184
-commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=3d401e30:18157
-commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=3d401e30:18147
-commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=3d401e30:18137
-flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=3d401e30:19518
-flushPassiveEffects @ chunk-V5LT2MCF.js?v=3d401e30:19475
-performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=3d401e30:18896
-flushSyncCallbacks @ chunk-V5LT2MCF.js?v=3d401e30:9135
-commitRootImpl @ chunk-V5LT2MCF.js?v=3d401e30:19460
-commitRoot @ chunk-V5LT2MCF.js?v=3d401e30:19305
-finishConcurrentRender @ chunk-V5LT2MCF.js?v=3d401e30:18811
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=3d401e30:18746
-workLoop @ chunk-V5LT2MCF.js?v=3d401e30:197
-flushWork @ chunk-V5LT2MCF.js?v=3d401e30:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=3d401e30:384Understand this warning
-client.ts:469  GET http://localhost:5173/src/components/forms/AddAccountForm.jsx?t=1753574701414 net::ERR_ABORTED 500 (Internal Server Error)
-fetchUpdate @ client.ts:469
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-chart-of-accounts:93 [hmr] Failed to reload /src/components/forms/AddAccountForm.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
-overrideMethod @ hook.js:608
-console.error @ chart-of-accounts:93
-warnFailedFetch @ client.ts:122
-fetchUpdate @ client.ts:475
-await in fetchUpdate
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-client.ts:469  GET http://localhost:5173/src/components/forms/AddAccountForm.jsx?t=1753574709822 net::ERR_ABORTED 500 (Internal Server Error)
-fetchUpdate @ client.ts:469
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-chart-of-accounts:93 [hmr] Failed to reload /src/components/forms/AddAccountForm.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
-overrideMethod @ hook.js:608
-console.error @ chart-of-accounts:93
-warnFailedFetch @ client.ts:122
-fetchUpdate @ client.ts:475
-await in fetchUpdate
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-client.ts:469  GET http://localhost:5173/src/components/forms/AddAccountForm.jsx?t=1753574727950 net::ERR_ABORTED 500 (Internal Server Error)
-fetchUpdate @ client.ts:469
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-chart-of-accounts:93 [hmr] Failed to reload /src/components/forms/AddAccountForm.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
-overrideMethod @ hook.js:608
-console.error @ chart-of-accounts:93
-warnFailedFetch @ client.ts:122
-fetchUpdate @ client.ts:475
-await in fetchUpdate
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-client.ts:469  GET http://localhost:5173/src/components/forms/AddAccountForm.jsx?t=1753574738598 net::ERR_ABORTED 500 (Internal Server Error)
-fetchUpdate @ client.ts:469
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-chart-of-accounts:93 [hmr] Failed to reload /src/components/forms/AddAccountForm.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
-overrideMethod @ hook.js:608
-console.error @ chart-of-accounts:93
-warnFailedFetch @ client.ts:122
-fetchUpdate @ client.ts:475
-await in fetchUpdate
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-client.ts:469  GET http://localhost:5173/src/components/forms/AddAccountForm.jsx?t=1753574745764 net::ERR_ABORTED 500 (Internal Server Error)
-fetchUpdate @ client.ts:469
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-chart-of-accounts:93 [hmr] Failed to reload /src/components/forms/AddAccountForm.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
-overrideMethod @ hook.js:608
-console.error @ chart-of-accounts:93
-warnFailedFetch @ client.ts:122
-fetchUpdate @ client.ts:475
-await in fetchUpdate
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-client.ts:469  GET http://localhost:5173/src/components/forms/AddAccountForm.jsx?t=1753574764613 net::ERR_ABORTED 500 (Internal Server Error)
-fetchUpdate @ client.ts:469
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-chart-of-accounts:93 [hmr] Failed to reload /src/components/forms/AddAccountForm.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
-overrideMethod @ hook.js:608
-console.error @ chart-of-accounts:93
-warnFailedFetch @ client.ts:122
-fetchUpdate @ client.ts:475
-await in fetchUpdate
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-client.ts:469  GET http://localhost:5173/src/components/forms/AddAccountForm.jsx?t=1753574772804 net::ERR_ABORTED 500 (Internal Server Error)
-fetchUpdate @ client.ts:469
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-chart-of-accounts:93 [hmr] Failed to reload /src/components/forms/AddAccountForm.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
-overrideMethod @ hook.js:608
-console.error @ chart-of-accounts:93
-warnFailedFetch @ client.ts:122
-fetchUpdate @ client.ts:475
-await in fetchUpdate
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-client.ts:469  GET http://localhost:5173/src/components/forms/AddAccountForm.jsx?t=1753574777618 net::ERR_ABORTED 500 (Internal Server Error)
-fetchUpdate @ client.ts:469
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-chart-of-accounts:93 [hmr] Failed to reload /src/components/forms/AddAccountForm.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
-overrideMethod @ hook.js:608
-console.error @ chart-of-accounts:93
-warnFailedFetch @ client.ts:122
-fetchUpdate @ client.ts:475
-await in fetchUpdate
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-client.ts:469  GET http://localhost:5173/src/components/forms/AddAccountForm.jsx?t=1753574785087 net::ERR_ABORTED 500 (Internal Server Error)
-fetchUpdate @ client.ts:469
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
-chart-of-accounts:93 [hmr] Failed to reload /src/components/forms/AddAccountForm.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
-overrideMethod @ hook.js:608
-console.error @ chart-of-accounts:93
-warnFailedFetch @ client.ts:122
-fetchUpdate @ client.ts:475
-await in fetchUpdate
-(anonymous) @ client.ts:181
-handleMessage @ client.ts:179
-(anonymous) @ client.ts:96Understand this error
+overrideMethod @ hook.js:608Understand this warning
+src/components/forms/AddAccountForm.jsx?t=1753583094655:1  Failed to load resource: the server responded with a status of 500 (Internal Server Error)Understand this error
+2chunk-GHX6QOSA.js?v=dd22e15c:903 Uncaught TypeError: Failed to fetch dynamically imported module: http://localhost:5173/src/pages/ChartOfAccounts.jsx?t=1753581941991Understand this error
+hook.js:608 The above error occurred in the <Route.Provider> component:
+
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4103:5)
+    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4510:26)
+    at div
+    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:278:40)
+    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:7103:24)
+    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:7169:26)
+    at main
+    at div
+    at div
+    at Layout (http://localhost:5173/src/components/Layout.jsx:313:51)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4103:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4574:5)
+    at Suspense
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4517:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:5266:5)
+    at ThemeProvider (http://localhost:5173/src/contexts/ThemeContext.jsx:25:33)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+overrideMethod @ hook.js:608Understand this error
+chunk-V5LT2MCF.js?v=dd22e15c:19441 Uncaught TypeError: Failed to fetch dynamically imported module: http://localhost:5173/src/pages/ChartOfAccounts.jsx?t=1753581941991Understand this error
