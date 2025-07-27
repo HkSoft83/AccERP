@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Label } from '@/components/ui/label';
-// import AddSalesOrderForm from '@/components/forms/AddSalesOrderForm'; // Placeholder for now
+import AddSalesOrder from '@/pages/sales/AddSalesOrder';
 
 const CustomerProfileLedger = ({ customerId, customerName, onClose, onEditCustomer }) => {
   const { toast } = useToast();
@@ -117,10 +117,10 @@ const CustomerProfileLedger = ({ customerId, customerName, onClose, onEditCustom
   const confirmDeleteSalesOrder = () => {
     if (orderToDelete) {
       const allSalesOrders = JSON.parse(localStorage.getItem('salesOrders') || '[]');
-      const updatedOrders = allSalesOrders.filter(order => order.orderNumber !== orderToDelete.orderNumber);
+      const updatedOrders = allSalesOrders.filter(order => order.id !== orderToDelete.id);
       localStorage.setItem('salesOrders', JSON.stringify(updatedOrders));
-      setCustomerSalesOrders(updatedOrders.filter(order => order.customer === customerId)); // Update customer-specific list
-      toast({ title: "Order Deleted", description: `Sales Order ${orderToDelete.orderNumber} has been deleted.`, variant: "destructive" });
+      setCustomerSalesOrders(updatedOrders.filter(order => order.customer.id === customerId)); // Update customer-specific list
+      toast({ title: "Order Deleted", description: `Sales Order ${orderToDelete.salesOrderDetails.salesOrderNumber} has been deleted.`, variant: "destructive" });
       setIsConfirmDeleteSalesOrderModalOpen(false);
       setOrderToDelete(null);
     }
@@ -128,7 +128,7 @@ const CustomerProfileLedger = ({ customerId, customerName, onClose, onEditCustom
 
   const handleSaveSalesOrder = () => {
     const storedSalesOrders = JSON.parse(localStorage.getItem('salesOrders') || '[]');
-    const filteredOrders = storedSalesOrders.filter(order => order.customer === customerId);
+    const filteredOrders = storedSalesOrders.filter(order => order.customer.id === customerId);
     setCustomerSalesOrders(filteredOrders);
     setIsSalesOrderModalOpen(false);
     setOrderToEdit(null);
@@ -257,7 +257,7 @@ const CustomerProfileLedger = ({ customerId, customerName, onClose, onEditCustom
   useEffect(() => {
     if (customerId) {
       const storedSalesOrders = JSON.parse(localStorage.getItem('salesOrders')) || [];
-      const filteredOrders = storedSalesOrders.filter(order => order.customer === customerId);
+      const filteredOrders = storedSalesOrders.filter(order => order.customer.id === customerId);
       setCustomerSalesOrders(filteredOrders);
     }
   }, [customerId]);
@@ -383,12 +383,12 @@ const CustomerProfileLedger = ({ customerId, customerName, onClose, onEditCustom
                 <TableBody className="bg-card dark:bg-dark-card divide-y divide-border dark:divide-dark-border">
                   {customerSalesOrders.length > 0 ? (
                     customerSalesOrders.map((order) => {
-                      const totalAmount = order.lineItems.reduce((sum, item) => sum + (item.rateForBillingUnit * item.quantityInput), 0);
+                      const totalAmount = order.grandTotal;
                       return (
-                        <TableRow key={order.orderNumber}>
-                          <TableCell className="px-4 py-3 text-muted-foreground dark:text-dark-muted-foreground">{order.orderNumber}</TableCell>
-                          <TableCell className="px-4 py-3 text-muted-foreground dark:text-dark-muted-foreground">{format(new Date(order.orderDate), 'dd-MMM-yyyy')}</TableCell>
-                          <TableCell className="px-4 py-3 text-muted-foreground dark:text-dark-muted-foreground">{order.memo || '-'}</TableCell>
+                        <TableRow key={order.id}>
+                          <TableCell className="px-4 py-3 text-muted-foreground dark:text-dark-muted-foreground">{order.salesOrderDetails.salesOrderNumber}</TableCell>
+                          <TableCell className="px-4 py-3 text-muted-foreground dark:text-dark-muted-foreground">{format(new Date(order.salesOrderDetails.salesOrderDate), 'dd-MMM-yyyy')}</TableCell>
+                          <TableCell className="px-4 py-3 text-muted-foreground dark:text-dark-muted-foreground">{order.notes || '-'}</TableCell>
                           <TableCell className="px-4 py-3 text-right font-semibold text-foreground dark:text-dark-foreground">{totalAmount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</TableCell>
                           <TableCell className="px-4 py-3">
                             <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.isDraft ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
@@ -432,12 +432,9 @@ const CustomerProfileLedger = ({ customerId, customerName, onClose, onEditCustom
                 </DialogHeader>
                 {orderToView ? (
                   <div className="space-y-4 py-4">
-                    <p><strong>Order Number:</strong> {orderToView.orderNumber}</p>
+                    <p><strong>Order Number:</strong> {orderToView.salesOrderDetails.salesOrderNumber}</p>
                     <p><strong>Customer:</strong> {customerName || 'N/A'}</p>
-                    <p><strong>Order Date:</strong> {format(new Date(orderToView.orderDate), 'dd-MMM-yyyy')}</p>
-                    <p><strong>Expected Delivery Date:</strong> {format(new Date(orderToView.expectedDeliveryDate), 'dd-MMM-yyyy')}</p>
-                    <p><strong>Memo:</strong> {orderToView.memo || 'N/A'}</p>
-                    <p><strong>Shipping Address:</strong> {orderToView.shippingAddress || 'N/A'}</p>
+                    <p><strong>Order Date:</strong> {format(new Date(orderToView.salesOrderDetails.salesOrderDate), 'dd-MMM-yyyy')}</p>
                     <h4 className="font-semibold mt-4">Line Items:</h4>
                     <Table>
                       <TableHeader>
@@ -445,16 +442,16 @@ const CustomerProfileLedger = ({ customerId, customerName, onClose, onEditCustom
                           <TableHead>Product</TableHead>
                           <TableHead>Quantity</TableHead>
                           <TableHead>Rate</TableHead>
-                          <TableHead>Discount</TableHead>
+                          <TableHead>Amount</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {orderToView.lineItems.map((item, index) => (
                           <TableRow key={index}>
                             <TableCell>{item.productName}</TableCell>
-                            <TableCell>{item.quantityInput} {item.quantityUnitName}</TableCell>
-                            <TableCell>{item.rateForBillingUnit} per {item.billingUnitName}</TableCell>
-                            <TableCell>{item.discountPercent > 0 ? `${item.discountPercent}%` : item.discountAmount > 0 ? `${item.discountAmount}` : 'N/A'}</TableCell>
+                            <TableCell>{item.quantityInput} {item.quantityUnitId}</TableCell>
+                            <TableCell>{item.rateForBillingUnit}</TableCell>
+                            <TableCell>{item.totalPrice}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -462,14 +459,15 @@ const CustomerProfileLedger = ({ customerId, customerName, onClose, onEditCustom
                     <p><strong>Notes:</strong> {orderToView.notes || 'N/A'}</p>
                   </div>
                 ) : (
-                  // Placeholder for AddSalesOrderForm
-                  <div className="p-4 text-center text-muted-foreground">
-                    <p>Sales Order Form will be implemented here.</p>
-                    <Button onClick={() => {
+                  <AddSalesOrder
+                    onSave={handleSaveSalesOrder}
+                    onCancel={() => {
                       setIsSalesOrderModalOpen(false);
                       setOrderToEdit(null);
-                    }}>Close</Button>
-                  </div>
+                    }}
+                    initialData={orderToEdit || { customer: { id: customerId } }}
+                    isEditMode={!!orderToEdit}
+                  />
                 )}
               </DialogContent>
             </Dialog>
@@ -480,7 +478,7 @@ const CustomerProfileLedger = ({ customerId, customerName, onClose, onEditCustom
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. This will permanently delete the sales order
-                    "{orderToDelete?.orderNumber}".
+                    "{orderToDelete?.salesOrderDetails.salesOrderNumber}".
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

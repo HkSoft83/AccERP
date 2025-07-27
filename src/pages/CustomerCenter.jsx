@@ -30,13 +30,6 @@ import AddCustomerForm from '@/components/forms/AddCustomerForm';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CustomerProfileLedger from '@/components/customer/CustomerProfileLedger';
 
-const initialCustomersData = [
-  { id: 'cust-001', name: 'Client Omega Corp.', displayName: 'Omega Corp.', proprietorName: 'Mr. O', customerNumber: 'C001', address: '123 Omega St', balance: 2800.00, openingBalance: 2800.00, openingBalanceDate: '2023-01-01' },
-  { id: 'cust-002', name: 'Customer Zeta Ltd.', displayName: 'Zeta Ltd.', proprietorName: 'Ms. Z', customerNumber: 'C002', address: '456 Zeta Ave', balance: 0.00, openingBalance: 0.00, openingBalanceDate: '2023-01-01' },
-  { id: 'cust-003', name: 'Patron Gamma Solutions', displayName: 'Gamma Solutions', proprietorName: 'Dr. G', customerNumber: 'C003', address: '789 Gamma Rd', balance: 5120.75, openingBalance: 5120.75, openingBalanceDate: '2023-01-01' },
-  { id: 'cust-004', name: 'Client Alpha Services', displayName: 'Alpha Services', proprietorName: 'Prof. A', customerNumber: 'C004', address: '012 Alpha Blvd', balance: -300.00, openingBalance: -300.00, openingBalanceDate: '2023-01-01' },
-];
-
 const formatCustomerForDisplay = (customer) => ({
   ...customer,
   balanceFormatted: (customer.balance || 0).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }),
@@ -61,7 +54,21 @@ const SortableHeader = ({ children, columnKey, sortConfig, requestSort, isTextRi
 
 const CustomerCenter = () => {
   const { toast } = useToast();
-  const [customers, setCustomers] = useState(() => initialCustomersData.map(formatCustomerForDisplay));
+  const [customers, setCustomers] = useState(() => {
+    const storedCustomers = localStorage.getItem('customers');
+    if (storedCustomers) {
+      return JSON.parse(storedCustomers).map(formatCustomerForDisplay);
+    } else {
+      const defaultCustomers = [
+        { id: 'cust-001', name: 'Client Omega Corp.', displayName: 'Omega Corp.', proprietorName: 'Mr. O', customerNumber: 'C001', address: '123 Omega St', balance: 2800.00, openingBalance: 2800.00, openingBalanceDate: '2023-01-01' },
+        { id: 'cust-002', name: 'Customer Zeta Ltd.', displayName: 'Zeta Ltd.', proprietorName: 'Ms. Z', customerNumber: 'C002', address: '456 Zeta Ave', balance: 0.00, openingBalance: 0.00, openingBalanceDate: '2023-01-01' },
+        { id: 'cust-003', name: 'Patron Gamma Solutions', displayName: 'Gamma Solutions', proprietorName: 'Dr. G', customerNumber: 'C003', address: '789 Pine Ln', balance: 5120.75, openingBalance: 5120.75, openingBalanceDate: '2023-01-01' },
+        { id: 'cust-004', name: 'Client Alpha Services', displayName: 'Alpha Services', proprietorName: 'Prof. A', customerNumber: 'C004', address: '012 Alpha Blvd', balance: -300.00, openingBalance: -300.00, openingBalanceDate: '2023-01-01' },
+      ];
+      localStorage.setItem('customers', JSON.stringify(defaultCustomers));
+      return defaultCustomers.map(formatCustomerForDisplay);
+    }
+  });
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,14 +77,15 @@ const CustomerCenter = () => {
   const [customerToDelete, setCustomerToDelete] = useState(null);
   const [selectedCustomerForLedger, setSelectedCustomerForLedger] = useState(null);
 
-  useEffect(() => {
-    const storedCustomers = localStorage.getItem('customers');
-    if (storedCustomers) {
-      setCustomers(JSON.parse(storedCustomers).map(formatCustomerForDisplay));
-    } else {
-      localStorage.setItem('customers', JSON.stringify(initialCustomersData));
-    }
-  }, []);
+  // Remove the redundant useEffect for loading customers
+  // useEffect(() => {
+  //   const storedCustomers = localStorage.getItem('customers');
+  //   if (storedCustomers) {
+  //     setCustomers(JSON.parse(storedCustomers).map(formatCustomerForDisplay));
+  //   } else {
+  //     localStorage.setItem('customers', JSON.stringify(initialCustomersData));
+  //   }
+  // }, []);
 
   const updateLocalStorage = (updatedCustomers) => {
     localStorage.setItem('customers', JSON.stringify(updatedCustomers.map(({balanceFormatted, ...rest}) => rest)));

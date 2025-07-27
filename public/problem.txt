@@ -1,161 +1,56 @@
-main.jsx is executing
-main.jsx:9 Root element: <div id=​"root">​…​</div>​
-hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=dd22e15c:5266:5)
-    at ThemeProvider (ThemeContext.jsx:7:33)
-    at App (<anonymous>)
-overrideMethod @ hook.js:608
-warnOnce @ react-router-dom.js?v=dd22e15c:4409
-logDeprecation @ react-router-dom.js?v=dd22e15c:4412
-logV6DeprecationWarnings @ react-router-dom.js?v=dd22e15c:4415
-(anonymous) @ react-router-dom.js?v=dd22e15c:5290
-commitHookEffectListMount @ chunk-V5LT2MCF.js?v=dd22e15c:16936
-commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=dd22e15c:18184
-commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=dd22e15c:18157
-commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=dd22e15c:18147
-commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=dd22e15c:18137
-flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=dd22e15c:19518
-flushPassiveEffects @ chunk-V5LT2MCF.js?v=dd22e15c:19475
-performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=dd22e15c:18896
-flushSyncCallbacks @ chunk-V5LT2MCF.js?v=dd22e15c:9135
-commitRootImpl @ chunk-V5LT2MCF.js?v=dd22e15c:19460
-commitRoot @ chunk-V5LT2MCF.js?v=dd22e15c:19305
-finishConcurrentRender @ chunk-V5LT2MCF.js?v=dd22e15c:18811
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=dd22e15c:18746
-workLoop @ chunk-V5LT2MCF.js?v=dd22e15c:197
-flushWork @ chunk-V5LT2MCF.js?v=dd22e15c:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=dd22e15c:384Understand this warning
-hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=dd22e15c:5266:5)
-    at ThemeProvider (ThemeContext.jsx:7:33)
-    at App (<anonymous>)
-overrideMethod @ hook.js:608
-warnOnce @ react-router-dom.js?v=dd22e15c:4409
-logDeprecation @ react-router-dom.js?v=dd22e15c:4412
-logV6DeprecationWarnings @ react-router-dom.js?v=dd22e15c:4418
-(anonymous) @ react-router-dom.js?v=dd22e15c:5290
-commitHookEffectListMount @ chunk-V5LT2MCF.js?v=dd22e15c:16936
-commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=dd22e15c:18184
-commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=dd22e15c:18157
-commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=dd22e15c:18147
-commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=dd22e15c:18137
-flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=dd22e15c:19518
-flushPassiveEffects @ chunk-V5LT2MCF.js?v=dd22e15c:19475
-performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=dd22e15c:18896
-flushSyncCallbacks @ chunk-V5LT2MCF.js?v=dd22e15c:9135
-commitRootImpl @ chunk-V5LT2MCF.js?v=dd22e15c:19460
-commitRoot @ chunk-V5LT2MCF.js?v=dd22e15c:19305
-finishConcurrentRender @ chunk-V5LT2MCF.js?v=dd22e15c:18811
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=dd22e15c:18746
-workLoop @ chunk-V5LT2MCF.js?v=dd22e15c:197
-flushWork @ chunk-V5LT2MCF.js?v=dd22e15c:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=dd22e15c:384Understand this warning
-Estimate.jsx:283 Uncaught TypeError: Cannot read properties of undefined (reading 'toLocaleString')
-    at Estimate.jsx:283:35
-    at Array.map (<anonymous>)
-    at Estimate (Estimate.jsx:252:28)
-    at renderWithHooks (chunk-V5LT2MCF.js?v=dd22e15c:11568:26)
-    at updateFunctionComponent (chunk-V5LT2MCF.js?v=dd22e15c:14602:28)
-    at mountLazyComponent (chunk-V5LT2MCF.js?v=dd22e15c:14853:23)
-    at beginWork (chunk-V5LT2MCF.js?v=dd22e15c:15938:22)
-    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=dd22e15c:3674:22)
-    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=dd22e15c:3699:24)
-    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=dd22e15c:3733:39)
-(anonymous) @ Estimate.jsx:283
-Estimate @ Estimate.jsx:252
-renderWithHooks @ chunk-V5LT2MCF.js?v=dd22e15c:11568
-updateFunctionComponent @ chunk-V5LT2MCF.js?v=dd22e15c:14602
-mountLazyComponent @ chunk-V5LT2MCF.js?v=dd22e15c:14853
-beginWork @ chunk-V5LT2MCF.js?v=dd22e15c:15938
-callCallback2 @ chunk-V5LT2MCF.js?v=dd22e15c:3674
-invokeGuardedCallbackDev @ chunk-V5LT2MCF.js?v=dd22e15c:3699
-invokeGuardedCallback @ chunk-V5LT2MCF.js?v=dd22e15c:3733
-beginWork$1 @ chunk-V5LT2MCF.js?v=dd22e15c:19793
-performUnitOfWork @ chunk-V5LT2MCF.js?v=dd22e15c:19226
-workLoopConcurrent @ chunk-V5LT2MCF.js?v=dd22e15c:19217
-renderRootConcurrent @ chunk-V5LT2MCF.js?v=dd22e15c:19192
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=dd22e15c:18706
-workLoop @ chunk-V5LT2MCF.js?v=dd22e15c:197
-flushWork @ chunk-V5LT2MCF.js?v=dd22e15c:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=dd22e15c:384Understand this error
-Estimate.jsx:283 Uncaught TypeError: Cannot read properties of undefined (reading 'toLocaleString')
-    at Estimate.jsx:283:35
-    at Array.map (<anonymous>)
-    at Estimate (Estimate.jsx:252:28)
-    at renderWithHooks (chunk-V5LT2MCF.js?v=dd22e15c:11568:26)
-    at updateFunctionComponent (chunk-V5LT2MCF.js?v=dd22e15c:14602:28)
-    at mountLazyComponent (chunk-V5LT2MCF.js?v=dd22e15c:14853:23)
-    at beginWork (chunk-V5LT2MCF.js?v=dd22e15c:15938:22)
-    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=dd22e15c:3674:22)
-    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=dd22e15c:3699:24)
-    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=dd22e15c:3733:39)
-(anonymous) @ Estimate.jsx:283
-Estimate @ Estimate.jsx:252
-renderWithHooks @ chunk-V5LT2MCF.js?v=dd22e15c:11568
-updateFunctionComponent @ chunk-V5LT2MCF.js?v=dd22e15c:14602
-mountLazyComponent @ chunk-V5LT2MCF.js?v=dd22e15c:14853
-beginWork @ chunk-V5LT2MCF.js?v=dd22e15c:15938
-callCallback2 @ chunk-V5LT2MCF.js?v=dd22e15c:3674
-invokeGuardedCallbackDev @ chunk-V5LT2MCF.js?v=dd22e15c:3699
-invokeGuardedCallback @ chunk-V5LT2MCF.js?v=dd22e15c:3733
-beginWork$1 @ chunk-V5LT2MCF.js?v=dd22e15c:19793
-performUnitOfWork @ chunk-V5LT2MCF.js?v=dd22e15c:19226
-workLoopSync @ chunk-V5LT2MCF.js?v=dd22e15c:19165
-renderRootSync @ chunk-V5LT2MCF.js?v=dd22e15c:19144
-recoverFromConcurrentError @ chunk-V5LT2MCF.js?v=dd22e15c:18764
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=dd22e15c:18712
-workLoop @ chunk-V5LT2MCF.js?v=dd22e15c:197
-flushWork @ chunk-V5LT2MCF.js?v=dd22e15c:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=dd22e15c:384Understand this error
-estimate:93 The above error occurred in the <Estimate> component:
+So, the error:
 
-    at Estimate (http://localhost:5173/src/pages/sales/Estimate.jsx?t=1753597863324:66:49)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4103:5)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4103:5)
-    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4510:26)
-    at div
-    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:278:40)
-    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:7103:24)
-    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:7169:26)
-    at main
-    at div
-    at div
-    at Layout (http://localhost:5173/src/components/Layout.jsx?t=1753596728667:314:51)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4103:5)
-    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4574:5)
-    at Suspense
-    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4517:15)
-    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:5266:5)
-    at ThemeProvider (http://localhost:5173/src/contexts/ThemeContext.jsx:25:33)
-    at App
+csharp
+Copy
+Edit
+Uncaught ReferenceError: products is not defined
+was likely caused by one of the following:
 
-Consider adding an error boundary to your tree to customize error handling behavior.
-Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
-overrideMethod @ hook.js:608
-console.error @ estimate:93
-logCapturedError @ chunk-V5LT2MCF.js?v=dd22e15c:14052
-update.callback @ chunk-V5LT2MCF.js?v=dd22e15c:14072
-callCallback @ chunk-V5LT2MCF.js?v=dd22e15c:11268
-commitUpdateQueue @ chunk-V5LT2MCF.js?v=dd22e15c:11285
-commitLayoutEffectOnFiber @ chunk-V5LT2MCF.js?v=dd22e15c:17115
-commitLayoutMountEffects_complete @ chunk-V5LT2MCF.js?v=dd22e15c:18008
-commitLayoutEffects_begin @ chunk-V5LT2MCF.js?v=dd22e15c:17997
-commitLayoutEffects @ chunk-V5LT2MCF.js?v=dd22e15c:17948
-commitRootImpl @ chunk-V5LT2MCF.js?v=dd22e15c:19381
-commitRoot @ chunk-V5LT2MCF.js?v=dd22e15c:19305
-finishConcurrentRender @ chunk-V5LT2MCF.js?v=dd22e15c:18788
-performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=dd22e15c:18746
-workLoop @ chunk-V5LT2MCF.js?v=dd22e15c:197
-flushWork @ chunk-V5LT2MCF.js?v=dd22e15c:176
-performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=dd22e15c:384Understand this error
-chunk-V5LT2MCF.js?v=dd22e15c:19441 Uncaught TypeError: Cannot read properties of undefined (reading 'toLocaleString')
-    at Estimate.jsx:283:35
-    at Array.map (<anonymous>)
-    at Estimate (Estimate.jsx:252:28)
-    at renderWithHooks (chunk-V5LT2MCF.js?v=dd22e15c:11568:26)
-    at updateFunctionComponent (chunk-V5LT2MCF.js?v=dd22e15c:14602:28)
-    at mountLazyComponent (chunk-V5LT2MCF.js?v=dd22e15c:14853:23)
-    at beginWork (chunk-V5LT2MCF.js?v=dd22e15c:15938:22)
-    at beginWork$1 (chunk-V5LT2MCF.js?v=dd22e15c:19781:22)
-    at performUnitOfWork (chunk-V5LT2MCF.js?v=dd22e15c:19226:20)
-    at workLoopSync (chunk-V5LT2MCF.js?v=dd22e15c:19165:13)
+✅ Root Cause:
+You have a return statement inside handleSubmit but didn’t close the function properly, so everything after that point is outside the component, including this part:
+
+jsx
+Copy
+Edit
+return (
+  <div className="p-4">
+    ...
+  </div>
+);
+That means your actual JSX render part is not inside the AddSalesOrder function, which causes weird runtime errors — like products is not defined, even though it clearly is.
+
+🔧 How to Fix
+Move this render part (return (...)) back inside the AddSalesOrder function.
+
+✂️ Wrong (your current code):
+jsx
+Copy
+Edit
+const handleSubmit = () => {
+  ...
+  onCancel(); // Close the modal
+
+return (
+  <div className="p-4">  ← ❌ This is wrongly placed outside
+You forgot a closing } after handleSubmit.
+
+✅ Corrected version:
+jsx
+Copy
+Edit
+const handleSubmit = () => {
+  ...
+  onCancel(); // Close the modal
+}; // ✅ CLOSE handleSubmit properly
+
+return (
+  <div className="p-4">  // ✅ This is now inside AddSalesOrder
+    ...
+  </div>
+);
+✅ Final Fix Summary:
+Add a } before your final return (...) to properly close handleSubmit.
+
+Ensure return (...) is inside the AddSalesOrder component.
+
+Save and restart the dev server.
