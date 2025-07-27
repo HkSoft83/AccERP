@@ -201,6 +201,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
         <Select onValueChange={setSubAccountOf} value={subAccountOf}>
           <SelectTrigger id="subAccountOf" className="w-full mt-1">
             <SelectValue>{displaySubAccountOf}</SelectValue>
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value={NO_PARENT_ACCOUNT_VALUE}>None</SelectItem>
             {existingAccounts.filter(acc => acc.accNum !== originalId && acc.isHeader && acc.accType === accountType && acc.accSubtype === accountSubtype).map(acc => (
@@ -210,7 +211,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
         </Select>
       </div>
       {!isHeaderAccount && (
-        <>
+        <div>
           <div>
             <Label htmlFor="openingBalance">Opening Balance</Label>
             <Input
@@ -236,7 +237,7 @@ const AddAccountForm = ({ existingAccounts = [], onSave, onCancel, initialData, 
             </div>
              {isEditMode && <p className="text-xs text-muted-foreground">Opening balance date cannot be changed after creation.</p>}
           </div>
-        </>
+        </div>
       )}
       <DialogFooter className="pt-6">
         <DialogClose asChild>
