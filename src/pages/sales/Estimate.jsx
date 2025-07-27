@@ -44,7 +44,7 @@ const getProductsFromStorage = () => {
 const Estimate = () => {
   const { toast } = useToast();
   const [estimateDetails, setEstimateDetails] = useState({
-    estimateNumber: '',
+    estimateNumber: `EST-${String(Date.now()).slice(-6)}`,
     estimateDate: null,
     expiryDate: null,
   });
