@@ -320,27 +320,28 @@ const ChartOfAccounts = () => {
             </div>
           </CardHeader>
           <CardContent className="p-4 md:p-6">
-            <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-              <DialogContent className="sm:max-w-[550px] bg-card dark:bg-dark-card text-foreground dark:text-dark-foreground border-border dark:border-dark-border shadow-2xl rounded-lg">
-                <DialogHeader>
-                  <DialogTitle className="text-primary dark:text-dark-primary text-2xl font-semibold">
-                    {accountToEdit ? 'Edit Account' : 'Add New Account'}
-                  </DialogTitle>
-                  <DialogDescription className="text-muted-foreground dark:text-dark-muted-foreground">
-                    {accountToEdit ? 'Update the account details.' : 'Fill in the details to create a new account.'}
-                  </DialogDescription>
-                </DialogHeader>
-                <AddAccountForm 
-                  key={accountToEdit?.id || initialSubAccountData?.accNum || 'new'}
-                  existingAccounts={accounts} 
-                  onSave={handleSaveAccount} 
-                  onCancel={handleCloseModal} 
-                  initialData={accountToEdit}
-                  isEditMode={!!accountToEdit}
-                  initialSubAccountData={initialSubAccountData}
-                />
-              </DialogContent>
-            </Dialog>
+            {isModalOpen && (
+              <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+                <DialogContent className="sm:max-w-[550px] bg-card dark:bg-dark-card text-foreground dark:text-dark-foreground border-border dark:border-dark-border shadow-2xl rounded-lg">
+                  <DialogHeader>
+                    <DialogTitle className="text-primary dark:text-dark-primary text-2xl font-semibold">
+                      {accountToEdit ? 'Edit Account' : 'Add New Account'}
+                    </DialogTitle>
+                    <DialogDescription className="text-muted-foreground dark:text-dark-muted-foreground">
+                      {accountToEdit ? 'Update the account details.' : 'Fill in the details to create a new account.'}
+                    </DialogDescription>
+                  </DialogHeader>
+                  <AddAccountForm 
+                    existingAccounts={accounts} 
+                    onSave={handleSaveAccount} 
+                    onCancel={handleCloseModal} 
+                    initialData={accountToEdit}
+                    isEditMode={!!accountToEdit}
+                    initialSubAccountData={initialSubAccountData}
+                  />
+                </DialogContent>
+              </Dialog>
+            )}
 
             <AlertDialog open={isConfirmDeleteModalOpen} onOpenChange={setIsConfirmDeleteModalOpen}>
               <AlertDialogContent>
@@ -438,7 +439,7 @@ const ChartOfAccounts = () => {
                             variant="ghost"
                             size="icon"
                             className="text-secondary dark:text-dark-secondary hover:text-accent dark:hover:text-dark-accent h-8 w-8"
-                            onClick={() => handleOpenModal(account, 'edit')}
+                            onClick={() => handleOpenModal(accounts.find(a => a.id === account.id), 'edit')}
                           >
                             <Edit size={16} />
                           </Button>

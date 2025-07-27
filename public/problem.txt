@@ -1,38 +1,73 @@
-main.jsx is executing
-main.jsx:9 Root element: <div id=​"root">​</div>​
-hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=dd22e15c:5266:5)
-    at ThemeProvider (ThemeContext.jsx:7:33)
-    at App (<anonymous>)
-overrideMethod @ hook.js:608Understand this warning
-hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=dd22e15c:5266:5)
-    at ThemeProvider (ThemeContext.jsx:7:33)
-    at App (<anonymous>)
-overrideMethod @ hook.js:608Understand this warning
-src/components/forms/AddAccountForm.jsx?t=1753583094655:1  Failed to load resource: the server responded with a status of 500 (Internal Server Error)Understand this error
-2chunk-GHX6QOSA.js?v=dd22e15c:903 Uncaught TypeError: Failed to fetch dynamically imported module: http://localhost:5173/src/pages/ChartOfAccounts.jsx?t=1753581941991Understand this error
-hook.js:608 The above error occurred in the <Route.Provider> component:
+account sub type is not prefiiled when edit mode, others field are okay. see the suggestion
 
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4103:5)
-    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4510:26)
-    at div
-    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:278:40)
-    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:7103:24)
-    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:7169:26)
-    at main
-    at div
-    at div
-    at Layout (http://localhost:5173/src/components/Layout.jsx:313:51)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4103:5)
-    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4574:5)
-    at Suspense
-    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4517:15)
-    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:5266:5)
-    at ThemeProvider (http://localhost:5173/src/contexts/ThemeContext.jsx:25:33)
-    at App
 
-Consider adding an error boundary to your tree to customize error handling behavior.
-Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
-overrideMethod @ hook.js:608Understand this error
-chunk-V5LT2MCF.js?v=dd22e15c:19441 Uncaught TypeError: Failed to fetch dynamically imported module: http://localhost:5173/src/pages/ChartOfAccounts.jsx?t=1753581941991Understand this error
+ChatGPT said:
+Thanks for confirming. Since all fields except accountSubtype are being prefilled correctly in edit mode, and your console shows:
+
+
+AddAccountForm.jsx:43 AddAccountForm useEffect - initialData: Object
+...
+AddAccountForm.jsx:120 Rendering AddAccountForm with: { accountType: 'Expense', accountSubtype: '', ... }
+That means something resets accountSubtype to an empty string after useEffect sets it.
+
+✅ Root Cause (Confirmed)
+In your useEffect, you set:
+
+
+setAccountSubtype(initialData.isHeader ? '' : (initialData.accSubtype || ''));
+Then in this block:
+
+
+<Select
+  onValueChange={(value) => {
+    if (value !== accountType) {
+      setAccountType(value);
+      setAccountSubtype('');
+    }
+  }}
+  value={accountType}
+  required
+>
+Even in edit mode, this logic clears accountSubtype if accountType changes — which it might even from '' to 'Expense', triggering a reset.
+
+✅ Fix Strategy
+We want accountSubtype to not be cleared on first load in edit mode, but still cleared when the user manually changes accountType.
+
+✅ Final Fix: Add an initialLoadComplete flag
+Here's a clean and bulletproof way to do it:
+
+🔧 Step 1: Add a ref to detect first render
+At the top of AddAccountForm:
+
+
+const initialRender = React.useRef(true);
+🔧 Step 2: Update your accountType <Select> logic:
+
+<Select
+  onValueChange={(value) => {
+    if (value !== accountType) {
+      setAccountType(value);
+      if (!initialRender.current) {
+        setAccountSubtype('');
+      }
+    }
+  }}
+  value={accountType}
+  required
+>
+🔧 Step 3: In useEffect, after setting all fields, mark initial load complete
+At the very bottom of your useEffect:
+
+
+initialRender.current = false;
+✅ Why this works:
+On first load (initialRender.current === true), we skip resetting accountSubtype
+
+On user interaction, initialRender.current is already false, so accountSubtype clears as expected
+
+🧪 Optional Debug Console:
+Add this inside onValueChange to verify:
+
+
+console.log("accountType changed:", value, "Initial Render?", initialRender.current);
+Let me know if you’d like this implemented as a full snippet or want help persisting data to storage or backend next.
