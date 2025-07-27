@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import AddCustomerForm from '@/components/forms/AddCustomerForm';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import CustomerProfileLedger from '@/components/customer/CustomerProfileLedger';
 
 const initialCustomersData = [
   { id: 'cust-001', name: 'Client Omega Corp.', displayName: 'Omega Corp.', proprietorName: 'Mr. O', customerNumber: 'C001', address: '123 Omega St', balance: 2800.00, openingBalance: 2800.00, openingBalanceDate: '2023-01-01' },
@@ -67,6 +68,7 @@ const CustomerCenter = () => {
   const [customerToEdit, setCustomerToEdit] = useState(null);
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
   const [customerToDelete, setCustomerToDelete] = useState(null);
+  const [selectedCustomerForLedger, setSelectedCustomerForLedger] = useState(null);
 
   useEffect(() => {
     const storedCustomers = localStorage.getItem('customers');
@@ -170,7 +172,10 @@ const CustomerCenter = () => {
 
   return (
     <div className="space-y-6 p-1">
-      <Card className="shadow-lg border-border dark:border-dark-border">
+      {selectedCustomerForLedger ? (
+        <CustomerProfileLedger customerId={selectedCustomerForLedger.id} customerName={selectedCustomerForLedger.name} onClose={() => setSelectedCustomerForLedger(null)} />
+      ) : (
+        <Card className="shadow-lg border-border dark:border-dark-border">
         <CardHeader className="bg-card dark:bg-dark-card rounded-t-lg p-4 md:p-6 border-b border-border dark:border-dark-border">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
             <CardTitle className="text-2xl md:text-3xl font-bold text-primary dark:text-dark-primary flex items-center">
@@ -266,7 +271,7 @@ const CustomerCenter = () => {
                   <tr key={customer.id} className="bg-card dark:bg-dark-card border-b border-border dark:border-dark-border last:border-b-0 hover:bg-muted/30 dark:hover:bg-dark-muted/30 transition-colors duration-150">
                     <td 
                       className="px-4 py-3 font-medium text-secondary dark:text-dark-secondary hover:underline cursor-pointer"
-                      onClick={() => toast({ title: `View Ledger: ${customer.name}`, description: "Detailed customer ledger view coming soon."})}
+                      onClick={() => setSelectedCustomerForLedger(customer)}
                     >
                       {customer.name}
                     </td>
@@ -306,6 +311,7 @@ const CustomerCenter = () => {
           </div>
         </CardContent>
       </Card>
+      )}
     </div>
   );
 };

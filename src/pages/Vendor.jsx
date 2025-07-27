@@ -294,18 +294,16 @@ const Vendor = () => {
                   </thead>
                   <tbody>
                     {sortedAndFilteredVendors.map((vendor) => (
-                      <tr key={vendor.id} className="bg-card dark:bg-dark-card border-b border-border dark:border-dark-border last:border-b-0 hover:bg-muted/30 dark:hover:bg-dark-muted/30 transition-colors duration-150">
+                      <tr key={vendor.id} className="bg-card dark:bg-dark-card border-b border-border dark:border-dark-border last:border-b-0 hover:bg-muted/30 dark:hover:bg-dark-muted/30 transition-colors duration-150 cursor-pointer" onClick={() => handleOpenLedger(vendor)}>
                         <td 
-                          className="px-4 py-3 font-medium text-secondary dark:text-dark-secondary hover:underline cursor-pointer"
-                          onClick={() => handleOpenLedger(vendor)}
+                          className="px-4 py-3 font-medium text-secondary dark:text-dark-secondary"
                         >
                           {vendor.name}
                         </td>
                         <td className="px-4 py-3">{vendor.displayName}</td>
                         <td className="px-4 py-3">{vendor.address}</td>
                         <td className="px-4 py-3">{vendor.phoneNumber}</td>
-                        <td className="px-4 py-3 text-right font-semibold cursor-pointer hover:underline"
-                          onClick={() => handleOpenLedger(vendor)}>{vendor.balanceFormatted}</td>
+                        <td className="px-4 py-3 text-right font-semibold">{vendor.balanceFormatted}</td>
                         <td className="px-4 py-3 text-center space-x-1">
                           <Button 
                             variant="ghost" 
