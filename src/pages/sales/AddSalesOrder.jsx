@@ -351,7 +351,6 @@ const AddSalesOrder = () => {
     toast({ title: "Sales Order Saved!", description: `Sales Order ${salesOrderNumber} ${send ? 'finalized and' : ''} saved successfully.`, className: 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-200 border-green-300 dark:border-green-600' });
     onSave(salesOrderData, isEditMode); // Call onSave prop
     onCancel(); // Close the modal
-  };
 
   return (
     <div className="p-4">
