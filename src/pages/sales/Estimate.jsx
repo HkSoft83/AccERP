@@ -52,18 +52,23 @@ const Estimate = () => {
   const [myCompany, setMyCompany] = useState({
     name: 'My Company Name',
     address: '123 Business Rd, City, Country',
-    logo: '/images/company-logo.png', // Placeholder
+    logo: '', // Placeholder
   });
 
   const [customer, setCustomer] = useState({
+    id: '',
     name: '',
     address: '',
   });
+
+  const [availableCustomers, setAvailableCustomers] = useState([]);
 
   const [availableProducts, setAvailableProducts] = useState([]);
 
   useEffect(() => {
     setAvailableProducts(getProductsFromStorage());
+    const storedCustomers = JSON.parse(localStorage.getItem('customers') || '[]');
+    setAvailableCustomers(storedCustomers);
   }, []);
 
   const [lineItems, setLineItems] = useState([
@@ -215,23 +220,43 @@ const Estimate = () => {
             <h3 className="font-semibold text-lg mb-2">Bill To:</h3>
             <div className="space-y-2">
               <div>
-                <Label htmlFor="customerName">Customer Name:</Label>
-                <Input
-                  id="customerName"
-                  value={customer.name}
-                  onChange={(e) => handleCustomerChange('name', e.target.value)}
-                  className="mt-1"
-                />
+                <Label htmlFor="customerSelect">Customer:</Label>
+                <Select
+                  value={customer.id || ''}
+                  onValueChange={(value) => {
+                    if (value === 'placeholder') {
+                      setCustomer({ id: '', name: '', address: '' });
+                    } else {
+                      const selectedCustomer = availableCustomers.find(c => c.id === value);
+                      if (selectedCustomer) {
+                        setCustomer({
+                          id: selectedCustomer.id,
+                          name: selectedCustomer.name,
+                          address: selectedCustomer.address || '',
+                        });
+                      } else {
+                        setCustomer({ id: '', name: '', address: '' });
+                      }
+                    }
+                  }}
+                >
+                  <SelectTrigger id="customerSelect" className="mt-1">
+                    <SelectValue placeholder="Select a customer" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="placeholder">Select a customer</SelectItem>
+                    {availableCustomers.map(c => (
+                      <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-              <div>
-                <Label htmlFor="customerAddress">Customer Address:</Label>
-                <Input
-                  id="customerAddress"
-                  value={customer.address}
-                  onChange={(e) => handleCustomerChange('address', e.target.value)}
-                  className="mt-1"
-                />
-              </div>
+              {customer.name && (
+                <div className="mt-2 p-3 border rounded-md bg-muted/50 dark:bg-dark-muted/50">
+                  <p className="font-semibold">{customer.name}</p>
+                  <p className="text-sm text-muted-foreground">{customer.address}</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -261,7 +286,6 @@ const Estimate = () => {
                         <Select value={item.productId} onValueChange={(value) => handleLineItemChange(item.id, 'productId', value)}>
                           <SelectTrigger className="text-sm"><SelectValue placeholder="Select product" /></SelectTrigger>
                           <SelectContent>
-                            <SelectItem value={null}>Select product</SelectItem>
                             {availableProducts.map(p => (<SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>))}
                           </SelectContent>
                         </Select>
