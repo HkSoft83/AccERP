@@ -6,6 +6,7 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { useToast } from '@/components/ui/use-toast';
 import { DialogFooter, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { Save } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 
 const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const { toast } = useToast();
@@ -14,11 +15,12 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
   const [proprietorName, setProprietorName] = useState('');
   const [customerNumber, setCustomerNumber] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [nid, setNid] = useState('');
-  const [extraField1, setExtraField1] = useState('');
-  const [extraField2, setExtraField2] = useState('');
-  const [extraField3, setExtraField3] = useState('');
+  const [bankDetails, setBankDetails] = useState('');
+  const [notes, setNotes] = useState('');
+  const [creditLimit, setCreditLimit] = useState('');
   const [openingBalance, setOpeningBalance] = useState('');
   const [openingBalanceDate, setOpeningBalanceDate] = useState(undefined);
   const [originalId, setOriginalId] = useState(null);
@@ -30,11 +32,12 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       setProprietorName(initialData.proprietorName || '');
       setCustomerNumber(initialData.customerNumber || '');
       setPhoneNumber(initialData.phoneNumber || '');
+      setEmail(initialData.email || '');
       setAddress(initialData.address || '');
       setNid(initialData.nid || '');
-      setExtraField1(initialData.extraField1 || '');
-      setExtraField2(initialData.extraField2 || '');
-      setExtraField3(initialData.extraField3 || '');
+      setBankDetails(initialData.bankDetails || '');
+      setNotes(initialData.notes || '');
+      setCreditLimit(initialData.creditLimit?.toString() || '');
       setOpeningBalance(initialData.openingBalance?.toString() || '');
       setOpeningBalanceDate(initialData.openingBalanceDate ? new Date(initialData.openingBalanceDate) : undefined);
       setOriginalId(initialData.id || initialData.customerNumber);
@@ -49,11 +52,12 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
     setProprietorName('');
     setCustomerNumber('');
     setPhoneNumber('');
+    setEmail('');
     setAddress('');
     setNid('');
-    setExtraField1('');
-    setExtraField2('');
-    setExtraField3('');
+    setBankDetails('');
+    setNotes('');
+    setCreditLimit('');
     setOpeningBalance('');
     setOpeningBalanceDate(undefined);
     setOriginalId(null);
@@ -77,11 +81,12 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
       proprietorName,
       customerNumber: customerNumber || (originalId ? originalId.split('-')[1] || String(Date.now()).slice(-4) : `C${String(Date.now()).slice(-4)}`),
       phoneNumber,
+      email,
       address,
       nid,
-      extraField1,
-      extraField2,
-      extraField3,
+      bankDetails,
+      notes,
+      creditLimit: parseFloat(creditLimit) || 0,
       openingBalance: parseFloat(openingBalance) || 0,
       openingBalanceDate: openingBalanceDate ? openingBalanceDate.toISOString().split('T')[0] : null,
     };
@@ -162,6 +167,17 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
         />
       </div>
       <div>
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="e.g., contact@example.com"
+          className="mt-1"
+        />
+      </div>
+      <div>
         <Label htmlFor="address">Address</Label>
         <Input
           id="address"
@@ -182,32 +198,33 @@ const AddCustomerForm = ({ onSave, onCancel, initialData, isEditMode }) => {
         />
       </div>
       <div>
-        <Label htmlFor="extraField1">Extra Field 1</Label>
+        <Label htmlFor="creditLimit">Credit Limit</Label>
         <Input
-          id="extraField1"
-          value={extraField1}
-          onChange={(e) => setExtraField1(e.target.value)}
-          placeholder=""
+          id="creditLimit"
+          type="number"
+          value={creditLimit}
+          onChange={(e) => setCreditLimit(e.target.value)}
+          placeholder="e.g., 5000.00"
           className="mt-1"
         />
       </div>
       <div>
-        <Label htmlFor="extraField2">Extra Field 2</Label>
-        <Input
-          id="extraField2"
-          value={extraField2}
-          onChange={(e) => setExtraField2(e.target.value)}
-          placeholder=""
+        <Label htmlFor="bankDetails">Bank Details</Label>
+        <Textarea
+          id="bankDetails"
+          value={bankDetails}
+          onChange={(e) => setBankDetails(e.target.value)}
+          placeholder="e.g., Bank Name, Account Number, etc."
           className="mt-1"
         />
       </div>
       <div>
-        <Label htmlFor="extraField3">Extra Field 3</Label>
-        <Input
-          id="extraField3"
-          value={extraField3}
-          onChange={(e) => setExtraField3(e.target.value)}
-          placeholder=""
+        <Label htmlFor="notes">Notes</Label>
+        <Textarea
+          id="notes"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="e.g., Any special instructions or notes about the customer."
           className="mt-1"
         />
       </div>

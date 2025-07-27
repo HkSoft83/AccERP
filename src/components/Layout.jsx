@@ -19,7 +19,7 @@ const navItems = [
     subItems: [
       { name: 'Sales Invoice', path: '/sales/invoice' },
       { name: 'Sales Return', path: '/sales/return' },
-      { name: 'Sales Order', path: '/sales/order' },
+      { name: 'Sales Order', path: '/sales/sales-orders' },
       { name: 'Estimate', path: '/sales/estimate' },
     ]
   },

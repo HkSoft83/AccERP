@@ -15,6 +15,7 @@ const CustomerCenter = lazy(() => import('@/pages/CustomerCenter'));
 const SalesInvoice = lazy(() => import('@/pages/sales/SalesInvoice'));
 const SalesReturn = lazy(() => import('@/pages/sales/SalesReturn'));
 const SalesOrder = lazy(() => import('@/pages/sales/SalesOrder'));
+const AddSalesOrder = lazy(() => import('@/pages/sales/AddSalesOrder'));
 const EstimateList = lazy(() => import('@/pages/sales/EstimateList'));
 const AddEditEstimate = lazy(() => import('@/pages/sales/AddEditEstimate'));
 
@@ -70,7 +71,9 @@ function App() {
                 <Route index element={<Navigate to="invoice" replace />} />
                 <Route path="invoice" element={<SalesInvoice />} />
                 <Route path="return" element={<SalesReturn />} />
-                <Route path="order" element={<SalesOrder />} />
+                <Route path="sales-orders" element={<SalesOrder />} />
+                <Route path="sales-order/new" element={<AddSalesOrder />} />
+                <Route path="sales-order/:id" element={<AddSalesOrder />} />
                 <Route path="estimate">
                   <Route index element={<EstimateList />} />
                   <Route path="new" element={<AddEditEstimate />} />
