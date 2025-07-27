@@ -79,7 +79,7 @@ const SalesInvoiceHeader = ({
                 <SelectValue placeholder={saleType === 'cash' ? "Cash Customer (Optional)" : "Select customer"} />
               </SelectTrigger>
               <SelectContent>
-                {customers.map(c => (<SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>))}
+                {customers?.map(c => (<SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>))}
               </SelectContent>
             </Select>
           </div>

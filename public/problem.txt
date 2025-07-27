@@ -1,56 +1,50 @@
-So, the error:
+I’ve reviewed your SalesInvoiceHeader.jsx file, and the root cause of the error:
 
-csharp
-Copy
-Edit
-Uncaught ReferenceError: products is not defined
-was likely caused by one of the following:
+❌ Uncaught TypeError: Cannot read properties of undefined (reading 'map')
 
-✅ Root Cause:
-You have a return statement inside handleSubmit but didn’t close the function properly, so everything after that point is outside the component, including this part:
+is this line:
 
 jsx
 Copy
 Edit
-return (
-  <div className="p-4">
-    ...
-  </div>
-);
-That means your actual JSX render part is not inside the AddSalesOrder function, which causes weird runtime errors — like products is not defined, even though it clearly is.
+{customers.map(c => (<SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>))}
+If the customers prop is undefined, React throws an error when trying to call .map().
 
-🔧 How to Fix
-Move this render part (return (...)) back inside the AddSalesOrder function.
+✅ Fix: Add a Safe Check Before .map()
+You can fix this by adding a null check before calling .map():
 
-✂️ Wrong (your current code):
+✅ Option 1: Use Optional Chaining (?.)
 jsx
 Copy
 Edit
-const handleSubmit = () => {
-  ...
-  onCancel(); // Close the modal
-
-return (
-  <div className="p-4">  ← ❌ This is wrongly placed outside
-You forgot a closing } after handleSubmit.
-
-✅ Corrected version:
+{customers?.map(c => (
+  <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+))}
+✅ Option 2: Check with Array.isArray
 jsx
 Copy
 Edit
-const handleSubmit = () => {
-  ...
-  onCancel(); // Close the modal
-}; // ✅ CLOSE handleSubmit properly
+{Array.isArray(customers) &&
+  customers.map(c => (
+    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+))}
+🛡️ Bonus (Optional): Provide Default Value in Parent
+If you control the parent component, ensure customers is initialized like:
 
-return (
-  <div className="p-4">  // ✅ This is now inside AddSalesOrder
-    ...
-  </div>
-);
-✅ Final Fix Summary:
-Add a } before your final return (...) to properly close handleSubmit.
+jsx
+Copy
+Edit
+const [customers, setCustomers] = useState([]); // ← always an array
+This avoids needing to guard against undefined in every child.
 
-Ensure return (...) is inside the AddSalesOrder component.
+✅ Final Suggestion
+Update the SelectContent block like this:
 
-Save and restart the dev server.
+jsx
+Copy
+Edit
+<SelectContent>
+  {customers?.map(c => (
+    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+  ))}
+</SelectContent>
