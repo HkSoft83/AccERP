@@ -40,9 +40,14 @@ const SalarySetup = () => {
   const [transportAllowance, setTransportAllowance] = useState(0);
   const [mobileInternetAllowance, setMobileInternetAllowance] = useState(0);
   const [festivalBonus, setFestivalBonus] = useState(0);
+  const [overtime, setOvertime] = useState(0);
+  const [commission, setCommission] = useState(0);
+  const [specialAllowance, setSpecialAllowance] = useState(0);
+  const [othersAllowance, setOthersAllowance] = useState(0);
   const [providentFundEmployeePercent, setProvidentFundEmployeePercent] = useState(10);
   const [taxDeduction, setTaxDeduction] = useState(0);
   const [loanRepayment, setLoanRepayment] = useState(0);
+  const [deductionForLateAbsence, setDeductionForLateAbsence] = useState(0);
   const [otherDeduction, setOtherDeduction] = useState(0);
   const [providentFundEmployerPercent, setProvidentFundEmployerPercent] = useState(10);
   const [paymentMode, setPaymentMode] = useState('Bank');
@@ -63,22 +68,27 @@ const SalarySetup = () => {
     const transport = parseFloat(transportAllowance) || 0;
     const mobileInternet = parseFloat(mobileInternetAllowance) || 0;
     const bonus = parseFloat(festivalBonus) || 0;
+    const ot = parseFloat(overtime) || 0;
+    const comm = parseFloat(commission) || 0;
+    const special = parseFloat(specialAllowance) || 0;
+    const others = parseFloat(othersAllowance) || 0;
 
-    const totalAllowances = houseRent + medical + transport + mobileInternet + bonus;
+    const totalAllowances = houseRent + medical + transport + mobileInternet + bonus + ot + comm + special + others;
 
     const pfEmployee = basic * (parseFloat(providentFundEmployeePercent) / 100) || 0;
     const tax = parseFloat(taxDeduction) || 0;
     const loan = parseFloat(loanRepayment) || 0;
+    const lateAbsence = parseFloat(deductionForLateAbsence) || 0;
     const otherDed = parseFloat(otherDeduction) || 0;
 
-    const totalDeductions = pfEmployee + tax + loan + otherDed;
+    const totalDeductions = pfEmployee + tax + loan + lateAbsence + otherDed;
 
     const calculatedGrossSalary = basic + totalAllowances;
     const calculatedNetPayable = calculatedGrossSalary - totalDeductions;
 
     setGrossSalary(calculatedGrossSalary.toFixed(2));
     setNetPayable(calculatedNetPayable.toFixed(2));
-  }, [basicSalary, houseRentPercent, medicalAllowance, transportAllowance, mobileInternetAllowance, festivalBonus, providentFundEmployeePercent, taxDeduction, loanRepayment, otherDeduction]);
+  }, [basicSalary, houseRentPercent, medicalAllowance, transportAllowance, mobileInternetAllowance, festivalBonus, overtime, commission, specialAllowance, othersAllowance, providentFundEmployeePercent, taxDeduction, loanRepayment, deductionForLateAbsence, otherDeduction]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -99,11 +109,16 @@ const SalarySetup = () => {
         transportAllowance: parseFloat(transportAllowance),
         mobileInternetAllowance: parseFloat(mobileInternetAllowance),
         festivalBonus: parseFloat(festivalBonus),
+        overtime: parseFloat(overtime),
+        commission: parseFloat(commission),
+        specialAllowance: parseFloat(specialAllowance),
+        othersAllowance: parseFloat(othersAllowance),
       },
       deductions: {
         providentFundEmployeePercent: parseFloat(providentFundEmployeePercent),
         taxDeduction: parseFloat(taxDeduction),
         loanRepayment: parseFloat(loanRepayment),
+        deductionForLateAbsence: parseFloat(deductionForLateAbsence),
         otherDeduction: parseFloat(otherDeduction),
       },
       employerContribution: {
@@ -195,6 +210,22 @@ const SalarySetup = () => {
                 <Label htmlFor="festivalBonus">Festival Bonus</Label>
                 <Input id="festivalBonus" type="number" value={festivalBonus} onChange={(e) => setFestivalBonus(e.target.value)} />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="overtime">Overtime</Label>
+                <Input id="overtime" type="number" value={overtime} onChange={(e) => setOvertime(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="commission">Commission</Label>
+                <Input id="commission" type="number" value={commission} onChange={(e) => setCommission(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="specialAllowance">Special Allowance</Label>
+                <Input id="specialAllowance" type="number" value={specialAllowance} onChange={(e) => setSpecialAllowance(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="othersAllowance">Others Allowance</Label>
+                <Input id="othersAllowance" type="number" value={othersAllowance} onChange={(e) => setOthersAllowance(e.target.value)} />
+              </div>
             </div>
 
             <h3 className="text-lg font-semibold mt-6 mb-4">Deductions</h3>
@@ -211,6 +242,8 @@ const SalarySetup = () => {
                 <Label htmlFor="loanRepayment">Loan Repayment</Label>
                 <Input id="loanRepayment" type="number" value={loanRepayment} onChange={(e) => setLoanRepayment(e.target.value)} />
               </div>
+              
+              
               <div className="space-y-2">
                 <Label htmlFor="otherDeduction">Other Deduction</Label>
                 <Input id="otherDeduction" type="number" value={otherDeduction} onChange={(e) => setOtherDeduction(e.target.value)} />
