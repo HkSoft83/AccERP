@@ -366,7 +366,6 @@ const VendorProfileLedger = ({ vendorId, vendorName, onClose, onEditVendor }) =>
                 { filteredTransactions[filteredTransactions.length -1].balance >= 0 ? " (Payable)" : " (Receivable)"}
               </div>
             )}
-          )}
           </TabsContent>
           <TabsContent value="purchase-orders" className="space-y-4 pt-4">
             <div className="overflow-x-auto rounded-lg border border-border dark:border-dark-border shadow-md">

@@ -1,0 +1,68 @@
+✅ 1. Salary Setup Form – কী কী থাকতে হবে?
+Field/Option	Description
+🔹 Employee Name / Code	কর্মচারী নির্বাচন (Dropdown বা Autocomplete)।
+🔹 Salary Type	Fixed / Hourly / Commission-based
+🔹 Effective From Date	কোন তারিখ থেকে এই সেটাপ চালু হবে।
+🔹 Basic Salary	মূল বেতন।
+🔹 Allowances (ভাতা)	
+→ House Rent (e.g. 40% of basic)	
+→ Medical Allowance	
+→ Transport / Conveyance	
+→ Mobile/Internet Allowance	
+→ Festival Bonus (Yearly/Occasional)	
+🔹 Deductions (কাটছাঁট)	
+→ Provident Fund (Employee Portion)	
+→ Tax Deduction (TDS)	
+→ Loan Repayment (if any)	
+→ Other deduction	
+🔹 Employer Contribution	PF Employer Side (e.g. 10%)
+🔹 Gross Salary (auto)	Basic + Allowances - Deductions
+🔹 Net Payable (auto)	Gross - any deduction
+🔹 Payment Mode	Bank / Cash / Mobile Banking
+🔹 Bank Account No	(if payment via bank)
+🔹 Is Active?	Checkbox
+
+✅ 2. Feature Checklist (Functional)
+Feature	Needed?	Notes
+Create, Edit, Delete Salary Setup	✅	Based on employee ID
+Allow different salary structure for different employees	✅	Customizability
+Historical salary changes tracking	✅	Show log of changes
+Formula-based calculation	✅	e.g. House Rent = 40% of Basic
+Auto calculation of PF, Tax etc.	✅	Based on rules
+Clone salary structure for new employee	Optional	Speeds up entry
+Multiple effective periods	Optional	Advanced payroll systems only
+
+✅ 3. Optional Advanced Features
+Feature	Description
+🔹 Grade-wise Salary Structure	অফিসার, স্টাফ, ম্যানেজার — আলাদা কাঠামো
+🔹 Salary Components Template	Default template apply করার অপশন
+🔹 Payslip Preview	এই সেটআপ থেকে সরাসরি payslip দেখা
+🔹 Import from Excel	একাধিক কর্মচারীর বেতন সেটআপ একবারে আপলোড
+
+🧾 উদাহরণ: ফর্ম ভিউ (UI suggestion)
+markdown
+Copy
+Edit
+-------------------------------------------------
+| Employee: [Dropdown]                         |
+| Effective From: [Date]                       |
+-------------------------------------------------
+| Basic Salary:           [   15000   ]        |
+| House Rent (40%):       [   6000    ]        |
+| Medical Allowance:      [   1000    ]        |
+| Other Allowances:       [   500     ]        |
+-------------------------------------------------
+| Provident Fund (Emp):   [   1000    ]        |
+| Provident Fund (Org):   [   1000    ]        |
+| Tax Deduction:          [   200     ]        |
+-------------------------------------------------
+| Gross Salary:           [   22500   ]        |
+| Net Payable:            [   21300   ]        |
+-------------------------------------------------
+| Payment Mode:  [Dropdown: Bank/Cash]         |
+| Bank A/C:       [Optional Input]             |
+-------------------------------------------------
+| [Save] [Cancel]                              |
+-------------------------------------------------
+🔔 উপসংহার:
+Salary Setup module এর মূল কাজ হলো – পরিষ্কারভাবে Employee-wise salary break-up সংরক্ষণ, যাতে Payroll Run-এর সময় কোন বিভ্রান্তি না হয় এবং Payslip, Accounting Integration, Tax computation এগুলো সব সঠিকভাবে হয়।

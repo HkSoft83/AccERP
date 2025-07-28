@@ -1,9 +1,9 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
+
 import { Toaster } from '@/components/ui/toaster';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
@@ -31,7 +31,10 @@ const CreditNote = lazy(() => import('@/pages/transactions/CreditNote'));
 const ManualJournal = lazy(() => import('@/pages/transactions/ManualJournal'));
 const RecurringAdjustments = lazy(() => import('@/pages/transactions/RecurringAdjustments'));
 
-const AddEmployee = lazy(() => import('@/pages/employee/AddEmployee'));
+const SalarySetup = lazy(() => import('@/pages/employee/SalarySetup'));
+const PayrollRun = lazy(() => import('@/pages/employee/PayrollRun'));
+const SalaryReport = lazy(() => import('@/pages/employee/SalaryReport'));
+const Payslip = lazy(() => import('@/pages/employee/Payslip'));
 const EmployeeDatabase = lazy(() => import('@/pages/employee/EmployeeDatabase'));
 
 const Production = lazy(() => import('@/pages/Production'));
@@ -42,7 +45,7 @@ const TrialBalance = lazy(() => import('@/pages/reports/TrialBalance.jsx'));
 const OwnersEquityStatement = lazy(() => import('@/pages/reports/OwnersEquityStatement'));
 const StockReport = lazy(() => import('@/pages/reports/StockReport'));
 const CashFlowStatement = lazy(() => import('@/pages/reports/CashFlowStatement'));
-const CustomerLedger = lazy(() => import('@/pages/reports/CustomerLedger'));
+
 const VendorLedger = lazy(() => import('@/pages/reports/VendorLedger'));
 const OtherReports = lazy(() => import('@/pages/reports/OtherReports'));
 const FixedAssetManagement = lazy(() => import('@/pages/fixed-asset/FixedAssetManagement'));
@@ -101,8 +104,11 @@ function App() {
 
               <Route path="employee">
                 <Route index element={<Navigate to="database" replace />} />
-                <Route path="add" element={<AddEmployee />} />
                 <Route path="database" element={<EmployeeDatabase />} />
+                <Route path="salary-setup" element={<SalarySetup />} />
+                <Route path="payroll-run" element={<PayrollRun />} />
+                <Route path="salary-report" element={<SalaryReport />} />
+                <Route path="payslip" element={<Payslip />} />
               </Route>
               
               <Route path="production" element={<Production />} />
@@ -120,7 +126,7 @@ function App() {
               </Route>
               <Route path="fixed-asset-management" element={<FixedAssetManagement />} />
               
-              <Route path="*" element={<div className="p-6 text-center"><h2 className="text-2xl font-semibold text-blue-600">404 - Page Not Found</h2><p className="text-gray-600 mt-2">Oops! The page you're looking for doesn't exist.</p><Button onClick={() => window.history.back()} className="mt-4 bg-blue-600 text-white hover:bg-blue-700">Go Back</Button></div>} />
+              <Route path="*" element={<div className="p-6 text-center"><h2 className="text-2xl font-semibold text-blue-600">404 - Page Not Found</h2><p className="text-gray-600 mt-2">Oops! The page you&apos;re looking for doesn&apos;t exist.</p><Button onClick={() => window.history.back()} className="mt-4 bg-blue-600 text-white hover:bg-blue-700">Go Back</Button></div>} />
             </Route>
           </Routes>
         </Suspense>

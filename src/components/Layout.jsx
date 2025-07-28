@@ -48,6 +48,10 @@ const navItems = [
     name: 'Payroll Management', path: '/employee', icon: Users2,
     subItems: [
       { name: 'Employee Database', path: '/employee/database' },
+      { name: 'Salary Setup', path: '/employee/salary-setup' },
+      { name: 'Payroll run', path: '/employee/payroll-run' },
+      { name: 'Salary report', path: '/employee/salary-report' },
+      { name: 'Payslip', path: '/employee/payslip' },
     ]
   },
   { name: 'Production', path: '/production', icon: Factory },
