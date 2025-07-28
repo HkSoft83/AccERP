@@ -45,9 +45,8 @@ const navItems = [
     ]
   },
   {
-    name: 'Employee', path: '/employee', icon: Users2,
+    name: 'Payroll Management', path: '/employee', icon: Users2,
     subItems: [
-      { name: 'Add New Employee', path: '/employee/add' },
       { name: 'Employee Database', path: '/employee/database' },
     ]
   },
