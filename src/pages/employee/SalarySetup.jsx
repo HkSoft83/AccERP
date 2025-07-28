@@ -242,8 +242,10 @@ const SalarySetup = () => {
                 <Label htmlFor="loanRepayment">Loan Repayment</Label>
                 <Input id="loanRepayment" type="number" value={loanRepayment} onChange={(e) => setLoanRepayment(e.target.value)} />
               </div>
-              
-              
+              <div className="space-y-2">
+                <Label htmlFor="deductionForLateAbsence">Deduction for Late/Absence</Label>
+                <Input id="deductionForLateAbsence" type="number" value={deductionForLateAbsence} onChange={(e) => setDeductionForLateAbsence(e.target.value)} />
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="otherDeduction">Other Deduction</Label>
                 <Input id="otherDeduction" type="number" value={otherDeduction} onChange={(e) => setOtherDeduction(e.target.value)} />
