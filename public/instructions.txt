@@ -1,60 +1,91 @@
-A Salary Report typically summarizes payroll-related data across employees for a given month, date range, department, or branch. It helps HR, finance, or management quickly understand total salary expenses, deductions, and other components.
+The Payslip Menu is a user-facing feature that allows employees or HR/admin to view, search, and optionally download individual payslips — either for a specific month or for past periods.
 
-🧾 Common Fields in a Salary Report
-Here’s what you should consider including:
+Here’s a breakdown of what to include:
 
-📌 Header/Filters
-Report Period (Month or custom date range)
+📌 1. Payslip Menu Purpose
+"View and manage finalized salary statements for employees."
 
-Department / Branch (if applicable)
+🧭 Payslip Menu Structure
+✅ Filters / Search Panel
+Employee ID / Name
 
-Employee Status (Active, Terminated, etc.)
+Month / Date range
+
+Department (if available)
 
 Salary Type (Fixed, Hourly, etc.)
 
-📊 Salary Report Table Structure
-Employee ID	Name	Basic Salary	Allowances	Deductions	Gross Salary	Net Payable	Payment Mode
-EMP001	John Doe	40,000	15,000	5,000	55,000	50,000	Bank
-EMP002	Jane Smith	35,000	10,000	3,500	45,000	41,500	Mobile Banking
+Payment Status (Paid, Unpaid – optional)
+
+📋 Payslip List/Table View
+Payslip ID	Employee ID	Name	Month	Net Payable	Payment Mode	Status	Actions
+PS-2025-07-JD	EMP001	John Doe	July 2025	50,000	Bank	Finalized	View / Download
+PS-2025-07-JS	EMP002	Jane Smith	July 2025	41,500	Mobile Banking	Finalized	View / Download
 ...	...	...	...	...	...	...	...
 
-💸 Breakdowns (Optional but Useful)
-If you want to make it more detailed:
+📄 Payslip View Modal/Page
+When clicking View or Download, show the full payslip with:
 
-✅ Allowance Breakdown
-House Rent
+👤 Employee Info
+Name
 
-Medical
+ID
 
-Transport
+Designation
 
-Internet
+Department (optional)
 
-Festival Bonus
+📅 Payroll Info
+Month / Pay Period
 
-Commission
+Payment Date
 
-Special / Others
+Salary Type
 
-✅ Deduction Breakdown
-Tax (TDS)
+Payment Mode (Bank, Cash, Mobile)
 
-PF (Provident Fund)
+Bank/Mobile Account details (if applicable)
 
-Loan Repayment
+💸 Earnings Section
+Component	Amount
+Basic Salary	40,000
+House Rent Allowance	8,000
+Medical Allowance	2,000
+...	...
+Total Earnings	55,000
 
-Late/Absence
+🧾 Deductions Section
+Component	Amount
+Tax Deduction	2,000
+Loan Repayment	1,500
+Provident Fund	1,500
+...	...
+Total Deductions	5,000
 
-Others
+✅ Net Payable
+Gross Salary: Earnings Total
 
-Consider making these visible in a collapsible row or modal to keep the main table clean.
+Deductions: Deductions Total
 
-📈 Summary Section (at bottom or top)
-Total Employees Paid
+Net Salary = Gross - Deductions
 
-Total Gross Salary
+📝 Optional Info
+Notes or remarks
 
-Total Deductions
+Approval signature area
 
-Total Net Payable
+Employer contribution details (if relevant)
 
+🛠️ Actions
+🔍 View Payslip
+
+📄 Download PDF
+
+🖨️ Print Payslip
+
+📧 Email Payslip (optional)
+
+⚙️ Role-Based Access
+HR/Admin: Can view all
+
+Employees: Can view only their own

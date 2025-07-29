@@ -111,6 +111,7 @@ function App() {
                 <Route path="salary-report" element={<SalaryReport />} />
                 <Route path="payslip" element={<Payslip />} />
                 <Route path="add" element={<AddEmployee />} />
+                <Route path="payslip" element={<Payslip />} />
               </Route>
               
               <Route path="production" element={<Production />} />
