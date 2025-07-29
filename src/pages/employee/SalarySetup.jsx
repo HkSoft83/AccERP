@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, Edit, Trash2 } from 'lucide-react';
+import { PlusCircle, Edit, Trash2, Settings } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -12,6 +12,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import AddSalarySetup from './AddSalarySetup'; // Import the renamed component
+import JournalEntrySettings from './JournalEntrySettings'; // Import the new settings component
 
 const mockEmployees = [
   { id: 'EMP001', name: 'John Doe' },
@@ -26,8 +27,37 @@ const mockSalarySetups = [
     salaryType: 'Fixed',
     effectiveFromDate: '2023-01-01',
     basicSalary: 50000,
+    allowances: {
+      houseRentPercent: 40,
+      medicalAllowance: 2000,
+      transportAllowance: 1000,
+      mobileInternetAllowance: 500,
+      festivalBonus: 3000,
+      overtime: 0,
+      commission: 0,
+      specialAllowance: 0,
+      othersAllowance: 0,
+    },
+    deductions: {
+      providentFundEmployeePercent: 10,
+      taxDeduction: 1500,
+      loanRepayment: 0,
+      deductionForLateAbsence: 0,
+      otherDeduction: 0,
+    },
+    employerContribution: {
+      providentFundEmployerPercent: 10,
+    },
     grossSalary: 65000,
     netPayable: 60000,
+    paymentMode: 'Bank',
+    bankAccountNo: '123456789',
+    accountName: 'John Doe',
+    bankName: 'Example Bank',
+    branchName: 'Main Branch',
+    routingNo: '0001',
+    mobileBankingName: '',
+    mobileBankingNumber: '',
     isActive: true,
   },
   {
@@ -36,8 +66,37 @@ const mockSalarySetups = [
     salaryType: 'Hourly',
     effectiveFromDate: '2023-03-15',
     basicSalary: 25000,
+    allowances: {
+      houseRentPercent: 30,
+      medicalAllowance: 1000,
+      transportAllowance: 500,
+      mobileInternetAllowance: 200,
+      festivalBonus: 1000,
+      overtime: 500,
+      commission: 0,
+      specialAllowance: 0,
+      othersAllowance: 0,
+    },
+    deductions: {
+      providentFundEmployeePercent: 8,
+      taxDeduction: 500,
+      loanRepayment: 200,
+      deductionForLateAbsence: 0,
+      otherDeduction: 0,
+    },
+    employerContribution: {
+      providentFundEmployerPercent: 8,
+    },
     grossSalary: 30000,
     netPayable: 28000,
+    paymentMode: 'Mobile Banking',
+    bankAccountNo: '',
+    accountName: '',
+    bankName: '',
+    branchName: '',
+    routingNo: '',
+    mobileBankingName: 'Bkash',
+    mobileBankingNumber: '01712345678',
     isActive: true,
   },
 ];
@@ -46,6 +105,7 @@ const SalarySetup = () => {
   const { toast } = useToast();
   const [salarySetups, setSalarySetups] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showSettings, setShowSettings] = useState(false); // New state for settings form
   const [editData, setEditData] = useState(null); // New state for editing
 
   useEffect(() => {
@@ -56,7 +116,15 @@ const SalarySetup = () => {
     const storedSetups = localStorage.getItem('salarySetups');
     if (storedSetups) {
       try {
-        setSalarySetups(JSON.parse(storedSetups));
+        const parsedSetups = JSON.parse(storedSetups);
+        // Normalize data: ensure nested objects exist
+        const normalizedSetups = parsedSetups.map(setup => ({
+          ...setup,
+          allowances: setup.allowances || {},
+          deductions: setup.deductions || {},
+          employerContribution: setup.employerContribution || {},
+        }));
+        setSalarySetups(normalizedSetups);
       } catch (e) {
         console.error("Failed to parse salary setups from localStorage", e);
         setSalarySetups([]);
@@ -99,9 +167,14 @@ const SalarySetup = () => {
     <div className="p-4 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-primary dark:text-dark-primary">Salary Setup List</h1>
-        <Button onClick={() => setShowAddForm(!showAddForm)} className="bg-primary text-primary-foreground hover:bg-primary-hover">
-          <PlusCircle size={20} className="mr-2" /> {showAddForm ? 'Hide Form' : 'Add New Setup'}
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={() => setShowAddForm(!showAddForm)} className="bg-primary text-primary-foreground hover:bg-primary-hover">
+            <PlusCircle size={20} className="mr-2" /> {showAddForm ? 'Hide Form' : 'Add New Setup'}
+          </Button>
+          <Button onClick={() => setShowSettings(!showSettings)} variant="outline" className="text-primary border-primary hover:bg-primary/10">
+            <Settings size={20} className="mr-2" /> Settings
+          </Button>
+        </div>
       </div>
 
       {showAddForm && (
@@ -121,6 +194,20 @@ const SalarySetup = () => {
                 setEditData(null);
               }}
               editData={editData}
+            />
+          </CardContent>
+        </Card>
+      )}
+
+      {showSettings && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Journal Entry Settings</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <JournalEntrySettings 
+              onSave={() => setShowSettings(false)}
+              onCancel={() => setShowSettings(false)}
             />
           </CardContent>
         </Card>

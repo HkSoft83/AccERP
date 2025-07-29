@@ -52,26 +52,28 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
   const [netPayable, setNetPayable] = useState(0);
 
   useEffect(() => {
+    console.log("AddSalarySetup useEffect - editData:", editData);
+    console.log("AddSalarySetup useEffect - editData.allowances:", editData?.allowances);
     if (editData) {
       setSelectedEmployee(editData.employeeId);
       setSalaryType(editData.salaryType);
       setEffectiveFromDate(new Date(editData.effectiveFromDate));
-      setBasicSalary(editData.basicSalary);
-      setHouseRentPercent(editData.allowances.houseRentPercent);
-      setMedicalAllowance(editData.allowances.medicalAllowance);
-      setTransportAllowance(editData.allowances.transportAllowance);
-      setMobileInternetAllowance(editData.allowances.mobileInternetAllowance);
-      setFestivalBonus(editData.allowances.festivalBonus);
-      setOvertime(editData.allowances.overtime);
-      setCommission(editData.allowances.commission);
-      setSpecialAllowance(editData.allowances.specialAllowance);
-      setOthersAllowance(editData.allowances.othersAllowance);
-      setProvidentFundEmployeePercent(editData.deductions.providentFundEmployeePercent);
-      setTaxDeduction(editData.deductions.taxDeduction);
-      setLoanRepayment(editData.deductions.loanRepayment);
-      setDeductionForLateAbsence(editData.deductions.deductionForLateAbsence);
-      setOtherDeduction(editData.deductions.otherDeduction);
-      setProvidentFundEmployerPercent(editData.employerContribution.providentFundEmployerPercent);
+      setBasicSalary(editData.basicSalary || 0);
+      setHouseRentPercent(editData.allowances?.houseRentPercent || 0);
+      setMedicalAllowance(editData.allowances?.medicalAllowance || 0);
+      setTransportAllowance(editData.allowances?.transportAllowance || 0);
+      setMobileInternetAllowance(editData.allowances?.mobileInternetAllowance || 0);
+      setFestivalBonus(editData.allowances?.festivalBonus || 0);
+      setOvertime(editData.allowances?.overtime || 0);
+      setCommission(editData.allowances?.commission || 0);
+      setSpecialAllowance(editData.allowances?.specialAllowance || 0);
+      setOthersAllowance(editData.allowances?.othersAllowance || 0);
+      setProvidentFundEmployeePercent(editData.deductions?.providentFundEmployeePercent || 0);
+      setTaxDeduction(editData.deductions?.taxDeduction || 0);
+      setLoanRepayment(editData.deductions?.loanRepayment || 0);
+      setDeductionForLateAbsence(editData.deductions?.deductionForLateAbsence || 0);
+      setOtherDeduction(editData.deductions?.otherDeduction || 0);
+      setProvidentFundEmployerPercent(editData.employerContribution?.providentFundEmployerPercent || 0);
       setPaymentMode(editData.paymentMode);
       setBankAccountNo(editData.bankAccountNo || '');
       setAccountName(editData.accountName || '');

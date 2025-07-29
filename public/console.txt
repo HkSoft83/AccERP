@@ -1,69 +1,77 @@
 main.jsx is executing
 main.jsx:9 Root element: <div id=​"root">​</div>​
 hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=dd22e15c:5266:5)
+    at BrowserRouter (react-router-dom.js?v=8fac43d1:5266:5)
     at ThemeProvider (ThemeContext.jsx:7:33)
     at App (<anonymous>)
 overrideMethod @ hook.js:608Understand this warning
 hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
-    at BrowserRouter (react-router-dom.js?v=dd22e15c:5266:5)
+    at BrowserRouter (react-router-dom.js?v=8fac43d1:5266:5)
     at ThemeProvider (ThemeContext.jsx:7:33)
     at App (<anonymous>)
 overrideMethod @ hook.js:608Understand this warning
-2AssetDepreciation.jsx:218 Uncaught ReferenceError: chartOfAccounts is not defined
-    at AssetDepreciation (AssetDepreciation.jsx:218:90)
-    at renderWithHooks (chunk-V5LT2MCF.js?v=dd22e15c:11568:26)
-    at mountIndeterminateComponent (chunk-V5LT2MCF.js?v=dd22e15c:14946:21)
-    at beginWork (chunk-V5LT2MCF.js?v=dd22e15c:15934:22)
-    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=dd22e15c:3674:22)
-    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=dd22e15c:3699:24)
-    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=dd22e15c:3733:39)
-    at beginWork$1 (chunk-V5LT2MCF.js?v=dd22e15c:19793:15)
-    at performUnitOfWork (chunk-V5LT2MCF.js?v=dd22e15c:19226:20)
-    at workLoopSync (chunk-V5LT2MCF.js?v=dd22e15c:19165:13)Understand this error
-hook.js:608 The above error occurred in the <AssetDepreciation> component:
+SalarySetup.jsx:92 Editing setup: Object
+chunk-V5LT2MCF.js?v=8fac43d1:16691 Uncaught TypeError: Cannot read properties of undefined (reading 'houseRentPercent')
+    at AddSalarySetup.jsx:60:47
+    at commitHookEffectListMount (chunk-V5LT2MCF.js?v=8fac43d1:16936:34)
+    at commitPassiveMountOnFiber (chunk-V5LT2MCF.js?v=8fac43d1:18184:19)
+    at commitPassiveMountEffects_complete (chunk-V5LT2MCF.js?v=8fac43d1:18157:17)
+    at commitPassiveMountEffects_begin (chunk-V5LT2MCF.js?v=8fac43d1:18147:15)
+    at commitPassiveMountEffects (chunk-V5LT2MCF.js?v=8fac43d1:18137:11)
+    at flushPassiveEffectsImpl (chunk-V5LT2MCF.js?v=8fac43d1:19518:11)
+    at flushPassiveEffects (chunk-V5LT2MCF.js?v=8fac43d1:19475:22)
+    at commitRootImpl (chunk-V5LT2MCF.js?v=8fac43d1:19444:13)
+    at commitRoot (chunk-V5LT2MCF.js?v=8fac43d1:19305:13)Understand this error
+chunk-V5LT2MCF.js?v=8fac43d1:16691 Uncaught TypeError: Cannot read properties of undefined (reading 'houseRentPercent')
+    at AddSalarySetup.jsx:60:47
+    at commitHookEffectListMount (chunk-V5LT2MCF.js?v=8fac43d1:16936:34)
+    at invokePassiveEffectMountInDEV (chunk-V5LT2MCF.js?v=8fac43d1:18352:19)
+    at invokeEffectsInDev (chunk-V5LT2MCF.js?v=8fac43d1:19729:19)
+    at commitDoubleInvokeEffectsInDEV (chunk-V5LT2MCF.js?v=8fac43d1:19714:15)
+    at flushPassiveEffectsImpl (chunk-V5LT2MCF.js?v=8fac43d1:19531:13)
+    at flushPassiveEffects (chunk-V5LT2MCF.js?v=8fac43d1:19475:22)
+    at commitRootImpl (chunk-V5LT2MCF.js?v=8fac43d1:19444:13)
+    at commitRoot (chunk-V5LT2MCF.js?v=8fac43d1:19305:13)
+    at performSyncWorkOnRoot (chunk-V5LT2MCF.js?v=8fac43d1:18923:11)Understand this error
+2hook.js:608 The above error occurred in the <AddSalarySetup> component:
 
-    at AssetDepreciation (http://localhost:5173/src/pages/fixed-asset/AssetDepreciation.jsx?t=1753629561745:358:30)
+    at AddSalarySetup (http://localhost:5173/src/pages/employee/AddSalarySetup.jsx?t=1753766071855:27:27)
     at div
-    at http://localhost:5173/node_modules/.vite/deps/chunk-QATKMLZE.js?v=dd22e15c:43:13
-    at Presence (http://localhost:5173/node_modules/.vite/deps/chunk-JPYGKUVQ.js?v=dd22e15c:201:11)
-    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=dd22e15c:170:13
-    at _c5 (http://localhost:5173/src/components/ui/tabs.jsx:68:12)
+    at _c9 (http://localhost:5173/src/components/ui/card.jsx:100:12)
     at div
-    at http://localhost:5173/node_modules/.vite/deps/chunk-QATKMLZE.js?v=dd22e15c:43:13
-    at Provider (http://localhost:5173/node_modules/.vite/deps/chunk-JPYGKUVQ.js?v=dd22e15c:53:15)
-    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=dd22e15c:46:7
+    at _c (http://localhost:5173/src/components/ui/card.jsx:20:11)
     at div
-    at FixedAssetManagement (http://localhost:5173/src/pages/fixed-asset/FixedAssetManagement.jsx:65:31)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4103:5)
-    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4510:26)
+    at SalarySetup (http://localhost:5173/src/pages/employee/SalarySetup.jsx?t=1753772848588:62:21)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4103:5)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4103:5)
+    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4510:26)
     at div
-    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:278:40)
-    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:7103:24)
-    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=dd22e15c:7169:26)
+    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=8fac43d1:278:40)
+    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=8fac43d1:7103:24)
+    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=8fac43d1:7169:26)
     at main
     at div
     at div
-    at Layout (http://localhost:5173/src/components/Layout.jsx?t=1753616423264:314:51)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4103:5)
-    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4574:5)
+    at Layout (http://localhost:5173/src/components/Layout.jsx:317:51)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4103:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4574:5)
     at Suspense
-    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:4517:15)
-    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=dd22e15c:5266:5)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4517:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:5266:5)
     at ThemeProvider (http://localhost:5173/src/contexts/ThemeContext.jsx:25:33)
     at App
 
 Consider adding an error boundary to your tree to customize error handling behavior.
 Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
 overrideMethod @ hook.js:608Understand this error
-chunk-V5LT2MCF.js?v=dd22e15c:9145 Uncaught ReferenceError: chartOfAccounts is not defined
-    at AssetDepreciation (AssetDepreciation.jsx:218:90)
-    at renderWithHooks (chunk-V5LT2MCF.js?v=dd22e15c:11568:26)
-    at mountIndeterminateComponent (chunk-V5LT2MCF.js?v=dd22e15c:14946:21)
-    at beginWork (chunk-V5LT2MCF.js?v=dd22e15c:15934:22)
-    at beginWork$1 (chunk-V5LT2MCF.js?v=dd22e15c:19781:22)
-    at performUnitOfWork (chunk-V5LT2MCF.js?v=dd22e15c:19226:20)
-    at workLoopSync (chunk-V5LT2MCF.js?v=dd22e15c:19165:13)
-    at renderRootSync (chunk-V5LT2MCF.js?v=dd22e15c:19144:15)
-    at recoverFromConcurrentError (chunk-V5LT2MCF.js?v=dd22e15c:18764:28)
-    at performSyncWorkOnRoot (chunk-V5LT2MCF.js?v=dd22e15c:18907:28)
+chunk-V5LT2MCF.js?v=8fac43d1:9145 Uncaught TypeError: Cannot read properties of undefined (reading 'houseRentPercent')
+    at AddSalarySetup.jsx:60:47
+    at commitHookEffectListMount (chunk-V5LT2MCF.js?v=8fac43d1:16936:34)
+    at commitPassiveMountOnFiber (chunk-V5LT2MCF.js?v=8fac43d1:18184:19)
+    at commitPassiveMountEffects_complete (chunk-V5LT2MCF.js?v=8fac43d1:18157:17)
+    at commitPassiveMountEffects_begin (chunk-V5LT2MCF.js?v=8fac43d1:18147:15)
+    at commitPassiveMountEffects (chunk-V5LT2MCF.js?v=8fac43d1:18137:11)
+    at flushPassiveEffectsImpl (chunk-V5LT2MCF.js?v=8fac43d1:19518:11)
+    at flushPassiveEffects (chunk-V5LT2MCF.js?v=8fac43d1:19475:22)
+    at commitRootImpl (chunk-V5LT2MCF.js?v=8fac43d1:19444:13)
+    at commitRoot (chunk-V5LT2MCF.js?v=8fac43d1:19305:13)
