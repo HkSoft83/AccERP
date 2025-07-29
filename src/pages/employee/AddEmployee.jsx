@@ -26,6 +26,7 @@ const AddEmployee = () => {
   const [formData, setFormData] = useState({
     employeeName: '',
     employeeId: '',
+    employeeType: '', // New field for Employee Type
     department: '',
     subDepartment: '',
     contact: '',
@@ -34,6 +35,7 @@ const AddEmployee = () => {
     nid: '',
     currentAddress: '',
     permanentAddress: '',
+    status: 'Active', // Default status for new employees
   });
 
   const handleInputChange = (field, value) => {
@@ -47,7 +49,7 @@ const AddEmployee = () => {
     e.preventDefault();
     
     // Basic validation
-    if (!formData.employeeName || !formData.employeeId || !formData.department) {
+    if (!formData.employeeName || !formData.employeeId || !formData.employeeType || !formData.department) {
       toast({
         title: "Validation Error",
         description: "Please fill in all required fields.",
@@ -94,6 +96,26 @@ const AddEmployee = () => {
                 placeholder="EMP001"
                 required
               />
+            </div>
+
+            {/* Employee Type Dropdown */}
+            <div className="space-y-2">
+              <Label htmlFor="employeeType">Employee Type <span className="text-destructive">*</span></Label>
+              <Select
+                value={formData.employeeType}
+                onValueChange={(value) => handleInputChange('employeeType', value)}
+              >
+                <SelectTrigger id="employeeType">
+                  <SelectValue placeholder="Select employee type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Full time">Full time</SelectItem>
+                  <SelectItem value="Part time">Part time</SelectItem>
+                  <SelectItem value="Temporary">Temporary</SelectItem>
+                  <SelectItem value="Contractual">Contractual</SelectItem>
+                  <SelectItem value="Intern">Intern</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Department Information */}

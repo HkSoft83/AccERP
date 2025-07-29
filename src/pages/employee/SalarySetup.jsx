@@ -1,309 +1,179 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { DatePicker } from '@/components/ui/date-picker';
-import { Checkbox } from '@/components/ui/checkbox';
+import { PlusCircle, Edit, Trash2 } from 'lucide-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
-import { useNavigate } from 'react-router-dom';
+import AddSalarySetup from './AddSalarySetup'; // Import the renamed component
 
-const getEmployeesFromStorage = () => {
-  const storedEmployees = localStorage.getItem('employees');
-  if (storedEmployees) {
-    try {
-      return JSON.parse(storedEmployees);
-    } catch (e) {
-      console.error("Failed to parse employees from localStorage", e);
-      return [];
-    }
-  }
-  return [
-    { id: 'EMP001', name: 'John Doe' },
-    { id: 'EMP002', name: 'Jane Smith' },
-    { id: 'EMP003', name: 'Peter Jones' },
-  ];
-};
+const mockEmployees = [
+  { id: 'EMP001', name: 'John Doe' },
+  { id: 'EMP002', name: 'Jane Smith' },
+  { id: 'EMP003', name: 'Peter Jones' },
+];
+
+const mockSalarySetups = [
+  {
+    id: 'EMP001-2023-01-01',
+    employeeId: 'EMP001',
+    salaryType: 'Fixed',
+    effectiveFromDate: '2023-01-01',
+    basicSalary: 50000,
+    grossSalary: 65000,
+    netPayable: 60000,
+    isActive: true,
+  },
+  {
+    id: 'EMP002-2023-03-15',
+    employeeId: 'EMP002',
+    salaryType: 'Hourly',
+    effectiveFromDate: '2023-03-15',
+    basicSalary: 25000,
+    grossSalary: 30000,
+    netPayable: 28000,
+    isActive: true,
+  },
+];
 
 const SalarySetup = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
-
-  const [employees, setEmployees] = useState([]);
-  const [selectedEmployee, setSelectedEmployee] = useState('');
-  const [salaryType, setSalaryType] = useState('Fixed');
-  const [effectiveFromDate, setEffectiveFromDate] = useState(new Date());
-  const [basicSalary, setBasicSalary] = useState(0);
-  const [houseRentPercent, setHouseRentPercent] = useState(40);
-  const [medicalAllowance, setMedicalAllowance] = useState(0);
-  const [transportAllowance, setTransportAllowance] = useState(0);
-  const [mobileInternetAllowance, setMobileInternetAllowance] = useState(0);
-  const [festivalBonus, setFestivalBonus] = useState(0);
-  const [overtime, setOvertime] = useState(0);
-  const [commission, setCommission] = useState(0);
-  const [specialAllowance, setSpecialAllowance] = useState(0);
-  const [othersAllowance, setOthersAllowance] = useState(0);
-  const [providentFundEmployeePercent, setProvidentFundEmployeePercent] = useState(10);
-  const [taxDeduction, setTaxDeduction] = useState(0);
-  const [loanRepayment, setLoanRepayment] = useState(0);
-  const [deductionForLateAbsence, setDeductionForLateAbsence] = useState(0);
-  const [otherDeduction, setOtherDeduction] = useState(0);
-  const [providentFundEmployerPercent, setProvidentFundEmployerPercent] = useState(10);
-  const [paymentMode, setPaymentMode] = useState('Bank');
-  const [bankAccountNo, setBankAccountNo] = useState('');
-  const [isActive, setIsActive] = useState(true);
-
-  const [grossSalary, setGrossSalary] = useState(0);
-  const [netPayable, setNetPayable] = useState(0);
+  const [salarySetups, setSalarySetups] = useState([]);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [editData, setEditData] = useState(null); // New state for editing
 
   useEffect(() => {
-    setEmployees(getEmployeesFromStorage());
+    loadSalarySetups();
   }, []);
 
-  useEffect(() => {
-    const basic = parseFloat(basicSalary) || 0;
-    const houseRent = basic * (parseFloat(houseRentPercent) / 100) || 0;
-    const medical = parseFloat(medicalAllowance) || 0;
-    const transport = parseFloat(transportAllowance) || 0;
-    const mobileInternet = parseFloat(mobileInternetAllowance) || 0;
-    const bonus = parseFloat(festivalBonus) || 0;
-    const ot = parseFloat(overtime) || 0;
-    const comm = parseFloat(commission) || 0;
-    const special = parseFloat(specialAllowance) || 0;
-    const others = parseFloat(othersAllowance) || 0;
-
-    const totalAllowances = houseRent + medical + transport + mobileInternet + bonus + ot + comm + special + others;
-
-    const pfEmployee = basic * (parseFloat(providentFundEmployeePercent) / 100) || 0;
-    const tax = parseFloat(taxDeduction) || 0;
-    const loan = parseFloat(loanRepayment) || 0;
-    const lateAbsence = parseFloat(deductionForLateAbsence) || 0;
-    const otherDed = parseFloat(otherDeduction) || 0;
-
-    const totalDeductions = pfEmployee + tax + loan + lateAbsence + otherDed;
-
-    const calculatedGrossSalary = basic + totalAllowances;
-    const calculatedNetPayable = calculatedGrossSalary - totalDeductions;
-
-    setGrossSalary(calculatedGrossSalary.toFixed(2));
-    setNetPayable(calculatedNetPayable.toFixed(2));
-  }, [basicSalary, houseRentPercent, medicalAllowance, transportAllowance, mobileInternetAllowance, festivalBonus, overtime, commission, specialAllowance, othersAllowance, providentFundEmployeePercent, taxDeduction, loanRepayment, deductionForLateAbsence, otherDeduction]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!selectedEmployee) {
-      toast({ title: "Validation Error", description: "Please select an employee.", variant: "destructive" });
-      return;
+  const loadSalarySetups = () => {
+    const storedSetups = localStorage.getItem('salarySetups');
+    if (storedSetups) {
+      try {
+        setSalarySetups(JSON.parse(storedSetups));
+      } catch (e) {
+        console.error("Failed to parse salary setups from localStorage", e);
+        setSalarySetups([]);
+      }
+    } else {
+      // Initialize with mock data if localStorage is empty
+      localStorage.setItem('salarySetups', JSON.stringify(mockSalarySetups));
+      setSalarySetups(mockSalarySetups);
     }
+  };
 
-    const salaryData = {
-      id: `${selectedEmployee}-${effectiveFromDate.toISOString().split('T')[0]}`, // Unique ID for salary setup
-      employeeId: selectedEmployee,
-      salaryType,
-      effectiveFromDate: effectiveFromDate.toISOString().split('T')[0],
-      basicSalary: parseFloat(basicSalary),
-      allowances: {
-        houseRentPercent: parseFloat(houseRentPercent),
-        medicalAllowance: parseFloat(medicalAllowance),
-        transportAllowance: parseFloat(transportAllowance),
-        mobileInternetAllowance: parseFloat(mobileInternetAllowance),
-        festivalBonus: parseFloat(festivalBonus),
-        overtime: parseFloat(overtime),
-        commission: parseFloat(commission),
-        specialAllowance: parseFloat(specialAllowance),
-        othersAllowance: parseFloat(othersAllowance),
-      },
-      deductions: {
-        providentFundEmployeePercent: parseFloat(providentFundEmployeePercent),
-        taxDeduction: parseFloat(taxDeduction),
-        loanRepayment: parseFloat(loanRepayment),
-        deductionForLateAbsence: parseFloat(deductionForLateAbsence),
-        otherDeduction: parseFloat(otherDeduction),
-      },
-      employerContribution: {
-        providentFundEmployerPercent: parseFloat(providentFundEmployerPercent),
-      },
-      grossSalary: parseFloat(grossSalary),
-      netPayable: parseFloat(netPayable),
-      paymentMode,
-      bankAccountNo: paymentMode === 'Bank' ? bankAccountNo : '',
-      isActive,
-    };
+  const getEmployeeName = (employeeId) => {
+    const employee = mockEmployees.find(emp => emp.id === employeeId);
+    return employee ? employee.name : 'Unknown Employee';
+  };
 
-    console.log("Salary Setup Data:", JSON.stringify(salaryData, null, 2));
+  const handleDelete = (id) => {
+    const updatedSetups = salarySetups.filter(setup => setup.id !== id);
+    localStorage.setItem('salarySetups', JSON.stringify(updatedSetups));
+    setSalarySetups(updatedSetups);
+    toast({
+      title: "Salary Setup Deleted",
+      description: "The salary setup has been successfully deleted.",
+      variant: "destructive",
+    });
+  };
 
-    const existingSalarySetups = JSON.parse(localStorage.getItem('salarySetups') || '[]');
-    const updatedSalarySetups = [...existingSalarySetups, salaryData];
-    localStorage.setItem('salarySetups', JSON.stringify(updatedSalarySetups));
-
-    toast({ title: "Success", description: "Salary setup saved successfully!", className: 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-200 border-green-300 dark:border-green-600' });
-    navigate('/employee/salary-setup'); // Navigate back or to a list view
+  const handleEdit = (id) => {
+    const setupToEdit = salarySetups.find(setup => setup.id === id);
+    if (setupToEdit) {
+      console.log("Editing setup:", setupToEdit);
+      setEditData(setupToEdit);
+      setShowAddForm(true);
+    } else {
+      console.log("Setup not found for editing with ID:", id);
+    }
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold text-primary dark:text-dark-primary">Salary Setup List</h1>
+        <Button onClick={() => setShowAddForm(!showAddForm)} className="bg-primary text-primary-foreground hover:bg-primary-hover">
+          <PlusCircle size={20} className="mr-2" /> {showAddForm ? 'Hide Form' : 'Add New Setup'}
+        </Button>
+      </div>
+
+      {showAddForm && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Add New Salary Setup</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <AddSalarySetup 
+              onSave={() => {
+                loadSalarySetups(); // Reload list after saving
+                setShowAddForm(false); // Hide form after saving
+                setEditData(null); // Clear edit data
+              }}
+              onCancel={() => {
+                setShowAddForm(false);
+                setEditData(null);
+              }}
+              editData={editData}
+            />
+          </CardContent>
+        </Card>
+      )}
+
       <Card>
         <CardHeader>
-          <CardTitle>Salary Setup</CardTitle>
+          <CardTitle>Existing Salary Setups</CardTitle>
         </CardHeader>
-        <CardContent className="p-6 space-y-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="employee">Employee</Label>
-                <Select onValueChange={setSelectedEmployee} value={selectedEmployee}>
-                  <SelectTrigger id="employee">
-                    <SelectValue placeholder="Select an employee" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {employees.map(emp => (
-                      <SelectItem key={emp.id} value={emp.id}>
-                        {emp.name} ({emp.id})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="salaryType">Salary Type</Label>
-                <Select onValueChange={setSalaryType} value={salaryType}>
-                  <SelectTrigger id="salaryType">
-                    <SelectValue placeholder="Select salary type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Fixed">Fixed</SelectItem>
-                    <SelectItem value="Hourly">Hourly</SelectItem>
-                    <SelectItem value="Commission-based">Commission-based</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="effectiveFromDate">Effective From Date</Label>
-                <DatePicker date={effectiveFromDate} setDate={setEffectiveFromDate} />
-              </div>
+        <CardContent>
+          {salarySetups.length > 0 ? (
+            <div className="overflow-x-auto">
+              <Table className="min-w-full">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Employee ID</TableHead>
+                    <TableHead>Employee Name</TableHead>
+                    <TableHead>Salary Type</TableHead>
+                    <TableHead>Effective From</TableHead>
+                    <TableHead>Basic Salary</TableHead>
+                    <TableHead>Gross Salary</TableHead>
+                    <TableHead>Net Payable</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-center">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {salarySetups.map((setup) => (
+                    <TableRow key={setup.id}>
+                      <TableCell>{setup.employeeId}</TableCell>
+                      <TableCell>{getEmployeeName(setup.employeeId)}</TableCell>
+                      <TableCell>{setup.salaryType}</TableCell>
+                      <TableCell>{setup.effectiveFromDate}</TableCell>
+                      <TableCell>{setup.basicSalary.toFixed(2)}</TableCell>
+                      <TableCell>{setup.grossSalary.toFixed(2)}</TableCell>
+                      <TableCell>{setup.netPayable.toFixed(2)}</TableCell>
+                      <TableCell>{setup.isActive ? 'Active' : 'Inactive'}</TableCell>
+                      <TableCell className="text-center space-x-2">
+                        <Button variant="outline" size="sm" onClick={() => handleEdit(setup.id)}>
+                          <Edit size={16} />
+                        </Button>
+                        <Button variant="destructive" size="sm" onClick={() => handleDelete(setup.id)}>
+                          <Trash2 size={16} />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
-
-            <h3 className="text-lg font-semibold mt-6 mb-4">Salary Components</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="basicSalary">Basic Salary</Label>
-                <Input id="basicSalary" type="number" value={basicSalary} onChange={(e) => setBasicSalary(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="houseRentPercent">House Rent (%)</Label>
-                <Input id="houseRentPercent" type="number" value={houseRentPercent} onChange={(e) => setHouseRentPercent(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="medicalAllowance">Medical Allowance</Label>
-                <Input id="medicalAllowance" type="number" value={medicalAllowance} onChange={(e) => setMedicalAllowance(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="transportAllowance">Transport/Conveyance</Label>
-                <Input id="transportAllowance" type="number" value={transportAllowance} onChange={(e) => setTransportAllowance(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="mobileInternetAllowance">Mobile/Internet Allowance</Label>
-                <Input id="mobileInternetAllowance" type="number" value={mobileInternetAllowance} onChange={(e) => setMobileInternetAllowance(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="festivalBonus">Festival Bonus</Label>
-                <Input id="festivalBonus" type="number" value={festivalBonus} onChange={(e) => setFestivalBonus(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="overtime">Overtime</Label>
-                <Input id="overtime" type="number" value={overtime} onChange={(e) => setOvertime(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="commission">Commission</Label>
-                <Input id="commission" type="number" value={commission} onChange={(e) => setCommission(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="specialAllowance">Special Allowance</Label>
-                <Input id="specialAllowance" type="number" value={specialAllowance} onChange={(e) => setSpecialAllowance(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="othersAllowance">Others Allowance</Label>
-                <Input id="othersAllowance" type="number" value={othersAllowance} onChange={(e) => setOthersAllowance(e.target.value)} />
-              </div>
-            </div>
-
-            <h3 className="text-lg font-semibold mt-6 mb-4">Deductions</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="providentFundEmployeePercent">Provident Fund (Employee %)</Label>
-                <Input id="providentFundEmployeePercent" type="number" value={providentFundEmployeePercent} onChange={(e) => setProvidentFundEmployeePercent(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="taxDeduction">Tax Deduction (TDS)</Label>
-                <Input id="taxDeduction" type="number" value={taxDeduction} onChange={(e) => setTaxDeduction(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="loanRepayment">Loan Repayment</Label>
-                <Input id="loanRepayment" type="number" value={loanRepayment} onChange={(e) => setLoanRepayment(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="deductionForLateAbsence">Deduction for Late/Absence</Label>
-                <Input id="deductionForLateAbsence" type="number" value={deductionForLateAbsence} onChange={(e) => setDeductionForLateAbsence(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="otherDeduction">Other Deduction</Label>
-                <Input id="otherDeduction" type="number" value={otherDeduction} onChange={(e) => setOtherDeduction(e.target.value)} />
-              </div>
-            </div>
-
-            <h3 className="text-lg font-semibold mt-6 mb-4">Employer Contribution</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="providentFundEmployerPercent">Provident Fund (Employer %)</Label>
-                <Input id="providentFundEmployerPercent" type="number" value={providentFundEmployerPercent} onChange={(e) => setProvidentFundEmployerPercent(e.target.value)} />
-              </div>
-            </div>
-
-            <h3 className="text-lg font-semibold mt-6 mb-4">Summary</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Gross Salary</Label>
-                <Input value={grossSalary} readOnly />
-              </div>
-              <div className="space-y-2">
-                <Label>Net Payable</Label>
-                <Input value={netPayable} readOnly />
-              </div>
-            </div>
-
-            <h3 className="text-lg font-semibold mt-6 mb-4">Payment Details</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="paymentMode">Payment Mode</Label>
-                <Select onValueChange={setPaymentMode} value={paymentMode}>
-                  <SelectTrigger id="paymentMode">
-                    <SelectValue placeholder="Select payment mode" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Bank">Bank</SelectItem>
-                    <SelectItem value="Cash">Cash</SelectItem>
-                    <SelectItem value="Mobile Banking">Mobile Banking</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {paymentMode === 'Bank' && (
-                <div className="space-y-2">
-                  <Label htmlFor="bankAccountNo">Bank Account No</Label>
-                  <Input id="bankAccountNo" type="text" value={bankAccountNo} onChange={(e) => setBankAccountNo(e.target.value)} />
-                </div>
-              )}
-              <div className="flex items-center space-x-2">
-                <Checkbox id="isActive" checked={isActive} onCheckedChange={setIsActive} />
-                <Label htmlFor="isActive">Is Active?</Label>
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-2 mt-6">
-              <Button type="submit">Save Salary Setup</Button>
-              <Button type="button" variant="outline" onClick={() => navigate('/employee/database')}>Cancel</Button>
-            </div>
-          </form>
+          ) : (
+            <p className="text-center text-muted-foreground py-8">No salary setups found. Click &quot;Add New Setup&quot; to create one.</p>
+          )}
         </CardContent>
       </Card>
     </div>

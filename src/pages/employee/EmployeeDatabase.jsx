@@ -2,16 +2,23 @@ import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Search, UserPlus, Edit, Trash2, ArrowUpDown } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 
 
 const initialEmployees = [
-  { sl: 1, name: 'Alice Wonderland', id: 'EMP001', department: 'Sales', subDepartment: 'Retail', contact: '555-1234', emergencyContactName: 'Mad Hatter', emergencyContactRelation: 'Friend', nid: '1234567890123', currentAddress: '123 Rabbit Hole, Wonderland', permanentAddress: 'Wonderland Palace, Wonderland' },
-  { sl: 2, name: 'Bob The Builder', id: 'EMP002', department: 'Operations', subDepartment: 'Construction', contact: '555-5678', emergencyContactName: 'Wendy', emergencyContactRelation: 'Partner', nid: '0987654321098', currentAddress: '456 Fixit Ave, Builder City', permanentAddress: 'Builder City Central, Builder City' },
-  { sl: 3, name: 'Charlie Chaplin', id: 'EMP003', department: 'Creative', subDepartment: 'Performance', contact: '555-0000', emergencyContactName: 'Oona O\'Neill', emergencyContactRelation: 'Spouse', nid: '1122334455667', currentAddress: '789 Tramp St, Hollywood', permanentAddress: 'Hollywood Hills Estate, Hollywood' },
-  { sl: 4, name: 'Diana Prince', id: 'EMP004', department: 'Justice', subDepartment: 'Field Operations', contact: '555-9999', emergencyContactName: 'Steve Trevor', emergencyContactRelation: 'Colleague', nid: '2233445566778', currentAddress: 'Themyscira Embassy, Washington D.C.', permanentAddress: 'Paradise Island, Themyscira' },
-  { sl: 5, name: 'Edward Scissorhands', id: 'EMP005', department: 'Art & Design', subDepartment: 'Topiary', contact: '555-3333', emergencyContactName: 'Peg Boggs', emergencyContactRelation: 'Guardian', nid: '3344556677889', currentAddress: 'Avon St, Suburbia', permanentAddress: 'The Castle on the Hill, Suburbia' },
+  { sl: 1, name: 'Alice Wonderland', id: 'EMP001', employeeType: 'Full time', department: 'Sales', subDepartment: 'Retail', contact: '555-1234', emergencyContactName: 'Mad Hatter', emergencyContactRelation: 'Friend', nid: '1234567890123', currentAddress: '123 Rabbit Hole, Wonderland', permanentAddress: 'Wonderland Palace, Wonderland', status: 'Active' },
+  { sl: 2, name: 'Bob The Builder', id: 'EMP002', employeeType: 'Part time', department: 'Operations', subDepartment: 'Construction', contact: '555-5678', emergencyContactName: 'Wendy', emergencyContactRelation: 'Partner', nid: '0987654321098', currentAddress: '456 Fixit Ave, Builder City', permanentAddress: 'Builder City Central, Builder City', status: 'Active' },
+  { sl: 3, name: 'Charlie Chaplin', id: 'EMP003', employeeType: 'Temporary', department: 'Creative', subDepartment: 'Performance', contact: '555-0000', emergencyContactName: "Oona O'Neill", emergencyContactRelation: 'Spouse', nid: '1122334455667', currentAddress: '789 Tramp St, Hollywood', permanentAddress: 'Hollywood Hills Estate, Hollywood', status: 'Active' },
+  { sl: 4, name: 'Diana Prince', id: 'EMP004', employeeType: 'Contractual', department: 'Justice', subDepartment: 'Field Operations', contact: '555-9999', emergencyContactName: 'Steve Trevor', emergencyContactRelation: 'Colleague', nid: '2233445566778', currentAddress: 'Themyscira Embassy, Washington D.C.', permanentAddress: 'Paradise Island, Themyscira', status: 'Active' },
+  { sl: 5, name: 'Edward Scissorhands', id: 'EMP005', employeeType: 'Intern', department: 'Art & Design', subDepartment: 'Topiary', contact: '555-3333', emergencyContactName: 'Peg Boggs', emergencyContactRelation: 'Guardian', nid: '3344556677889', currentAddress: 'Avon St, Suburbia', permanentAddress: 'The Castle on the Hill, Suburbia', status: 'Active' },
 ];
 
 const SortableHeader = ({ children, columnKey, sortConfig, requestSort }) => {
@@ -37,6 +44,18 @@ const EmployeeDatabase = () => {
   const [employees, setEmployees] = useState(initialEmployees);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState(null);
+
+  const handleStatusChange = (employeeId, newStatus) => {
+    setEmployees(prevEmployees =>
+      prevEmployees.map(emp =>
+        emp.id === employeeId ? { ...emp, status: newStatus } : emp
+      )
+    );
+    toast({
+      title: "Employee Status Updated",
+      description: `Employee ID: ${employeeId} status changed to ${newStatus}.`,
+    });
+  };
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -125,6 +144,7 @@ const EmployeeDatabase = () => {
               <SortableHeader columnKey="sl" sortConfig={sortConfig} requestSort={requestSort}>Sl No.</SortableHeader>
               <SortableHeader columnKey="name" sortConfig={sortConfig} requestSort={requestSort}>Employee Name</SortableHeader>
               <SortableHeader columnKey="id" sortConfig={sortConfig} requestSort={requestSort}>ID</SortableHeader>
+              <SortableHeader columnKey="employeeType" sortConfig={sortConfig} requestSort={requestSort}>Employee Type</SortableHeader>
               <SortableHeader columnKey="department" sortConfig={sortConfig} requestSort={requestSort}>Department</SortableHeader>
               <SortableHeader columnKey="subDepartment" sortConfig={sortConfig} requestSort={requestSort}>Sub Department</SortableHeader>
               <SortableHeader columnKey="contact" sortConfig={sortConfig} requestSort={requestSort}>Contact</SortableHeader>
@@ -133,6 +153,7 @@ const EmployeeDatabase = () => {
               <SortableHeader columnKey="nid" sortConfig={sortConfig} requestSort={requestSort}>NID</SortableHeader>
               <SortableHeader columnKey="currentAddress" sortConfig={sortConfig} requestSort={requestSort}>Current Address</SortableHeader>
               <SortableHeader columnKey="permanentAddress" sortConfig={sortConfig} requestSort={requestSort}>Permanent Address</SortableHeader>
+              <SortableHeader columnKey="status" sortConfig={sortConfig} requestSort={requestSort}>Status</SortableHeader>
               <th scope="col" className="px-4 py-3 text-center whitespace-nowrap">Actions</th>
             </tr>
           </thead>
@@ -142,6 +163,7 @@ const EmployeeDatabase = () => {
                 <td className="px-4 py-3">{emp.sl}</td>
                 <td className="px-4 py-3 font-medium text-ecb-secondary whitespace-nowrap">{emp.name}</td>
                 <td className="px-4 py-3 whitespace-nowrap">{emp.id}</td>
+                <td className="px-4 py-3 whitespace-nowrap">{emp.employeeType}</td>
                 <td className="px-4 py-3 whitespace-nowrap">{emp.department}</td>
                 <td className="px-4 py-3 whitespace-nowrap">{emp.subDepartment}</td>
                 <td className="px-4 py-3 whitespace-nowrap">{emp.contact}</td>
@@ -150,7 +172,23 @@ const EmployeeDatabase = () => {
                 <td className="px-4 py-3 whitespace-nowrap">{emp.nid}</td>
                 <td className="px-4 py-3 whitespace-nowrap">{emp.currentAddress}</td>
                 <td className="px-4 py-3 whitespace-nowrap">{emp.permanentAddress}</td>
+                <td className="px-4 py-3 whitespace-nowrap">{emp.status}</td>
                 <td className="px-4 py-3 text-center space-x-1 whitespace-nowrap">
+                  <Select onValueChange={(value) => handleStatusChange(emp.id, value)} value={emp.status}>
+                    <SelectTrigger className="w-[120px] h-8 text-xs">
+                      <SelectValue placeholder="Change Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Active">Active</SelectItem>
+                      <SelectItem value="Resigned">Resigned</SelectItem>
+                      <SelectItem value="Terminated">Terminated</SelectItem>
+                      <SelectItem value="Retired">Retired</SelectItem>
+                      <SelectItem value="Laid Off">Laid Off</SelectItem>
+                      <SelectItem value="Deceased">Deceased</SelectItem>
+                      <SelectItem value="Absconded">Absconded</SelectItem>
+                      <SelectItem value="Transferred">Transferred</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <Button 
                     variant="ghost" 
                     size="icon" 

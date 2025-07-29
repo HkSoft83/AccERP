@@ -36,6 +36,7 @@ const PayrollRun = lazy(() => import('@/pages/employee/PayrollRun'));
 const SalaryReport = lazy(() => import('@/pages/employee/SalaryReport'));
 const Payslip = lazy(() => import('@/pages/employee/Payslip'));
 const EmployeeDatabase = lazy(() => import('@/pages/employee/EmployeeDatabase'));
+const AddEmployee = lazy(() => import('@/pages/employee/AddEmployee'));
 
 const Production = lazy(() => import('@/pages/Production'));
 
@@ -109,6 +110,7 @@ function App() {
                 <Route path="payroll-run" element={<PayrollRun />} />
                 <Route path="salary-report" element={<SalaryReport />} />
                 <Route path="payslip" element={<Payslip />} />
+                <Route path="add" element={<AddEmployee />} />
               </Route>
               
               <Route path="production" element={<Production />} />
