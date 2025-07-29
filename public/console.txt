@@ -10,38 +10,53 @@ hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution w
     at ThemeProvider (ThemeContext.jsx:7:33)
     at App (<anonymous>)
 overrideMethod @ hook.js:608Understand this warning
-SalarySetup.jsx:92 Editing setup: Object
-chunk-V5LT2MCF.js?v=8fac43d1:16691 Uncaught TypeError: Cannot read properties of undefined (reading 'houseRentPercent')
-    at AddSalarySetup.jsx:60:47
-    at commitHookEffectListMount (chunk-V5LT2MCF.js?v=8fac43d1:16936:34)
-    at commitPassiveMountOnFiber (chunk-V5LT2MCF.js?v=8fac43d1:18184:19)
-    at commitPassiveMountEffects_complete (chunk-V5LT2MCF.js?v=8fac43d1:18157:17)
-    at commitPassiveMountEffects_begin (chunk-V5LT2MCF.js?v=8fac43d1:18147:15)
-    at commitPassiveMountEffects (chunk-V5LT2MCF.js?v=8fac43d1:18137:11)
-    at flushPassiveEffectsImpl (chunk-V5LT2MCF.js?v=8fac43d1:19518:11)
-    at flushPassiveEffects (chunk-V5LT2MCF.js?v=8fac43d1:19475:22)
-    at commitRootImpl (chunk-V5LT2MCF.js?v=8fac43d1:19444:13)
-    at commitRoot (chunk-V5LT2MCF.js?v=8fac43d1:19305:13)Understand this error
-chunk-V5LT2MCF.js?v=8fac43d1:16691 Uncaught TypeError: Cannot read properties of undefined (reading 'houseRentPercent')
-    at AddSalarySetup.jsx:60:47
-    at commitHookEffectListMount (chunk-V5LT2MCF.js?v=8fac43d1:16936:34)
-    at invokePassiveEffectMountInDEV (chunk-V5LT2MCF.js?v=8fac43d1:18352:19)
-    at invokeEffectsInDev (chunk-V5LT2MCF.js?v=8fac43d1:19729:19)
-    at commitDoubleInvokeEffectsInDEV (chunk-V5LT2MCF.js?v=8fac43d1:19714:15)
-    at flushPassiveEffectsImpl (chunk-V5LT2MCF.js?v=8fac43d1:19531:13)
-    at flushPassiveEffects (chunk-V5LT2MCF.js?v=8fac43d1:19475:22)
-    at commitRootImpl (chunk-V5LT2MCF.js?v=8fac43d1:19444:13)
-    at commitRoot (chunk-V5LT2MCF.js?v=8fac43d1:19305:13)
-    at performSyncWorkOnRoot (chunk-V5LT2MCF.js?v=8fac43d1:18923:11)Understand this error
-2hook.js:608 The above error occurred in the <AddSalarySetup> component:
+4@radix-ui_react-select.js?v=8fac43d1:2545 Uncaught Error: A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.
+    at @radix-ui_react-select.js?v=8fac43d1:2545:11
+    at renderWithHooks (chunk-V5LT2MCF.js?v=8fac43d1:11568:26)
+    at updateForwardRef (chunk-V5LT2MCF.js?v=8fac43d1:14345:28)
+    at beginWork (chunk-V5LT2MCF.js?v=8fac43d1:15966:22)
+    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=8fac43d1:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=8fac43d1:3699:24)
+    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=8fac43d1:3733:39)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=8fac43d1:19793:15)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=8fac43d1:19226:20)
+    at workLoopSync (chunk-V5LT2MCF.js?v=8fac43d1:19165:13)Understand this error
+2hook.js:608 The above error occurred in the <SelectItem> component:
 
-    at AddSalarySetup (http://localhost:5173/src/pages/employee/AddSalarySetup.jsx?t=1753766071855:27:27)
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:2527:11
+    at _c7 (http://localhost:5173/src/components/ui/select.jsx:124:12)
+    at div
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:367:13
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:199:11
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:176:11
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:272:13
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:2439:11
+    at div
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:199:11
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:176:11
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:272:13
+    at Provider (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:71:15)
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:1956:100
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:199:11
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:176:11
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:367:13
+    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:1321:11
+    at SelectPortal
+    at _c3 (http://localhost:5173/src/components/ui/select.jsx:60:12)
+    at Provider (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:71:15)
+    at Provider (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:71:15)
+    at CollectionProvider (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:258:13)
+    at Provider (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:71:15)
+    at Provider (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:71:15)
+    at $cf1ac5d9fe0e8206$export$badac9ada3a0bdf9 (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:1039:11)
+    at $cc7e05a45900e73f$export$ef9b1a59e592288f (http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-select.js?v=8fac43d1:1764:11)
+    at div
     at div
     at _c9 (http://localhost:5173/src/components/ui/card.jsx:100:12)
     at div
     at _c (http://localhost:5173/src/components/ui/card.jsx:20:11)
     at div
-    at SalarySetup (http://localhost:5173/src/pages/employee/SalarySetup.jsx?t=1753772848588:62:21)
+    at PayrollRun (http://localhost:5173/src/pages/employee/PayrollRun.jsx?t=1753778159883:42:21)
     at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4103:5)
     at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4103:5)
     at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4510:26)
@@ -64,14 +79,14 @@ chunk-V5LT2MCF.js?v=8fac43d1:16691 Uncaught TypeError: Cannot read properties of
 Consider adding an error boundary to your tree to customize error handling behavior.
 Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
 overrideMethod @ hook.js:608Understand this error
-chunk-V5LT2MCF.js?v=8fac43d1:9145 Uncaught TypeError: Cannot read properties of undefined (reading 'houseRentPercent')
-    at AddSalarySetup.jsx:60:47
-    at commitHookEffectListMount (chunk-V5LT2MCF.js?v=8fac43d1:16936:34)
-    at commitPassiveMountOnFiber (chunk-V5LT2MCF.js?v=8fac43d1:18184:19)
-    at commitPassiveMountEffects_complete (chunk-V5LT2MCF.js?v=8fac43d1:18157:17)
-    at commitPassiveMountEffects_begin (chunk-V5LT2MCF.js?v=8fac43d1:18147:15)
-    at commitPassiveMountEffects (chunk-V5LT2MCF.js?v=8fac43d1:18137:11)
-    at flushPassiveEffectsImpl (chunk-V5LT2MCF.js?v=8fac43d1:19518:11)
-    at flushPassiveEffects (chunk-V5LT2MCF.js?v=8fac43d1:19475:22)
-    at commitRootImpl (chunk-V5LT2MCF.js?v=8fac43d1:19444:13)
-    at commitRoot (chunk-V5LT2MCF.js?v=8fac43d1:19305:13)
+chunk-V5LT2MCF.js?v=8fac43d1:9145 Uncaught Error: A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.
+    at @radix-ui_react-select.js?v=8fac43d1:2545:11
+    at renderWithHooks (chunk-V5LT2MCF.js?v=8fac43d1:11568:26)
+    at updateForwardRef (chunk-V5LT2MCF.js?v=8fac43d1:14345:28)
+    at beginWork (chunk-V5LT2MCF.js?v=8fac43d1:15966:22)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=8fac43d1:19781:22)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=8fac43d1:19226:20)
+    at workLoopSync (chunk-V5LT2MCF.js?v=8fac43d1:19165:13)
+    at renderRootSync (chunk-V5LT2MCF.js?v=8fac43d1:19144:15)
+    at recoverFromConcurrentError (chunk-V5LT2MCF.js?v=8fac43d1:18764:28)
+    at performSyncWorkOnRoot (chunk-V5LT2MCF.js?v=8fac43d1:18907:28)Understand this error

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, Edit, Trash2, Settings } from 'lucide-react';
+import { PlusCircle, Edit, Trash2, Settings, Eye } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -13,6 +13,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import AddSalarySetup from './AddSalarySetup'; // Import the renamed component
 import JournalEntrySettings from './JournalEntrySettings'; // Import the new settings component
+import SalarySetupDetail from './SalarySetupDetail'; // Import the new detail component
+import AllSalaryDetailsTable from './AllSalaryDetailsTable'; // Import the new all details component
 
 const mockEmployees = [
   { id: 'EMP001', name: 'John Doe' },
@@ -107,6 +109,8 @@ const SalarySetup = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showSettings, setShowSettings] = useState(false); // New state for settings form
   const [editData, setEditData] = useState(null); // New state for editing
+  const [selectedSetupForDetail, setSelectedSetupForDetail] = useState(null); // New state for detail view
+  const [showAllDetailsTable, setShowAllDetailsTable] = useState(false); // New state for all details table
 
   useEffect(() => {
     loadSalarySetups();
@@ -158,9 +162,28 @@ const SalarySetup = () => {
       console.log("Editing setup:", setupToEdit);
       setEditData(setupToEdit);
       setShowAddForm(true);
+      setSelectedSetupForDetail(null); // Hide detail view when editing
+      setShowAllDetailsTable(false); // Hide all details table when editing
     } else {
       console.log("Setup not found for editing with ID:", id);
     }
+  };
+
+  const handleViewDetails = (id) => {
+    const setupToView = salarySetups.find(setup => setup.id === id);
+    if (setupToView) {
+      setSelectedSetupForDetail(setupToView);
+      setShowAddForm(false); // Hide add/edit form when viewing details
+      setShowSettings(false); // Hide settings when viewing details
+      setShowAllDetailsTable(false); // Hide all details table when viewing details
+    }
+  };
+
+  const handleShowAllDetails = () => {
+    setShowAllDetailsTable(true);
+    setShowAddForm(false);
+    setShowSettings(false);
+    setSelectedSetupForDetail(null);
   };
 
   return (
@@ -177,13 +200,14 @@ const SalarySetup = () => {
         </div>
       </div>
 
-      {showAddForm && (
+      {showAddForm && !showSettings && !selectedSetupForDetail && !showAllDetailsTable && (
         <Card>
           <CardHeader>
             <CardTitle>Add New Salary Setup</CardTitle>
           </CardHeader>
           <CardContent>
             <AddSalarySetup 
+              key={editData ? editData.id : 'new'} // Add key to force remount on editData change
               onSave={() => {
                 loadSalarySetups(); // Reload list after saving
                 setShowAddForm(false); // Hide form after saving
@@ -199,7 +223,7 @@ const SalarySetup = () => {
         </Card>
       )}
 
-      {showSettings && (
+      {showSettings && !showAddForm && !selectedSetupForDetail && !showAllDetailsTable && (
         <Card>
           <CardHeader>
             <CardTitle>Journal Entry Settings</CardTitle>
@@ -213,9 +237,26 @@ const SalarySetup = () => {
         </Card>
       )}
 
+      {selectedSetupForDetail && !showAddForm && !showSettings && !showAllDetailsTable && (
+        <SalarySetupDetail 
+          setup={selectedSetupForDetail} 
+          onClose={() => setSelectedSetupForDetail(null)} 
+        />
+      )}
+
+      {showAllDetailsTable && !showAddForm && !showSettings && !selectedSetupForDetail && (
+        <AllSalaryDetailsTable 
+          salarySetups={salarySetups} 
+          onClose={() => setShowAllDetailsTable(false)} 
+        />
+      )}
+
       <Card>
-        <CardHeader>
+        <CardHeader className="flex flex-row justify-between items-center">
           <CardTitle>Existing Salary Setups</CardTitle>
+          <Button onClick={handleShowAllDetails} variant="outline" className="text-primary border-primary hover:bg-primary/10">
+            <Eye size={20} className="mr-2" /> View All Details
+          </Button>
         </CardHeader>
         <CardContent>
           {salarySetups.length > 0 ? (
@@ -246,6 +287,9 @@ const SalarySetup = () => {
                       <TableCell>{setup.netPayable.toFixed(2)}</TableCell>
                       <TableCell>{setup.isActive ? 'Active' : 'Inactive'}</TableCell>
                       <TableCell className="text-center space-x-2">
+                        <Button variant="outline" size="sm" onClick={() => handleViewDetails(setup.id)}>
+                          <Eye size={16} />
+                        </Button>
                         <Button variant="outline" size="sm" onClick={() => handleEdit(setup.id)}>
                           <Edit size={16} />
                         </Button>

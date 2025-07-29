@@ -1,68 +1,70 @@
-✅ 1. Salary Setup Form – কী কী থাকতে হবে?
-Field/Option	Description
-🔹 Employee Name / Code	কর্মচারী নির্বাচন (Dropdown বা Autocomplete)।
-🔹 Salary Type	Fixed / Hourly / Commission-based
-🔹 Effective From Date	কোন তারিখ থেকে এই সেটাপ চালু হবে।
-🔹 Basic Salary	মূল বেতন।
-🔹 Allowances (ভাতা)	
-→ House Rent (e.g. 40% of basic)	
-→ Medical Allowance	
-→ Transport / Conveyance	
-→ Mobile/Internet Allowance	
-→ Festival Bonus (Yearly/Occasional)	
-🔹 Deductions (কাটছাঁট)	
-→ Provident Fund (Employee Portion)	
-→ Tax Deduction (TDS)	
-→ Loan Repayment (if any)	
-→ Other deduction	
-🔹 Employer Contribution	PF Employer Side (e.g. 10%)
-🔹 Gross Salary (auto)	Basic + Allowances - Deductions
-🔹 Net Payable (auto)	Gross - any deduction
-🔹 Payment Mode	Bank / Cash / Mobile Banking
-🔹 Bank Account No	(if payment via bank)
-🔹 Is Active?	Checkbox
+🔍 পেরোল রান (Payroll Run) ধাপে কী কী থাকবে?
+1. Period Selection (মাস ও সাল নির্বাচন)
+ইউজার যেন বলতে পারে: “আমি জানুয়ারি 2025-এর জন্য পেরোল চালাতে চাই”
+✅ Month + Year ড্রপডাউন ইনপুট
 
-✅ 2. Feature Checklist (Functional)
-Feature	Needed?	Notes
-Create, Edit, Delete Salary Setup	✅	Based on employee ID
-Allow different salary structure for different employees	✅	Customizability
-Historical salary changes tracking	✅	Show log of changes
-Formula-based calculation	✅	e.g. House Rent = 40% of Basic
-Auto calculation of PF, Tax etc.	✅	Based on rules
-Clone salary structure for new employee	Optional	Speeds up entry
-Multiple effective periods	Optional	Advanced payroll systems only
+2. Eligible Employee Fetch
+যারা সেই মাসে Active আছে তাদের বেসে Payroll চলবে
+✅ Filter: isActive === true
+✅ Optional: Employment start date ≤ Selected Period
 
-✅ 3. Optional Advanced Features
-Feature	Description
-🔹 Grade-wise Salary Structure	অফিসার, স্টাফ, ম্যানেজার — আলাদা কাঠামো
-🔹 Salary Components Template	Default template apply করার অপশন
-🔹 Payslip Preview	এই সেটআপ থেকে সরাসরি payslip দেখা
-🔹 Import from Excel	একাধিক কর্মচারীর বেতন সেটআপ একবারে আপলোড
+3. Salary Computation
+প্রত্যেক কর্মচারীর জন্য নিচের বিষয়গুলো Salary Setup থেকে টেনে আনো:
 
-🧾 উদাহরণ: ফর্ম ভিউ (UI suggestion)
-markdown
+বিষয়	উৎস
+Basic Salary	Setup ফর্ম থেকে
+Allowances	Medical, House Rent, Others
+Deductions	Tax, PF, Loan
+Net Payable	আগেই calculate করা হয়েছে
+
+✅ এই Data সব টেবিল আকারে দেখানো হবে
+
+4. Optional Adjustments
+অল্প কিছু ম্যানুয়াল Correction দরকার হতে পারে (optional)
+✅ Input fields for adjustment: bonus, advance recovery, etc.
+
+5. Generate Payslip Button
+টেবিলের নিচে "Generate Payslip" বোতাম থাকবে
+✅ On click: Show Confirmation Modal
+✅ Confirm করলে → localStorage বা API-তে সেভ হয়
+✅ Payslip তৈরি হয় (PDF/HTML preview)
+
+6. Accounting Entries
+সেলারি পোস্ট হওয়ার সাথে সাথে নিচের জার্নাল তৈরি হয়:
+
+text
 Copy
 Edit
--------------------------------------------------
-| Employee: [Dropdown]                         |
-| Effective From: [Date]                       |
--------------------------------------------------
-| Basic Salary:           [   15000   ]        |
-| House Rent (40%):       [   6000    ]        |
-| Medical Allowance:      [   1000    ]        |
-| Other Allowances:       [   500     ]        |
--------------------------------------------------
-| Provident Fund (Emp):   [   1000    ]        |
-| Provident Fund (Org):   [   1000    ]        |
-| Tax Deduction:          [   200     ]        |
--------------------------------------------------
-| Gross Salary:           [   22500   ]        |
-| Net Payable:            [   21300   ]        |
--------------------------------------------------
-| Payment Mode:  [Dropdown: Bank/Cash]         |
-| Bank A/C:       [Optional Input]             |
--------------------------------------------------
-| [Save] [Cancel]                              |
--------------------------------------------------
-🔔 উপসংহার:
-Salary Setup module এর মূল কাজ হলো – পরিষ্কারভাবে Employee-wise salary break-up সংরক্ষণ, যাতে Payroll Run-এর সময় কোন বিভ্রান্তি না হয় এবং Payslip, Accounting Integration, Tax computation এগুলো সব সঠিকভাবে হয়।
+Dr. Employee Salary Expense
+Dr. Employer PF Contribution
+Cr. Salary Payable
+Cr. PF Payable
+Cr. Tax Payable (if any)
+✅ এন্ট্রিগুলো রিপোর্টিং বা জার্নাল পেজে পাঠানো যায়
+
+7. Status Tracking
+যাদের salary paid হয়ে গেছে বা pending, সেটা দেখাতে পারো
+✅ Column: Payment Status = “Pending”, “Paid”
+
+🖥️ ইউআই কাঠামো (প্রস্তাবিত ডিজাইন)
+Employee	Basic	Allowances	Deductions	Net	Status	Action
+John	50000	15000	5000	60000	Pending	[Edit] [Finalize]
+
+✅ সংক্ষেপে Payroll Run ধাপের মূল ফিচার:
+ফিচার	ব্যাখ্যা
+মাস/সাল নির্বাচন	কোন পিরিয়ডে সেলারি রান হবে তা নির্বাচন করা
+কর্মচারী তালিকা	Active কর্মচারীদের জন্য Payroll তৈরি
+হিসাব	Basic, Allowances, Deductions, Net Calculation
+Manual Adjustment (optional)	Extra Bonus বা Penalty এন্ট্রি
+Payslip Generation	রিপোর্ট তৈরির অপশন
+Accounting Integration	অটোমেটিক জার্নাল এন্ট্রি
+Status & Actions	Paid/Pending Status + Finalize অপশন
+
+🔔 পরবর্তী ধাপ কি হতে পারে?
+Payslip Viewer
+
+Bank Advice/Disbursement Sheet
+
+Provident Fund Posting
+
+Salary Ledger

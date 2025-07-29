@@ -19,35 +19,45 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
   ];
 
   const [employees] = useState(mockEmployees);
-  const [selectedEmployee, setSelectedEmployee] = useState('');
-  const [salaryType, setSalaryType] = useState('Fixed');
-  const [effectiveFromDate, setEffectiveFromDate] = useState(new Date());
-  const [basicSalary, setBasicSalary] = useState(0);
-  const [houseRentPercent, setHouseRentPercent] = useState(40);
-  const [medicalAllowance, setMedicalAllowance] = useState(0);
-  const [transportAllowance, setTransportAllowance] = useState(0);
-  const [mobileInternetAllowance, setMobileInternetAllowance] = useState(0);
-  const [festivalBonus, setFestivalBonus] = useState(0);
-  const [overtime, setOvertime] = useState(0);
-  const [commission, setCommission] = useState(0);
-  const [specialAllowance, setSpecialAllowance] = useState(0);
-  const [othersAllowance, setOthersAllowance] = useState(0);
-  const [providentFundEmployeePercent, setProvidentFundEmployeePercent] = useState(10);
-  const [taxDeduction, setTaxDeduction] = useState(0);
-  const [loanRepayment, setLoanRepayment] = useState(0);
-  const [deductionForLateAbsence, setDeductionForLateAbsence] = useState(0);
-  const [otherDeduction, setOtherDeduction] = useState(0);
-  const [providentFundEmployerPercent, setProvidentFundEmployerPercent] = useState(10);
-  const [paymentMode, setPaymentMode] = useState('Bank');
-  const [bankAccountNo, setBankAccountNo] = useState('');
-  const [accountName, setAccountName] = useState('');
-  const [bankName, setBankName] = useState('');
-  const [branchName, setBranchName] = useState('');
-  const [routingNo, setRoutingNo] = useState('');
-  const [mobileBankingName, setMobileBankingName] = useState('');
-  const [mobileBankingNumber, setMobileBankingNumber] = useState('');
-  const [isActive, setIsActive] = useState(true);
 
+  const initialFormData = {
+    employeeId: '',
+    salaryType: 'Fixed',
+    effectiveFromDate: new Date(),
+    basicSalary: 0,
+    allowances: {
+      houseRentPercent: 0, // Default to 0
+      medicalAllowance: 0,
+      transportAllowance: 0,
+      mobileInternetAllowance: 0,
+      festivalBonus: 0,
+      overtime: 0,
+      commission: 0,
+      specialAllowance: 0,
+      othersAllowance: 0,
+    },
+    deductions: {
+      providentFundEmployeePercent: 0, // Default to 0
+      taxDeduction: 0,
+      loanRepayment: 0,
+      deductionForLateAbsence: 0,
+      otherDeduction: 0,
+    },
+    employerContribution: {
+      providentFundEmployerPercent: 0, // Default to 0
+    },
+    paymentMode: 'Bank',
+    bankAccountNo: '',
+    accountName: '',
+    bankName: '',
+    branchName: '',
+    routingNo: '',
+    mobileBankingName: '',
+    mobileBankingNumber: '',
+    isActive: true,
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
   const [grossSalary, setGrossSalary] = useState(0);
   const [netPayable, setNetPayable] = useState(0);
 
@@ -55,56 +65,37 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
     console.log("AddSalarySetup useEffect - editData:", editData);
     console.log("AddSalarySetup useEffect - editData.allowances:", editData?.allowances);
     if (editData) {
-      setSelectedEmployee(editData.employeeId);
-      setSalaryType(editData.salaryType);
-      setEffectiveFromDate(new Date(editData.effectiveFromDate));
-      setBasicSalary(editData.basicSalary || 0);
-      setHouseRentPercent(editData.allowances?.houseRentPercent || 0);
-      setMedicalAllowance(editData.allowances?.medicalAllowance || 0);
-      setTransportAllowance(editData.allowances?.transportAllowance || 0);
-      setMobileInternetAllowance(editData.allowances?.mobileInternetAllowance || 0);
-      setFestivalBonus(editData.allowances?.festivalBonus || 0);
-      setOvertime(editData.allowances?.overtime || 0);
-      setCommission(editData.allowances?.commission || 0);
-      setSpecialAllowance(editData.allowances?.specialAllowance || 0);
-      setOthersAllowance(editData.allowances?.othersAllowance || 0);
-      setProvidentFundEmployeePercent(editData.deductions?.providentFundEmployeePercent || 0);
-      setTaxDeduction(editData.deductions?.taxDeduction || 0);
-      setLoanRepayment(editData.deductions?.loanRepayment || 0);
-      setDeductionForLateAbsence(editData.deductions?.deductionForLateAbsence || 0);
-      setOtherDeduction(editData.deductions?.otherDeduction || 0);
-      setProvidentFundEmployerPercent(editData.employerContribution?.providentFundEmployerPercent || 0);
-      setPaymentMode(editData.paymentMode);
-      setBankAccountNo(editData.bankAccountNo || '');
-      setAccountName(editData.accountName || '');
-      setBankName(editData.bankName || '');
-      setBranchName(editData.branchName || '');
-      setRoutingNo(editData.routingNo || '');
-      setMobileBankingName(editData.mobileBankingName || '');
-      setMobileBankingNumber(editData.mobileBankingNumber || '');
-      setIsActive(editData.isActive);
+      setFormData({
+        ...editData,
+        effectiveFromDate: new Date(editData.effectiveFromDate),
+        allowances: editData.allowances || {},
+        deductions: editData.deductions || {},
+        employerContribution: editData.employerContribution || {},
+      });
+    } else {
+      setFormData(initialFormData);
     }
   }, [editData]);
 
   useEffect(() => {
-    const basic = parseFloat(basicSalary) || 0;
-    const houseRent = basic * (parseFloat(houseRentPercent) / 100) || 0;
-    const medical = parseFloat(medicalAllowance) || 0;
-    const transport = parseFloat(transportAllowance) || 0;
-    const mobileInternet = parseFloat(mobileInternetAllowance) || 0;
-    const bonus = parseFloat(festivalBonus) || 0;
-    const ot = parseFloat(overtime) || 0;
-    const comm = parseFloat(commission) || 0;
-    const special = parseFloat(specialAllowance) || 0;
-    const others = parseFloat(othersAllowance) || 0;
+    const basic = parseFloat(formData.basicSalary) || 0;
+    const houseRent = basic * (parseFloat(formData.allowances.houseRentPercent) / 100) || 0;
+    const medical = parseFloat(formData.allowances.medicalAllowance) || 0;
+    const transport = parseFloat(formData.allowances.transportAllowance) || 0;
+    const mobileInternet = parseFloat(formData.allowances.mobileInternetAllowance) || 0;
+    const bonus = parseFloat(formData.allowances.festivalBonus) || 0;
+    const ot = parseFloat(formData.allowances.overtime) || 0;
+    const comm = parseFloat(formData.allowances.commission) || 0;
+    const special = parseFloat(formData.allowances.specialAllowance) || 0;
+    const others = parseFloat(formData.allowances.othersAllowance) || 0;
 
     const totalAllowances = houseRent + medical + transport + mobileInternet + bonus + ot + comm + special + others;
 
-    const pfEmployee = basic * (parseFloat(providentFundEmployeePercent) / 100) || 0;
-    const tax = parseFloat(taxDeduction) || 0;
-    const loan = parseFloat(loanRepayment) || 0;
-    const lateAbsence = parseFloat(deductionForLateAbsence) || 0;
-    const otherDed = parseFloat(otherDeduction) || 0;
+    const pfEmployee = basic * (parseFloat(formData.deductions.providentFundEmployeePercent) / 100) || 0;
+    const tax = parseFloat(formData.deductions.taxDeduction) || 0;
+    const loan = parseFloat(formData.deductions.loanRepayment) || 0;
+    const lateAbsence = parseFloat(formData.deductions.deductionForLateAbsence) || 0;
+    const otherDed = parseFloat(formData.deductions.otherDeduction) || 0;
 
     const totalDeductions = pfEmployee + tax + loan + lateAbsence + otherDed;
 
@@ -113,59 +104,77 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
 
     setGrossSalary(calculatedGrossSalary.toFixed(2));
     setNetPayable(calculatedNetPayable.toFixed(2));
-  }, [basicSalary, houseRentPercent, medicalAllowance, transportAllowance, mobileInternetAllowance, festivalBonus, overtime, commission, specialAllowance, othersAllowance, providentFundEmployeePercent, taxDeduction, loanRepayment, deductionForLateAbsence, otherDeduction]);
+  }, [formData]);
+
+  const handleInputChange = (field, value, nestedField = null) => {
+    setFormData(prev => {
+      if (nestedField) {
+        return {
+          ...prev,
+          [field]: {
+            ...prev[field],
+            [nestedField]: value,
+          },
+        };
+      }
+      return {
+        ...prev,
+        [field]: value,
+      };
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!selectedEmployee) {
+    if (!formData.employeeId) {
       toast({ title: "Validation Error", description: "Please select an employee.", variant: "destructive" });
       return;
     }
 
     const salaryData = {
-      id: editData ? editData.id : `${selectedEmployee}-${effectiveFromDate.toISOString().split('T')[0]}`, // Use existing ID if editing
-      employeeId: selectedEmployee,
-      salaryType,
-      effectiveFromDate: effectiveFromDate.toISOString().split('T')[0],
-      basicSalary: parseFloat(basicSalary),
+      id: formData.id || `${formData.employeeId}-${formData.effectiveFromDate.toISOString().split('T')[0]}`, // Use existing ID if editing
+      employeeId: formData.employeeId,
+      salaryType: formData.salaryType,
+      effectiveFromDate: formData.effectiveFromDate.toISOString().split('T')[0],
+      basicSalary: parseFloat(formData.basicSalary),
       allowances: {
-        houseRentPercent: parseFloat(houseRentPercent),
-        medicalAllowance: parseFloat(medicalAllowance),
-        transportAllowance: parseFloat(transportAllowance),
-        mobileInternetAllowance: parseFloat(mobileInternetAllowance),
-        festivalBonus: parseFloat(festivalBonus),
-        overtime: parseFloat(overtime),
-        commission: parseFloat(commission),
-        specialAllowance: parseFloat(specialAllowance),
-        othersAllowance: parseFloat(othersAllowance),
+        houseRentPercent: parseFloat(formData.allowances.houseRentPercent),
+        medicalAllowance: parseFloat(formData.allowances.medicalAllowance),
+        transportAllowance: parseFloat(formData.allowances.transportAllowance),
+        mobileInternetAllowance: parseFloat(formData.allowances.mobileInternetAllowance),
+        festivalBonus: parseFloat(formData.allowances.festivalBonus),
+        overtime: parseFloat(formData.allowances.overtime),
+        commission: parseFloat(formData.allowances.commission),
+        specialAllowance: parseFloat(formData.allowances.specialAllowance),
+        othersAllowance: parseFloat(formData.allowances.othersAllowance),
       },
       deductions: {
-        providentFundEmployeePercent: parseFloat(providentFundEmployeePercent),
-        taxDeduction: parseFloat(taxDeduction),
-        loanRepayment: parseFloat(loanRepayment),
-        deductionForLateAbsence: parseFloat(deductionForLateAbsence),
-        otherDeduction: parseFloat(otherDeduction),
+        providentFundEmployeePercent: parseFloat(formData.deductions.providentFundEmployeePercent),
+        taxDeduction: parseFloat(formData.deductions.taxDeduction),
+        loanRepayment: parseFloat(formData.deductions.loanRepayment),
+        deductionForLateAbsence: parseFloat(formData.deductions.deductionForLateAbsence),
+        otherDeduction: parseFloat(formData.deductions.otherDeduction),
       },
       employerContribution: {
-        providentFundEmployerPercent: parseFloat(providentFundEmployerPercent),
+        providentFundEmployerPercent: parseFloat(formData.employerContribution.providentFundEmployerPercent),
       },
       grossSalary: parseFloat(grossSalary),
       netPayable: parseFloat(netPayable),
-      paymentMode,
-      bankAccountNo: paymentMode === 'Bank' ? bankAccountNo : '',
-      accountName: paymentMode === 'Bank' ? accountName : '',
-      bankName: paymentMode === 'Bank' ? bankName : '',
-      branchName: paymentMode === 'Bank' ? branchName : '',
-      routingNo: paymentMode === 'Bank' ? routingNo : '',
-      mobileBankingName: paymentMode === 'Mobile Banking' ? mobileBankingName : '',
-      mobileBankingNumber: paymentMode === 'Mobile Banking' ? mobileBankingNumber : '',
-      isActive,
+      paymentMode: formData.paymentMode,
+      bankAccountNo: formData.paymentMode === 'Bank' ? formData.bankAccountNo : '',
+      accountName: formData.paymentMode === 'Bank' ? formData.accountName : '',
+      bankName: formData.paymentMode === 'Bank' ? formData.bankName : '',
+      branchName: formData.paymentMode === 'Bank' ? formData.branchName : '',
+      routingNo: formData.paymentMode === 'Bank' ? formData.routingNo : '',
+      mobileBankingName: formData.paymentMode === 'Mobile Banking' ? formData.mobileBankingName : '',
+      mobileBankingNumber: formData.paymentMode === 'Mobile Banking' ? formData.mobileBankingNumber : '',
+      isActive: formData.isActive,
     };
 
     console.log("Salary Setup Data:", JSON.stringify(salaryData, null, 2));
 
     let existingSalarySetups = JSON.parse(localStorage.getItem('salarySetups') || '[]');
-    if (editData) {
+    if (formData.id) {
       // Update existing entry
       existingSalarySetups = existingSalarySetups.map(setup =>
         setup.id === salaryData.id ? salaryData : setup
@@ -194,7 +203,7 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="employee">Employee</Label>
-                <Select onValueChange={setSelectedEmployee} value={selectedEmployee}>
+                <Select onValueChange={(value) => handleInputChange('employeeId', value)} value={formData.employeeId}>
                   <SelectTrigger id="employee">
                     <SelectValue placeholder="Select an employee" />
                   </SelectTrigger>
@@ -209,7 +218,7 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="salaryType">Salary Type</Label>
-                <Select onValueChange={setSalaryType} value={salaryType}>
+                <Select onValueChange={(value) => handleInputChange('salaryType', value)} value={formData.salaryType}>
                   <SelectTrigger id="salaryType">
                     <SelectValue placeholder="Select salary type" />
                   </SelectTrigger>
@@ -222,7 +231,7 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="effectiveFromDate">Effective From Date</Label>
-                <DatePicker date={effectiveFromDate} setDate={setEffectiveFromDate} />
+                <DatePicker date={formData.effectiveFromDate} setDate={(date) => handleInputChange('effectiveFromDate', date)} />
               </div>
             </div>
 
@@ -230,43 +239,43 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="basicSalary">Basic Salary</Label>
-                <Input id="basicSalary" type="number" value={basicSalary} onChange={(e) => setBasicSalary(e.target.value)} />
+                                <Input id="basicSalary" type="number" value={formData.basicSalary} onChange={(e) => handleInputChange('basicSalary', e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="houseRentPercent">House Rent (%)</Label>
-                <Input id="houseRentPercent" type="number" value={houseRentPercent} onChange={(e) => setHouseRentPercent(e.target.value)} />
+                <Input id="houseRentPercent" type="number" value={formData.allowances.houseRentPercent} onChange={(e) => handleInputChange('allowances', e.target.value, 'houseRentPercent')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="medicalAllowance">Medical Allowance</Label>
-                <Input id="medicalAllowance" type="number" value={medicalAllowance} onChange={(e) => setMedicalAllowance(e.target.value)} />
+                <Input id="medicalAllowance" type="number" value={formData.allowances.medicalAllowance} onChange={(e) => handleInputChange('allowances', e.target.value, 'medicalAllowance')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="transportAllowance">Transport/Conveyance</Label>
-                <Input id="transportAllowance" type="number" value={transportAllowance} onChange={(e) => setTransportAllowance(e.target.value)} />
+                <Input id="transportAllowance" type="number" value={formData.allowances.transportAllowance} onChange={(e) => handleInputChange('allowances', e.target.value, 'transportAllowance')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="mobileInternetAllowance">Mobile/Internet Allowance</Label>
-                <Input id="mobileInternetAllowance" type="number" value={mobileInternetAllowance} onChange={(e) => setMobileInternetAllowance(e.target.value)} />
+                <Input id="mobileInternetAllowance" type="number" value={formData.allowances.mobileInternetAllowance} onChange={(e) => handleInputChange('allowances', e.target.value, 'mobileInternetAllowance')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="festivalBonus">Festival Bonus</Label>
-                <Input id="festivalBonus" type="number" value={festivalBonus} onChange={(e) => setFestivalBonus(e.target.value)} />
+                <Input id="festivalBonus" type="number" value={formData.allowances.festivalBonus} onChange={(e) => handleInputChange('allowances', e.target.value, 'festivalBonus')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="overtime">Overtime</Label>
-                <Input id="overtime" type="number" value={overtime} onChange={(e) => setOvertime(e.target.value)} />
+                <Input id="overtime" type="number" value={formData.allowances.overtime} onChange={(e) => handleInputChange('allowances', e.target.value, 'overtime')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="commission">Commission</Label>
-                <Input id="commission" type="number" value={commission} onChange={(e) => setCommission(e.target.value)} />
+                <Input id="commission" type="number" value={formData.allowances.commission} onChange={(e) => handleInputChange('allowances', e.target.value, 'commission')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="specialAllowance">Special Allowance</Label>
-                <Input id="specialAllowance" type="number" value={specialAllowance} onChange={(e) => setSpecialAllowance(e.target.value)} />
+                <Input id="specialAllowance" type="number" value={formData.allowances.specialAllowance} onChange={(e) => handleInputChange('allowances', e.target.value, 'specialAllowance')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="othersAllowance">Others Allowance</Label>
-                <Input id="othersAllowance" type="number" value={othersAllowance} onChange={(e) => setOthersAllowance(e.target.value)} />
+                <Input id="othersAllowance" type="number" value={formData.allowances.othersAllowance} onChange={(e) => handleInputChange('allowances', e.target.value, 'othersAllowance')} />
               </div>
             </div>
 
@@ -274,23 +283,23 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="providentFundEmployeePercent">Provident Fund (Employee %)</Label>
-                <Input id="providentFundEmployeePercent" type="number" value={providentFundEmployeePercent} onChange={(e) => setProvidentFundEmployeePercent(e.target.value)} />
+                <Input id="providentFundEmployeePercent" type="number" value={formData.deductions.providentFundEmployeePercent} onChange={(e) => handleInputChange('deductions', e.target.value, 'providentFundEmployeePercent')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="taxDeduction">Tax Deduction (TDS)</Label>
-                <Input id="taxDeduction" type="number" value={taxDeduction} onChange={(e) => setTaxDeduction(e.target.value)} />
+                <Input id="taxDeduction" type="number" value={formData.deductions.taxDeduction} onChange={(e) => handleInputChange('deductions', e.target.value, 'taxDeduction')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="loanRepayment">Loan Repayment</Label>
-                <Input id="loanRepayment" type="number" value={loanRepayment} onChange={(e) => setLoanRepayment(e.target.value)} />
+                <Input id="loanRepayment" type="number" value={formData.deductions.loanRepayment} onChange={(e) => handleInputChange('deductions', e.target.value, 'loanRepayment')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="deductionForLateAbsence">Deduction for Late/Absence</Label>
-                <Input id="deductionForLateAbsence" type="number" value={deductionForLateAbsence} onChange={(e) => setDeductionForLateAbsence(e.target.value)} />
+                <Input id="deductionForLateAbsence" type="number" value={formData.deductions.deductionForLateAbsence} onChange={(e) => handleInputChange('deductions', e.target.value, 'deductionForLateAbsence')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="otherDeduction">Other Deduction</Label>
-                <Input id="otherDeduction" type="number" value={otherDeduction} onChange={(e) => setOtherDeduction(e.target.value)} />
+                <Input id="otherDeduction" type="number" value={formData.deductions.otherDeduction} onChange={(e) => handleInputChange('deductions', e.target.value, 'otherDeduction')} />
               </div>
             </div>
 
@@ -298,7 +307,7 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="providentFundEmployerPercent">Provident Fund (Employer %)</Label>
-                <Input id="providentFundEmployerPercent" type="number" value={providentFundEmployerPercent} onChange={(e) => setProvidentFundEmployerPercent(e.target.value)} />
+                <Input id="providentFundEmployerPercent" type="number" value={formData.employerContribution.providentFundEmployerPercent} onChange={(e) => handleInputChange('employerContribution', e.target.value, 'providentFundEmployerPercent')} />
               </div>
             </div>
 
@@ -318,7 +327,7 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="paymentMode">Payment Mode</Label>
-                <Select onValueChange={setPaymentMode} value={paymentMode}>
+                <Select onValueChange={(value) => handleInputChange('paymentMode', value)} value={formData.paymentMode}>
                   <SelectTrigger id="paymentMode">
                     <SelectValue placeholder="Select payment mode" />
                   </SelectTrigger>
@@ -329,44 +338,44 @@ const AddSalarySetup = ({ onSave, onCancel, editData }) => {
                   </SelectContent>
                 </Select>
               </div>
-              {paymentMode === 'Bank' && (
+              {formData.paymentMode === 'Bank' && (
                 <>
                   <div className="space-y-2">
                     <Label htmlFor="bankAccountNo">Bank Account No</Label>
-                    <Input id="bankAccountNo" type="text" value={bankAccountNo} onChange={(e) => setBankAccountNo(e.target.value)} />
+                    <Input id="bankAccountNo" type="text" value={formData.bankAccountNo} onChange={(e) => handleInputChange('bankAccountNo', e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="accountName">Account Name</Label>
-                    <Input id="accountName" type="text" value={accountName} onChange={(e) => setAccountName(e.target.value)} />
+                    <Input id="accountName" type="text" value={formData.accountName} onChange={(e) => handleInputChange('accountName', e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="bankName">Bank Name</Label>
-                    <Input id="bankName" type="text" value={bankName} onChange={(e) => setBankName(e.target.value)} />
+                    <Input id="bankName" type="text" value={formData.bankName} onChange={(e) => handleInputChange('bankName', e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="branchName">Branch Name</Label>
-                    <Input id="branchName" type="text" value={branchName} onChange={(e) => setBranchName(e.target.value)} />
+                    <Input id="branchName" type="text" value={formData.branchName} onChange={(e) => handleInputChange('branchName', e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="routingNo">Routing No</Label>
-                    <Input id="routingNo" type="text" value={routingNo} onChange={(e) => setRoutingNo(e.target.value)} />
+                    <Input id="routingNo" type="text" value={formData.routingNo} onChange={(e) => handleInputChange('routingNo', e.target.value)} />
                   </div>
                 </>
               )}
-              {paymentMode === 'Mobile Banking' && (
+              {formData.paymentMode === 'Mobile Banking' && (
                 <>
                   <div className="space-y-2">
                     <Label htmlFor="mobileBankingName">Mobile Banking Name</Label>
-                    <Input id="mobileBankingName" type="text" value={mobileBankingName} onChange={(e) => setMobileBankingName(e.target.value)} />
+                    <Input id="mobileBankingName" type="text" value={formData.mobileBankingName} onChange={(e) => handleInputChange('mobileBankingName', e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="mobileBankingNumber">Mobile Banking Number</Label>
-                    <Input id="mobileBankingNumber" type="text" value={mobileBankingNumber} onChange={(e) => setMobileBankingNumber(e.target.value)} />
+                    <Input id="mobileBankingNumber" type="text" value={formData.mobileBankingNumber} onChange={(e) => handleInputChange('mobileBankingNumber', e.target.value)} />
                   </div>
                 </>
               )}
               <div className="flex items-center space-x-2">
-                <Checkbox id="isActive" checked={isActive} onCheckedChange={setIsActive} />
+                <Checkbox id="isActive" checked={formData.isActive} onCheckedChange={(checked) => handleInputChange('isActive', checked)} />
                 <Label htmlFor="isActive">Is Active?</Label>
               </div>
             </div>
