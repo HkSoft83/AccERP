@@ -1,70 +1,60 @@
-🔍 পেরোল রান (Payroll Run) ধাপে কী কী থাকবে?
-1. Period Selection (মাস ও সাল নির্বাচন)
-ইউজার যেন বলতে পারে: “আমি জানুয়ারি 2025-এর জন্য পেরোল চালাতে চাই”
-✅ Month + Year ড্রপডাউন ইনপুট
+A Salary Report typically summarizes payroll-related data across employees for a given month, date range, department, or branch. It helps HR, finance, or management quickly understand total salary expenses, deductions, and other components.
 
-2. Eligible Employee Fetch
-যারা সেই মাসে Active আছে তাদের বেসে Payroll চলবে
-✅ Filter: isActive === true
-✅ Optional: Employment start date ≤ Selected Period
+🧾 Common Fields in a Salary Report
+Here’s what you should consider including:
 
-3. Salary Computation
-প্রত্যেক কর্মচারীর জন্য নিচের বিষয়গুলো Salary Setup থেকে টেনে আনো:
+📌 Header/Filters
+Report Period (Month or custom date range)
 
-বিষয়	উৎস
-Basic Salary	Setup ফর্ম থেকে
-Allowances	Medical, House Rent, Others
-Deductions	Tax, PF, Loan
-Net Payable	আগেই calculate করা হয়েছে
+Department / Branch (if applicable)
 
-✅ এই Data সব টেবিল আকারে দেখানো হবে
+Employee Status (Active, Terminated, etc.)
 
-4. Optional Adjustments
-অল্প কিছু ম্যানুয়াল Correction দরকার হতে পারে (optional)
-✅ Input fields for adjustment: bonus, advance recovery, etc.
+Salary Type (Fixed, Hourly, etc.)
 
-5. Generate Payslip Button
-টেবিলের নিচে "Generate Payslip" বোতাম থাকবে
-✅ On click: Show Confirmation Modal
-✅ Confirm করলে → localStorage বা API-তে সেভ হয়
-✅ Payslip তৈরি হয় (PDF/HTML preview)
+📊 Salary Report Table Structure
+Employee ID	Name	Basic Salary	Allowances	Deductions	Gross Salary	Net Payable	Payment Mode
+EMP001	John Doe	40,000	15,000	5,000	55,000	50,000	Bank
+EMP002	Jane Smith	35,000	10,000	3,500	45,000	41,500	Mobile Banking
+...	...	...	...	...	...	...	...
 
-6. Accounting Entries
-সেলারি পোস্ট হওয়ার সাথে সাথে নিচের জার্নাল তৈরি হয়:
+💸 Breakdowns (Optional but Useful)
+If you want to make it more detailed:
 
-text
-Copy
-Edit
-Dr. Employee Salary Expense
-Dr. Employer PF Contribution
-Cr. Salary Payable
-Cr. PF Payable
-Cr. Tax Payable (if any)
-✅ এন্ট্রিগুলো রিপোর্টিং বা জার্নাল পেজে পাঠানো যায়
+✅ Allowance Breakdown
+House Rent
 
-7. Status Tracking
-যাদের salary paid হয়ে গেছে বা pending, সেটা দেখাতে পারো
-✅ Column: Payment Status = “Pending”, “Paid”
+Medical
 
-🖥️ ইউআই কাঠামো (প্রস্তাবিত ডিজাইন)
-Employee	Basic	Allowances	Deductions	Net	Status	Action
-John	50000	15000	5000	60000	Pending	[Edit] [Finalize]
+Transport
 
-✅ সংক্ষেপে Payroll Run ধাপের মূল ফিচার:
-ফিচার	ব্যাখ্যা
-মাস/সাল নির্বাচন	কোন পিরিয়ডে সেলারি রান হবে তা নির্বাচন করা
-কর্মচারী তালিকা	Active কর্মচারীদের জন্য Payroll তৈরি
-হিসাব	Basic, Allowances, Deductions, Net Calculation
-Manual Adjustment (optional)	Extra Bonus বা Penalty এন্ট্রি
-Payslip Generation	রিপোর্ট তৈরির অপশন
-Accounting Integration	অটোমেটিক জার্নাল এন্ট্রি
-Status & Actions	Paid/Pending Status + Finalize অপশন
+Internet
 
-🔔 পরবর্তী ধাপ কি হতে পারে?
-Payslip Viewer
+Festival Bonus
 
-Bank Advice/Disbursement Sheet
+Commission
 
-Provident Fund Posting
+Special / Others
 
-Salary Ledger
+✅ Deduction Breakdown
+Tax (TDS)
+
+PF (Provident Fund)
+
+Loan Repayment
+
+Late/Absence
+
+Others
+
+Consider making these visible in a collapsible row or modal to keep the main table clean.
+
+📈 Summary Section (at bottom or top)
+Total Employees Paid
+
+Total Gross Salary
+
+Total Deductions
+
+Total Net Payable
+

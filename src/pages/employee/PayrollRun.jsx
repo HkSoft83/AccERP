@@ -252,8 +252,6 @@ const PayrollRun = () => {
                     <TableHead>Deductions</TableHead>
                     <TableHead>Gross Salary</TableHead>
                     <TableHead>Net Payable</TableHead>
-                    <TableHead>Bonus</TableHead>
-                    <TableHead>Advance Recovery</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="text-center">Actions</TableHead>
                   </TableRow>
@@ -278,22 +276,6 @@ const PayrollRun = () => {
                       </TableCell>
                       <TableCell>{data.grossSalary.toFixed(2)}</TableCell>
                       <TableCell>{data.netPayable.toFixed(2)}</TableCell>
-                      <TableCell>
-                        <Input
-                          type="number"
-                          value={data.adjustments.bonus}
-                          onChange={(e) => handleAdjustmentChange(data.employeeId, 'bonus', e.target.value)}
-                          className="w-24 text-right"
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          type="number"
-                          value={data.adjustments.advanceRecovery}
-                          onChange={(e) => handleAdjustmentChange(data.employeeId, 'advanceRecovery', e.target.value)}
-                          className="w-24 text-right"
-                        />
-                      </TableCell>
                       <TableCell>{data.status}</TableCell>
                       <TableCell className="text-center">
                         {data.status === 'Pending' ? (
