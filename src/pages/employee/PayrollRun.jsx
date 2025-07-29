@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table';
 import { useToast } from '@/components/ui/use-toast';
 import { Edit, CheckCircle } from 'lucide-react';
+import PayslipPreview from './PayslipPreview';
 
 // Mock data for employees (should ideally come from a centralized employee database)
 const mockEmployees = [
@@ -31,6 +32,8 @@ const PayrollRun = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('');
   const [employeeTypeFilter, setEmployeeTypeFilter] = useState('');
+  const [showPayslipPreview, setShowPayslipPreview] = useState(false);
+  const [payslipData, setPayslipData] = useState(null);
 
   const months = Array.from({ length: 12 }, (item, i) => {
     const month = String(i + 1).padStart(2, '0');
@@ -130,8 +133,14 @@ const PayrollRun = () => {
   };
 
   const handleGeneratePayslip = () => {
-    toast({ title: "Payslip Generation", description: "Generating payslips... (Not yet implemented)" });
-    // This would trigger the actual payslip generation logic
+    const finalizedPayroll = payrollData.filter(item => item.status === 'Paid');
+    if (finalizedPayroll.length > 0) {
+      setPayslipData(finalizedPayroll[0]); // For now, show the first finalized payslip
+      setShowPayslipPreview(true);
+      toast({ title: "Payslip Generated", description: `Payslip for ${finalizedPayroll[0].employeeName} is ready.` });
+    } else {
+      toast({ title: "No Finalized Payroll", description: "No finalized payroll entries to generate payslips for.", variant: "destructive" });
+    }
   };
 
   return (
@@ -312,6 +321,13 @@ const PayrollRun = () => {
             Generate Payslips
           </Button>
         </div>
+      )}
+
+      {showPayslipPreview && (
+        <PayslipPreview 
+          employeePayrollData={payslipData} 
+          onClose={() => setShowPayslipPreview(false)} 
+        />
       )}
     </div>
   );
