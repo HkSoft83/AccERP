@@ -20,6 +20,10 @@ const BOM = ({ products }) => {
     const [selectedByProduct, setSelectedByProduct] = React.useState('');
     const [byProductQty, setByProductQty] = React.useState(1);
 
+    const [overheadItems, setOverheadItems] = React.useState([]);
+    const [overheadName, setOverheadName] = React.useState('');
+    const [overheadAmount, setOverheadAmount] = React.useState(0);
+
     const handleSelectProductToProduce = (value) => {
         const selectedProduct = products.find(p => p.name === value);
         if (selectedProduct) {
@@ -56,7 +60,15 @@ const BOM = ({ products }) => {
         }
     };
 
-    const totalInputCost = inputItems.reduce((total, item) => total + item.quantity * item.cost, 0);
+    const handleAddOverhead = () => {
+        if (overheadName && overheadAmount >= 0) {
+            setOverheadItems([...overheadItems, { name: overheadName, amount: overheadAmount }]);
+            setOverheadName('');
+            setOverheadAmount(0);
+        }
+    };
+
+    const totalInputCost = inputItems.reduce((total, item) => total + item.quantity * item.cost, 0) + overheadItems.reduce((total, item) => total + item.amount, 0);
     const perUnitCost = totalInputCost / (productToProduceQty || 1);
 
     return (
@@ -121,6 +133,37 @@ const BOM = ({ products }) => {
                                 ))}
                             </TableBody>
                         </Table>
+                        <div className="text-right mt-4 font-bold">
+                            Total Raw Material Cost: ${inputItems.reduce((total, item) => total + item.quantity * item.cost, 0).toFixed(2)}
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2">Overhead Cost</h3>
+                        <div className="grid grid-cols-3 gap-4 mb-4">
+                            <Input placeholder="Overhead Name" value={overheadName} onChange={(e) => setOverheadName(e.target.value)} />
+                            <Input type="number" placeholder="Amount" value={overheadAmount} onChange={(e) => setOverheadAmount(parseFloat(e.target.value))} />
+                            <Button onClick={handleAddOverhead}>Add Overhead</Button>
+                        </div>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Overhead Name</TableHead>
+                                    <TableHead>Amount</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {overheadItems.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{item.name}</TableCell>
+                                        <TableCell>${item.amount.toFixed(2)}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                        <div className="text-right mt-4 font-bold">
+                            Total Overhead Cost: ${overheadItems.reduce((total, item) => total + item.amount, 0).toFixed(2)}
+                        </div>
+                        <div className="text-right mt-4 font-bold text-xl">
+                            Total Input Cost: ${totalInputCost.toFixed(2)}
+                        </div>
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold mb-2">Main Product Output</h3>
