@@ -5,7 +5,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const BOM = ({ products }) => {
@@ -13,7 +12,6 @@ const BOM = ({ products }) => {
     const [itemName, setItemName] = React.useState('');
     const [quantity, setQuantity] = React.useState(1);
     const [cost, setCost] = React.useState(0);
-    const [finishedGoodsQty, setFinishedGoodsQty] = React.useState(1);
 
     const [productToProduce, setProductToProduce] = React.useState('');
     const [productToProduceQty, setProductToProduceQty] = React.useState(1);
@@ -21,7 +19,6 @@ const BOM = ({ products }) => {
     const [byProducts, setByProducts] = React.useState([]);
     const [selectedByProduct, setSelectedByProduct] = React.useState('');
     const [byProductQty, setByProductQty] = React.useState(1);
-    const [byProductCost, setByProductCost] = React.useState(0);
 
     const handleSelectProductToProduce = (value) => {
         const selectedProduct = products.find(p => p.name === value);
@@ -49,6 +46,147 @@ const BOM = ({ products }) => {
     };
 
     const handleAddByProduct = () => {
+        if (selectedByProduct && byProductQty > 0) {
+            const product = products.find(p => p.name === selectedByProduct);
+            if (product) {
+                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice }]);
+                setSelectedByProduct('');
+                setByProductQty(1);
+            }
+        }
+    };
+
+    const totalInputCost = inputItems.reduce((total, item) => total + item.quantity * item.cost, 0);
+    const perUnitCost = totalInputCost / (productToProduceQty || 1);
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center">Bill of Materials (BOM)</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="flex items-center gap-4 mb-4">
+                    <h3 className="text-lg font-semibold">Want to produce</h3>
+                    <Select onValueChange={handleSelectProductToProduce}>
+                        <SelectTrigger className="w-[300px]">
+                            <SelectValue placeholder="Select Product to Produce" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {products.map((product) => (
+                                <SelectItem key={product.id} value={product.name}>
+                                    {product.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    <Input type="number" placeholder="Quantity" value={productToProduceQty} onChange={(e) => setProductToProduceQty(parseInt(e.target.value, 10))} className="w-[150px]" />
+                </div>
+                <div className="grid grid-cols-2 gap-8">
+                    <div>
+                        <h3 className="text-lg font-semibold mb-2">Input (Raw Materials)</h3>
+                        <div className="grid grid-cols-4 gap-4 mb-4">
+                            <Select onValueChange={handleSelectMaterial}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select Raw Material" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {products.map((product) => (
+                                        <SelectItem key={product.id} value={product.name}>
+                                            {product.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            <Input type="number" placeholder="Quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} />
+                            <Input type="number" placeholder="Cost per Unit" value={cost} readOnly />
+                            <Button onClick={handleAddItem}>Add</Button>
+                        </div>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Item Name</TableHead>
+                                    <TableHead>Quantity</TableHead>
+                                    <TableHead>Cost per Unit</TableHead>
+                                    <TableHead>Total Cost</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {inputItems.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{item.name}</TableCell>
+                                        <TableCell>{item.quantity}</TableCell>
+                                        <TableCell>${item.cost.toFixed(2)}</TableCell>
+                                        <TableCell>${(item.quantity * item.cost).toFixed(2)}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-semibold mb-2">Main Product Output</h3>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Product Name</TableHead>
+                                    <TableHead>Qty</TableHead>
+                                    <TableHead>Sales Price</TableHead>
+                                    <TableHead>Per Unit Cost</TableHead>
+                                    <TableHead>Total Cost</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>{productToProduce || 'Finished Product'}</TableCell>
+                                    <TableCell>{productToProduceQty}</TableCell>
+                                    <TableCell>${salesPrice.toFixed(2)}</TableCell>
+                                    <TableCell>${perUnitCost.toFixed(2)}</TableCell>
+                                    <TableCell>${totalInputCost.toFixed(2)}</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-semibold mb-2">By-Product/Co-product/Scrap</h3>
+                        <div className="grid grid-cols-3 gap-4 mb-4">
+                            <Select onValueChange={setSelectedByProduct}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select By-Product" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {products.map((product) => (
+                                        <SelectItem key={product.id} value={product.name}>
+                                            {product.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            <Input type="number" placeholder="Quantity" value={byProductQty} onChange={(e) => setByProductQty(parseInt(e.target.value, 10))} />
+                            <Button onClick={handleAddByProduct}>Add By-Product</Button>
+                        </div>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>By-Product Name</TableHead>
+                                    <TableHead>Quantity</TableHead>
+                                    <TableHead>Sales Price</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {byProducts.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{item.name}</TableCell>
+                                        <TableCell>{item.quantity}</TableCell>
+                                        <TableCell>${item.salesPrice.toFixed(2)}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    );
+};
 
 const ProductionOrder = () => (
     <Card>
