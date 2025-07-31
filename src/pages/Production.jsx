@@ -56,7 +56,7 @@ const BOM = ({ products }) => {
         if (selectedByProduct && byProductQty > 0) {
             const product = products.find(p => p.name === selectedByProduct);
             if (product) {
-                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice, costingPrice: product.costingPrice, editableSalesPrice: product.salesPrice }]);
+                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice, costingPrice: product.costingPrice || 0, editableSalesPrice: product.salesPrice }]);
                 setSelectedByProduct('');
                 setByProductQty(1);
             }
