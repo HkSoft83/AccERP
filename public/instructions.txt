@@ -1,91 +1,27 @@
-The Payslip Menu is a user-facing feature that allows employees or HR/admin to view, search, and optionally download individual payslips — either for a specific month or for past periods.
+আপনার কোডে একটি বড় সমস্যা হচ্ছে—BOM কম্পোনেন্টের ভিতরে একটি handleAddByProduct ফাংশন শুরু করে শেষ করা হয়নি, কিন্তু তার নিচেই আপনি অন্য কম্পোনেন্ট (ProductionOrder) ডিফাইন করে দিয়েছেন। এ কারণেই আপনি নিচের এরর পাচ্ছেন:
 
-Here’s a breakdown of what to include:
+'import' and 'export' may only appear at the top level.
 
-📌 1. Payslip Menu Purpose
-"View and manage finalized salary statements for employees."
+✅ সমাধান:
+handleAddByProduct ফাংশনের বডি (body) আপনি ভুলে গেছেন লিখতে, তাই React মনে করছে আপনি ভেতরে export লিখে ফেলেছেন, যা শুধুমাত্র টপ লেভেলে থাকতে পারে।
 
-🧭 Payslip Menu Structure
-✅ Filters / Search Panel
-Employee ID / Name
+🔧 ঠিক করা কোড:
+আপনার handleAddByProduct ফাংশনটি সম্পূর্ণ করুন অথবা অন্তত একটি ফাঁকা ফাংশন দিন এইভাবে:
 
-Month / Date range
+const handleAddByProduct = () => {
+  if (selectedByProduct && byProductQty > 0 && byProductCost >= 0) {
+    setByProducts([...byProducts, { name: selectedByProduct, quantity: byProductQty, cost: byProductCost }]);
+    setSelectedByProduct('');
+    setByProductQty(1);
+    setByProductCost(0);
+  }
+};
+এই ফাংশন শেষে দিতে ভুলে গিয়েছেন — }; — এবং এটাই পার্সিং সমস্যা তৈরি করছে।
 
-Department (if available)
+🔁 সারাংশে করণীয়:
+handleAddByProduct ফাংশনের কনটেন্ট সম্পূর্ণ লিখুন।
 
-Salary Type (Fixed, Hourly, etc.)
+নিশ্চিত করুন আপনি কোন function বা component এর ভিতরে আর export লিখছেন না।
 
-Payment Status (Paid, Unpaid – optional)
+React কম্পোনেন্টের বাইরে বা বন্ধ হবার পরে export default Production; থাকা উচিত।
 
-📋 Payslip List/Table View
-Payslip ID	Employee ID	Name	Month	Net Payable	Payment Mode	Status	Actions
-PS-2025-07-JD	EMP001	John Doe	July 2025	50,000	Bank	Finalized	View / Download
-PS-2025-07-JS	EMP002	Jane Smith	July 2025	41,500	Mobile Banking	Finalized	View / Download
-...	...	...	...	...	...	...	...
-
-📄 Payslip View Modal/Page
-When clicking View or Download, show the full payslip with:
-
-👤 Employee Info
-Name
-
-ID
-
-Designation
-
-Department (optional)
-
-📅 Payroll Info
-Month / Pay Period
-
-Payment Date
-
-Salary Type
-
-Payment Mode (Bank, Cash, Mobile)
-
-Bank/Mobile Account details (if applicable)
-
-💸 Earnings Section
-Component	Amount
-Basic Salary	40,000
-House Rent Allowance	8,000
-Medical Allowance	2,000
-...	...
-Total Earnings	55,000
-
-🧾 Deductions Section
-Component	Amount
-Tax Deduction	2,000
-Loan Repayment	1,500
-Provident Fund	1,500
-...	...
-Total Deductions	5,000
-
-✅ Net Payable
-Gross Salary: Earnings Total
-
-Deductions: Deductions Total
-
-Net Salary = Gross - Deductions
-
-📝 Optional Info
-Notes or remarks
-
-Approval signature area
-
-Employer contribution details (if relevant)
-
-🛠️ Actions
-🔍 View Payslip
-
-📄 Download PDF
-
-🖨️ Print Payslip
-
-📧 Email Payslip (optional)
-
-⚙️ Role-Based Access
-HR/Admin: Can view all
-
-Employees: Can view only their own

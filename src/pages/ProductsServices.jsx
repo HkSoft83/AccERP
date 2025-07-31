@@ -29,13 +29,6 @@ import {
 import AddProductForm from '@/components/forms/AddProductForm';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-
-const initialProductsData = [
-  { sl: 1, id: 'PROD001', productType: 'Stock', name: 'Standard Widget', code: 'PROD001', location: 'Warehouse A', costingPrice: 15.50, salesPrice: 25.00, openingQuantity: 150, units: [{ id: 1, name: 'pcs', factor: 1, isBase: true }], baseUnitName: 'pcs', openingQuantityDate: '2023-01-01', hasWarranty: false, warrantyDays: 0, category: 'Widgets', description: 'A standard quality widget.' },
-  { sl: 2, id: 'PROD002', productType: 'Stock', name: 'Premium Gadget', code: 'PROD002', location: 'Warehouse B', costingPrice: 49.99, salesPrice: 89.99, openingQuantity: 75, units: [{ id: 1, name: 'pcs', factor: 1, isBase: true }, {id: 2, name: 'box', factor: 5, isBase: false}], baseUnitName: 'pcs', openingQuantityDate: '2023-01-15', hasWarranty: true, warrantyDays: 365, category: 'Gadgets', description: 'A premium quality gadget with extra features.' },
-  { sl: 3, id: 'SERV001', productType: 'Service', name: 'Consulting Hour', code: 'SERV001', location: 'N/A', costingPrice: 0, salesPrice: 100.00, openingQuantity: Infinity, units: [], baseUnitName: 'N/A', openingQuantityDate: null, hasWarranty: false, warrantyDays: 0, category: 'Services', description: 'One hour of expert consulting.' },
-];
-
 const formatProductForDisplay = (product) => {
   const baseUnit = product.units?.find(u => u.isBase) || { name: 'N/A', factor: 1 };
   const qty = product.productType === 'Service' ? Infinity : (product.openingQuantity || 0);
@@ -73,28 +66,14 @@ const SortableHeader = ({ children, columnKey, sortConfig, requestSort, isTextRi
 };
 
 
-const ProductsServices = () => {
+const ProductsServices = ({ products, setProducts }) => {
   const { toast } = useToast();
-  const [products, setProducts] = useState(() => initialProductsData.map(formatProductForDisplay));
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: 'sl', direction: 'ascending' });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
-
-  useEffect(() => {
-    const storedProducts = localStorage.getItem('products');
-    if (storedProducts) {
-      setProducts(JSON.parse(storedProducts).map(formatProductForDisplay));
-    } else {
-      localStorage.setItem('products', JSON.stringify(initialProductsData));
-    }
-  }, []);
-
-  const updateLocalStorage = (updatedProducts) => {
-    localStorage.setItem('products', JSON.stringify(updatedProducts.map(({ avgCostFormatted, qtyFormatted, valueFormatted, baseUnitName, ...rest }) => rest)));
-  };
 
   const handleOpenModal = (product = null) => {
     setProductToEdit(product);
@@ -118,7 +97,6 @@ const ProductsServices = () => {
         const newProduct = formatProductForDisplay({ ...productData, sl: newSl });
         updatedProducts = [...prevProducts, newProduct];
       }
-      updateLocalStorage(updatedProducts);
       return updatedProducts;
     });
   };
@@ -135,7 +113,6 @@ const ProductsServices = () => {
     if (productToDelete) {
       const updatedProducts = products.filter(p => p.id !== productToDelete.id);
       setProducts(updatedProducts);
-      updateLocalStorage(updatedProducts);
       toast({ title: "Product Deleted", description: `${productToDelete.name} has been deleted.`, variant: "destructive" });
       setIsConfirmDeleteModalOpen(false);
       setProductToDelete(null);
