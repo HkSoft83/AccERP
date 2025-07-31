@@ -49,7 +49,7 @@ const BOM = ({ products }) => {
         if (selectedByProduct && byProductQty > 0) {
             const product = products.find(p => p.name === selectedByProduct);
             if (product) {
-                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice }]);
+                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice, costingPrice: product.costingPrice }]);
                 setSelectedByProduct('');
                 setByProductQty(1);
             }
@@ -144,8 +144,6 @@ const BOM = ({ products }) => {
                                 </TableRow>
                             </TableBody>
                         </Table>
-                    </div>
-                    <div>
                         <h3 className="text-lg font-semibold mb-2">By-Product/Co-product/Scrap</h3>
                         <div className="grid grid-cols-3 gap-4 mb-4">
                             <Select onValueChange={setSelectedByProduct}>
@@ -169,6 +167,8 @@ const BOM = ({ products }) => {
                                     <TableHead>By-Product Name</TableHead>
                                     <TableHead>Quantity</TableHead>
                                     <TableHead>Sales Price</TableHead>
+                                    <TableHead>Per Unit Cost</TableHead>
+                                    <TableHead>Total Cost</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -177,6 +177,8 @@ const BOM = ({ products }) => {
                                         <TableCell>{item.name}</TableCell>
                                         <TableCell>{item.quantity}</TableCell>
                                         <TableCell>${item.salesPrice.toFixed(2)}</TableCell>
+                                        <TableCell>${item.costingPrice.toFixed(2)}</TableCell>
+                                        <TableCell>${(item.quantity * item.costingPrice).toFixed(2)}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
