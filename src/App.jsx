@@ -44,6 +44,12 @@ const VendorLedger = lazy(() => import('@/pages/reports/VendorLedger'));
 const OtherReports = lazy(() => import('@/pages/reports/OtherReports'));
 const FixedAssetManagement = lazy(() => import('@/pages/fixed-asset/FixedAssetManagement'));
 
+const AddAssetForm = lazy(() => import('@/pages/fixed-asset/AddAssetForm'));
+const AssetDepreciation = lazy(() => import('@/pages/fixed-asset/AssetDepreciation'));
+const AssetDisposal = lazy(() => import('@/pages/fixed-asset/AssetDisposal'));
+const AssetReports = lazy(() => import('@/pages/fixed-asset/AssetReports'));
+const FixedAssetMasterRegister = lazy(() => import('@/pages/fixed-asset/FixedAssetMasterRegister'));
+
 // Loading Fallback component
 const LoadingFallback = () => (
   <div className="flex items-center justify-center h-screen w-screen fixed inset-0 bg-gray-100 dark:bg-gray-900 z-50">
@@ -129,6 +135,14 @@ function App() {
                 <Route path="cash-flow-statement" element={<CashFlowStatement />} />
                 <Route path="other" element={<OtherReports />} />
                 <Route path="vendor-ledger" element={<VendorLedger />} />
+              </Route>
+              <Route path="fixed-asset">
+                <Route index element={<Navigate to="add-asset" replace />} />
+                <Route path="add-asset" element={<AddAssetForm />} />
+                <Route path="asset-depreciation" element={<AssetDepreciation />} />
+                <Route path="asset-disposal" element={<AssetDisposal />} />
+                <Route path="asset-reports" element={<AssetReports />} />
+                <Route path="fixed-asset-master-register" element={<FixedAssetMasterRegister />} />
               </Route>
               <Route path="fixed-asset-management" element={<FixedAssetManagement />} />
               

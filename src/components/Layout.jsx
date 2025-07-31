@@ -44,6 +44,15 @@ const navItems = [
       { name: 'Txn Transfer', path: '/transactions/txn-transfer' },
     ]
   },
+  { name: 'Fixed Asset Management', path: '/fixed-asset-management', icon: Briefcase,
+    subItems: [
+      { name: 'Add Asset', path: '/fixed-asset/add-asset' },
+      { name: 'Asset Depreciation', path: '/fixed-asset/asset-depreciation' },
+      { name: 'Asset Disposal', path: '/fixed-asset/asset-disposal' },
+      { name: 'Asset Reports', path: '/fixed-asset/asset-reports' },
+      { name: 'Fixed Asset Master Register', path: '/fixed-asset/fixed-asset-master-register' },
+    ]
+  },
   {
     name: 'Payroll Management', path: '/employee', icon: Users2,
     subItems: [
@@ -73,7 +82,6 @@ const navItems = [
       { name: 'Vendor Ledger', path: '/reports/vendor-ledger' },
     ]
   },
-  { name: 'Fixed Asset Management', path: '/fixed-asset-management', icon: Briefcase },
 ];
 
 const SidebarLink = ({ item, sidebarCollapsed }) => {
