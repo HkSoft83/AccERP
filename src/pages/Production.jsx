@@ -16,9 +16,11 @@ const BOM = ({ products }) => {
     const [productToProduce, setProductToProduce] = React.useState('');
     const [productToProduceQty, setProductToProduceQty] = React.useState(1);
     const [salesPrice, setSalesPrice] = React.useState(0);
+    const [editableSalesPrice, setEditableSalesPrice] = React.useState(0);
     const [byProducts, setByProducts] = React.useState([]);
     const [selectedByProduct, setSelectedByProduct] = React.useState('');
     const [byProductQty, setByProductQty] = React.useState(1);
+    const [byProductEditableSalesPrice, setByProductEditableSalesPrice] = React.useState(0);
 
     const [overheadItems, setOverheadItems] = React.useState([]);
     const [overheadName, setOverheadName] = React.useState('');
@@ -29,6 +31,7 @@ const BOM = ({ products }) => {
         if (selectedProduct) {
             setProductToProduce(selectedProduct.name);
             setSalesPrice(selectedProduct.salesPrice);
+            setEditableSalesPrice(selectedProduct.salesPrice);
         }
     };
 
@@ -53,10 +56,18 @@ const BOM = ({ products }) => {
         if (selectedByProduct && byProductQty > 0) {
             const product = products.find(p => p.name === selectedByProduct);
             if (product) {
-                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice, costingPrice: product.costingPrice }]);
+                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice, costingPrice: product.costingPrice, editableSalesPrice: product.salesPrice }]);
                 setSelectedByProduct('');
                 setByProductQty(1);
             }
+        }
+    };
+
+    const handleSelectByProduct = (value) => {
+        const selectedProduct = products.find(p => p.name === value);
+        if (selectedProduct) {
+            setSelectedByProduct(selectedProduct.name);
+            setByProductEditableSalesPrice(selectedProduct.salesPrice);
         }
     };
 
@@ -69,7 +80,20 @@ const BOM = ({ products }) => {
     };
 
     const totalInputCost = inputItems.reduce((total, item) => total + item.quantity * item.cost, 0) + overheadItems.reduce((total, item) => total + item.amount, 0);
-    const perUnitCost = totalInputCost / (productToProduceQty || 1);
+
+    // Calculate sales values
+    const mainProductSalesValue = productToProduceQty * editableSalesPrice;
+    const byProductsSalesValue = byProducts.reduce((total, item) => total + (item.quantity * item.editableSalesPrice), 0);
+    const totalSalesValue = mainProductSalesValue + byProductsSalesValue;
+
+    // Calculate allocated costs
+    const mainProductAllocatedCost = totalSalesValue > 0 ? (mainProductSalesValue / totalSalesValue) * totalInputCost : 0;
+    const allocatedByProducts = byProducts.map(item => ({
+        ...item,
+        allocatedCost: totalSalesValue > 0 ? (item.quantity * item.editableSalesPrice / totalSalesValue) * totalInputCost : 0
+    }));
+
+    const perUnitCost = mainProductAllocatedCost / (productToProduceQty || 1);
 
     return (
         <Card>
@@ -181,15 +205,15 @@ const BOM = ({ products }) => {
                                 <TableRow>
                                     <TableCell>{productToProduce || 'Finished Product'}</TableCell>
                                     <TableCell>{productToProduceQty}</TableCell>
-                                    <TableCell>${salesPrice.toFixed(2)}</TableCell>
+                                    <TableCell><Input type="number" value={editableSalesPrice} onChange={(e) => setEditableSalesPrice(parseFloat(e.target.value))} className="w-24 text-right" /></TableCell>
                                     <TableCell>${perUnitCost.toFixed(2)}</TableCell>
-                                    <TableCell>${totalInputCost.toFixed(2)}</TableCell>
+                                    <TableCell>${mainProductAllocatedCost.toFixed(2)}</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
                         <h3 className="text-lg font-semibold mb-2">By-Product/Co-product/Scrap</h3>
                         <div className="grid grid-cols-3 gap-4 mb-4">
-                            <Select onValueChange={setSelectedByProduct}>
+                            <Select onValueChange={handleSelectByProduct}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Select By-Product" />
                                 </SelectTrigger>
@@ -202,6 +226,7 @@ const BOM = ({ products }) => {
                                 </SelectContent>
                             </Select>
                             <Input type="number" placeholder="Quantity" value={byProductQty} onChange={(e) => setByProductQty(parseInt(e.target.value, 10))} />
+                            <Input type="number" placeholder="Sales Price" value={byProductEditableSalesPrice} onChange={(e) => setByProductEditableSalesPrice(parseFloat(e.target.value))} />
                             <Button onClick={handleAddByProduct}>Add By-Product</Button>
                         </div>
                         <Table>
@@ -219,13 +244,20 @@ const BOM = ({ products }) => {
                                     <TableRow key={index}>
                                         <TableCell>{item.name}</TableCell>
                                         <TableCell>{item.quantity}</TableCell>
-                                        <TableCell>${item.salesPrice.toFixed(2)}</TableCell>
+                                        <TableCell><Input type="number" value={item.editableSalesPrice} onChange={(e) => {
+                                        const updatedByProducts = [...byProducts];
+                                        updatedByProducts[index].editableSalesPrice = parseFloat(e.target.value);
+                                        setByProducts(updatedByProducts);
+                                    }} className="w-24 text-right" /></TableCell>
                                         <TableCell>${item.costingPrice.toFixed(2)}</TableCell>
-                                        <TableCell>${(item.quantity * item.costingPrice).toFixed(2)}</TableCell>
+                                        <TableCell>${item.allocatedCost.toFixed(2)}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
+                        <div className="text-right mt-4 font-bold text-xl">
+                            Total Allocated Cost: ${(mainProductAllocatedCost + allocatedByProducts.reduce((total, item) => total + item.allocatedCost, 0)).toFixed(2)}
+                        </div>
                     </div>
                 </div>
             </CardContent>

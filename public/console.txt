@@ -1,19 +1,14 @@
-main.jsx is executing
-main.jsx:9 Root element: 
-hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
-    at ThemeProvider (ThemeContext.jsx:7:33)
-    at App (App.jsx:63:35)
-
 hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
     at ThemeProvider (ThemeContext.jsx:7:33)
     at App (App.jsx:63:35)
-Production.jsx:99 Uncaught ReferenceError: handleAddItem is not defined
-    at BOM (Production.jsx:99:46)
-Production.jsx:99 Uncaught ReferenceError: handleAddItem is not defined
-    at BOM (Production.jsx:99:46)
+2
+Production.jsx:253 Uncaught TypeError: Cannot read properties of undefined (reading 'toFixed')
+    at Production.jsx:253:73
+    at Array.map (<anonymous>)
+    at BOM (Production.jsx:243:45)
 hook.js:608 The above error occurred in the <BOM> component:
 
-    at BOM (http://localhost:5173/src/pages/Production.jsx?t=1753975080986:26:16)
+    at BOM (http://localhost:5173/src/pages/Production.jsx?t=1753979616026:26:16)
     at div
     at http://localhost:5173/node_modules/.vite/deps/chunk-QATKMLZE.js?v=8fac43d1:43:13
     at Presence (http://localhost:5173/node_modules/.vite/deps/chunk-56ZWUPXC.js?v=8fac43d1:123:11)
@@ -24,7 +19,7 @@ hook.js:608 The above error occurred in the <BOM> component:
     at Provider (http://localhost:5173/node_modules/.vite/deps/chunk-56ZWUPXC.js?v=8fac43d1:53:15)
     at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=8fac43d1:46:7
     at div
-    at Production (http://localhost:5173/src/pages/Production.jsx?t=1753975080986:576:23)
+    at Production (http://localhost:5173/src/pages/Production.jsx?t=1753979616026:750:23)
     at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4103:5)
     at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4510:26)
     at div
@@ -45,5 +40,9 @@ hook.js:608 The above error occurred in the <BOM> component:
 
 Consider adding an error boundary to your tree to customize error handling behavior.
 Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
-chunk-V5LT2MCF.js?v=8fac43d1:19441 Uncaught ReferenceError: handleAddItem is not defined
-    at BOM (Production.jsx:99:46)
+chunk-V5LT2MCF.js?v=8fac43d1:9145 Uncaught TypeError: Cannot read properties of undefined (reading 'toFixed')
+    at Production.jsx:253:73
+    at Array.map (<anonymous>)
+    at BOM (Production.jsx:243:45)
+﻿
+
