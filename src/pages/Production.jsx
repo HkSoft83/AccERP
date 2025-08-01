@@ -1,5 +1,5 @@
 import React from 'react';
-import { Factory, PackagePlus, ClipboardList, Hourglass, PackageCheck } from 'lucide-react';
+import { Factory, PackagePlus, ClipboardList, Hourglass, PackageCheck, Trash2, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +14,7 @@ const BOM = ({ products }) => {
         return savedBoms ? JSON.parse(savedBoms) : [];
     });
     const [isBomFormOpen, setIsBomFormOpen] = React.useState(false);
+    const [editingBom, setEditingBom] = React.useState(null);
 
     React.useEffect(() => {
         localStorage.setItem('boms', JSON.stringify(boms));
@@ -56,6 +57,23 @@ const BOM = ({ products }) => {
         setOverheadAmount(0);
     };
 
+    React.useEffect(() => {
+        if (editingBom) {
+            setProductToProduce(editingBom.productToProduce);
+            setProductToProduceQty(editingBom.productToProduceQty);
+            setInputItems(editingBom.inputItems);
+            setOverheadItems(editingBom.overheadItems);
+            setByProducts(editingBom.byProducts);
+            const product = products.find(p => p.name === editingBom.productToProduce);
+            if (product) {
+                setSalesPrice(product.salesPrice);
+                setEditableSalesPrice(product.salesPrice);
+            }
+        } else {
+            resetForm();
+        }
+    }, [editingBom, products]);
+
     const handleSaveBom = () => {
         const totalInputCost = inputItems.reduce((total, item) => total + item.quantity * item.cost, 0) + overheadItems.reduce((total, item) => total + item.amount, 0);
         const mainProductSalesValue = productToProduceQty * editableSalesPrice;
@@ -64,24 +82,49 @@ const BOM = ({ products }) => {
         const mainProductAllocatedCost = totalSalesValue > 0 ? (mainProductSalesValue / totalSalesValue) * totalInputCost : 0;
         const perUnitCost = mainProductAllocatedCost / (productToProduceQty || 1);
 
-        const newBom = {
-            id: boms.length + 1,
-            productToProduce,
-            productToProduceQty,
-            inputItems,
-            overheadItems,
-            byProducts,
-            totalInputCost,
-            perUnitCost,
-        };
-        setBoms([...boms, newBom]);
+        if (editingBom) {
+            const updatedBom = {
+                ...editingBom,
+                productToProduce,
+                productToProduceQty,
+                inputItems,
+                overheadItems,
+                byProducts,
+                totalInputCost,
+                perUnitCost,
+            };
+            setBoms(boms.map(bom => bom.id === editingBom.id ? updatedBom : bom));
+            setEditingBom(null);
+        } else {
+            const newBom = {
+                id: boms.length > 0 ? Math.max(...boms.map(b => b.id)) + 1 : 1,
+                productToProduce,
+                productToProduceQty,
+                inputItems,
+                overheadItems,
+                byProducts,
+                totalInputCost,
+                perUnitCost,
+            };
+            setBoms([...boms, newBom]);
+        }
         resetForm();
         setIsBomFormOpen(false);
     };
 
     const handleCancel = () => {
         resetForm();
+        setEditingBom(null);
         setIsBomFormOpen(false);
+    };
+
+    const handleEditBom = (bom) => {
+        setEditingBom(bom);
+        setIsBomFormOpen(true);
+    };
+
+    const handleDeleteBom = (id) => {
+        setBoms(boms.filter(bom => bom.id !== id));
     };
 
     const handleSelectProductToProduce = (value) => {
@@ -130,6 +173,14 @@ const BOM = ({ products }) => {
         }
     };
 
+    const handleDeleteOverhead = (index) => {
+        setOverheadItems(overheadItems.filter((_, i) => i !== index));
+    };
+
+    const handleDeleteByProduct = (index) => {
+        setByProducts(byProducts.filter((_, i) => i !== index));
+    };
+
     const handleAddOverhead = () => {
         if (overheadName && overheadAmount >= 0) {
             setOverheadItems([...overheadItems, { name: overheadName, amount: overheadAmount }]);
@@ -161,18 +212,18 @@ const BOM = ({ products }) => {
                     <span>Bill of Materials (BOM)</span>
                     <Dialog open={isBomFormOpen} onOpenChange={setIsBomFormOpen}>
                         <DialogTrigger asChild>
-                            <Button onClick={() => setIsBomFormOpen(true)}>
+                            <Button onClick={() => { setEditingBom(null); setIsBomFormOpen(true); }}>
                                 <PackagePlus className="mr-2 h-4 w-4" /> Create New BOM
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-4xl">
+                        <DialogContent className="max-w-6xl h-[90vh] overflow-y-auto">
                             <DialogHeader>
-                                <DialogTitle>Create Bill of Materials</DialogTitle>
+                                <DialogTitle>{editingBom ? 'Edit' : 'Create'} Bill of Materials</DialogTitle>
                             </DialogHeader>
                             {/* Form content */}
                             <div className="flex items-center gap-4 mb-4">
                                 <h3 className="text-lg font-semibold">Want to produce</h3>
-                                <Select onValueChange={handleSelectProductToProduce}>
+                                <Select onValueChange={handleSelectProductToProduce} value={productToProduce}>
                                     <SelectTrigger className="w-[300px]">
                                         <SelectValue placeholder="Select Product to Produce" />
                                     </SelectTrigger>
@@ -238,15 +289,21 @@ const BOM = ({ products }) => {
                                     <Table>
                                         <TableHeader>
                                             <TableRow>
-                                                <TableHead>Overhead Name</TableHead>
-                                                <TableHead>Amount</TableHead>
-                                            </TableRow>
+                                    <TableHead>Overhead Name</TableHead>
+                                    <TableHead>Amount</TableHead>
+                                    <TableHead>Actions</TableHead>
+                                </TableRow>
                                         </TableHeader>
                                         <TableBody>
                                             {overheadItems.map((item, index) => (
                                                 <TableRow key={index}>
                                                     <TableCell>{item.name}</TableCell>
                                                     <TableCell>${item.amount.toFixed(2)}</TableCell>
+                                                    <TableCell>
+                                                        <Button variant="ghost" size="icon" onClick={() => handleDeleteOverhead(index)}>
+                                                            <Trash2 className="h-4 w-4" />
+                                                        </Button>
+                                                    </TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -301,12 +358,13 @@ const BOM = ({ products }) => {
                                     <Table>
                                         <TableHeader>
                                             <TableRow>
-                                                <TableHead>By-Product Name</TableHead>
-                                                <TableHead>Quantity</TableHead>
-                                                <TableHead>Sales Price</TableHead>
-                                                <TableHead>Per Unit Cost</TableHead>
-                                                <TableHead>Total Cost</TableHead>
-                                            </TableRow>
+                                    <TableHead>By-Product Name</TableHead>
+                                    <TableHead>Quantity</TableHead>
+                                    <TableHead>Sales Price</TableHead>
+                                    <TableHead>Per Unit Cost</TableHead>
+                                    <TableHead>Total Cost</TableHead>
+                                    <TableHead>Actions</TableHead>
+                                </TableRow>
                                         </TableHeader>
                                         <TableBody>
                                             {allocatedByProducts.map((item, index) => (
@@ -320,6 +378,11 @@ const BOM = ({ products }) => {
                                                 }} className="w-24 text-right" /></TableCell>
                                                     <TableCell>${(item.allocatedCost / item.quantity).toFixed(2)}</TableCell>
                                                     <TableCell>${item.allocatedCost.toFixed(2)}</TableCell>
+                                                    <TableCell>
+                                                        <Button variant="ghost" size="icon" onClick={() => handleDeleteByProduct(index)}>
+                                                            <Trash2 className="h-4 w-4" />
+                                                        </Button>
+                                                    </TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -346,6 +409,7 @@ const BOM = ({ products }) => {
                             <TableHead>Quantity</TableHead>
                             <TableHead>Total Cost</TableHead>
                             <TableHead>Per Unit Cost</TableHead>
+                            <TableHead>Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -356,6 +420,14 @@ const BOM = ({ products }) => {
                                 <TableCell>{bom.productToProduceQty}</TableCell>
                                 <TableCell>${bom.totalInputCost.toFixed(2)}</TableCell>
                                 <TableCell>${bom.perUnitCost.toFixed(2)}</TableCell>
+                                <TableCell>
+                                    <Button variant="ghost" size="icon" onClick={() => handleEditBom(bom)}>
+                                        <Pencil className="h-4 w-4" />
+                                    </Button>
+                                    <Button variant="ghost" size="icon" onClick={() => handleDeleteBom(bom.id)}>
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
