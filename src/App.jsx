@@ -136,14 +136,6 @@ function App() {
                 <Route path="other" element={<OtherReports />} />
                 <Route path="vendor-ledger" element={<VendorLedger />} />
               </Route>
-              <Route path="fixed-asset">
-                <Route index element={<Navigate to="add-asset" replace />} />
-                <Route path="add-asset" element={<AddAssetForm />} />
-                <Route path="asset-depreciation" element={<AssetDepreciation />} />
-                <Route path="asset-disposal" element={<AssetDisposal />} />
-                <Route path="asset-reports" element={<AssetReports />} />
-                <Route path="fixed-asset-master-register" element={<FixedAssetMasterRegister />} />
-              </Route>
               <Route path="fixed-asset-management" element={<FixedAssetManagement />} />
               
               <Route path="*" element={<div className="p-6 text-center"><h2 className="text-2xl font-semibold text-blue-600">404 - Page Not Found</h2><p className="text-gray-600 mt-2">Oops! The page you&apos;re looking for doesn&apos;t exist.</p><Button onClick={() => window.history.back()} className="mt-4 bg-blue-600 text-white hover:bg-blue-700">Go Back</Button></div>} />

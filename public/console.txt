@@ -1,48 +1,234 @@
-hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
+main.jsx is executing
+main.jsx:9 Root element: <div id=​"root">​</div>​
+hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
+    at BrowserRouter (react-router-dom.js?v=b5e19452:5266:5)
     at ThemeProvider (ThemeContext.jsx:7:33)
-    at App (App.jsx:63:35)
-2
-Production.jsx:253 Uncaught TypeError: Cannot read properties of undefined (reading 'toFixed')
-    at Production.jsx:253:73
-    at Array.map (<anonymous>)
-    at BOM (Production.jsx:243:45)
-hook.js:608 The above error occurred in the <BOM> component:
+    at App (App.jsx:69:35)
+overrideMethod @ hook.js:608Understand this warning
+hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
+    at BrowserRouter (react-router-dom.js?v=b5e19452:5266:5)
+    at ThemeProvider (ThemeContext.jsx:7:33)
+    at App (App.jsx:69:35)
+overrideMethod @ hook.js:608Understand this warning
+2AssetDepreciation.jsx:201 Uncaught TypeError: Cannot read properties of undefined (reading 'reduce')
+    at AssetDepreciation (AssetDepreciation.jsx:201:43)
+    at renderWithHooks (chunk-V5LT2MCF.js?v=b5e19452:11568:26)
+    at updateFunctionComponent (chunk-V5LT2MCF.js?v=b5e19452:14602:28)
+    at mountLazyComponent (chunk-V5LT2MCF.js?v=b5e19452:14853:23)
+    at beginWork (chunk-V5LT2MCF.js?v=b5e19452:15938:22)
+    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=b5e19452:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=b5e19452:3699:24)
+    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=b5e19452:3733:39)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=b5e19452:19793:15)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=b5e19452:19226:20)Understand this error
+hook.js:608 The above error occurred in the <AssetDepreciation> component:
 
-    at BOM (http://localhost:5173/src/pages/Production.jsx?t=1753979616026:26:16)
+    at AssetDepreciation (http://localhost:5173/src/pages/fixed-asset/AssetDepreciation.jsx:382:30)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4103:5)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4103:5)
+    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4510:26)
     at div
-    at http://localhost:5173/node_modules/.vite/deps/chunk-QATKMLZE.js?v=8fac43d1:43:13
-    at Presence (http://localhost:5173/node_modules/.vite/deps/chunk-56ZWUPXC.js?v=8fac43d1:123:11)
-    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=8fac43d1:170:13
-    at _c5 (http://localhost:5173/src/components/ui/tabs.jsx:68:12)
-    at div
-    at http://localhost:5173/node_modules/.vite/deps/chunk-QATKMLZE.js?v=8fac43d1:43:13
-    at Provider (http://localhost:5173/node_modules/.vite/deps/chunk-56ZWUPXC.js?v=8fac43d1:53:15)
-    at http://localhost:5173/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=8fac43d1:46:7
-    at div
-    at Production (http://localhost:5173/src/pages/Production.jsx?t=1753979616026:750:23)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4103:5)
-    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4510:26)
-    at div
-    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=8fac43d1:278:40)
-    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=8fac43d1:7103:24)
-    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=8fac43d1:7169:26)
+    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=b5e19452:278:40)
+    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=b5e19452:7103:24)
+    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=b5e19452:7169:26)
     at main
     at div
     at div
-    at Layout (http://localhost:5173/src/components/Layout.jsx:317:51)
-    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4103:5)
-    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4574:5)
+    at Layout (http://localhost:5173/src/components/Layout.jsx:328:51)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4103:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4574:5)
     at Suspense
-    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:4517:15)
-    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=8fac43d1:5266:5)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4517:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:5266:5)
     at ThemeProvider (http://localhost:5173/src/contexts/ThemeContext.jsx:25:33)
-    at App (http://localhost:5173/src/App.jsx?t=1753970805514:122:35)
+    at App (http://localhost:5173/src/App.jsx:132:35)
 
 Consider adding an error boundary to your tree to customize error handling behavior.
 Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
-chunk-V5LT2MCF.js?v=8fac43d1:9145 Uncaught TypeError: Cannot read properties of undefined (reading 'toFixed')
-    at Production.jsx:253:73
-    at Array.map (<anonymous>)
-    at BOM (Production.jsx:243:45)
-﻿
+overrideMethod @ hook.js:608Understand this error
+chunk-V5LT2MCF.js?v=b5e19452:19441 Uncaught TypeError: Cannot read properties of undefined (reading 'reduce')
+    at AssetDepreciation (AssetDepreciation.jsx:201:43)
+    at renderWithHooks (chunk-V5LT2MCF.js?v=b5e19452:11568:26)
+    at updateFunctionComponent (chunk-V5LT2MCF.js?v=b5e19452:14602:28)
+    at mountLazyComponent (chunk-V5LT2MCF.js?v=b5e19452:14853:23)
+    at beginWork (chunk-V5LT2MCF.js?v=b5e19452:15938:22)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=b5e19452:19781:22)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=b5e19452:19226:20)
+    at workLoopSync (chunk-V5LT2MCF.js?v=b5e19452:19165:13)
+    at renderRootSync (chunk-V5LT2MCF.js?v=b5e19452:19144:15)
+    at recoverFromConcurrentError (chunk-V5LT2MCF.js?v=b5e19452:18764:28)
 
+
+main.jsx is executing
+main.jsx:9 Root element: <div id=​"root">​…​</div>​
+hook.js:608 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. Error Component Stack
+    at BrowserRouter (react-router-dom.js?v=b5e19452:5266:5)
+    at ThemeProvider (ThemeContext.jsx:7:33)
+    at App (App.jsx:69:35)
+overrideMethod @ hook.js:608
+warnOnce @ react-router-dom.js?v=b5e19452:4409
+logDeprecation @ react-router-dom.js?v=b5e19452:4412
+logV6DeprecationWarnings @ react-router-dom.js?v=b5e19452:4415
+(anonymous) @ react-router-dom.js?v=b5e19452:5290
+commitHookEffectListMount @ chunk-V5LT2MCF.js?v=b5e19452:16936
+commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=b5e19452:18184
+commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=b5e19452:18157
+commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=b5e19452:18147
+commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=b5e19452:18137
+flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=b5e19452:19518
+flushPassiveEffects @ chunk-V5LT2MCF.js?v=b5e19452:19475
+performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=b5e19452:18896
+flushSyncCallbacks @ chunk-V5LT2MCF.js?v=b5e19452:9135
+commitRootImpl @ chunk-V5LT2MCF.js?v=b5e19452:19460
+commitRoot @ chunk-V5LT2MCF.js?v=b5e19452:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=b5e19452:18811
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=b5e19452:18746
+workLoop @ chunk-V5LT2MCF.js?v=b5e19452:197
+flushWork @ chunk-V5LT2MCF.js?v=b5e19452:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=b5e19452:384Understand this warning
+hook.js:608 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. Error Component Stack
+    at BrowserRouter (react-router-dom.js?v=b5e19452:5266:5)
+    at ThemeProvider (ThemeContext.jsx:7:33)
+    at App (App.jsx:69:35)
+overrideMethod @ hook.js:608
+warnOnce @ react-router-dom.js?v=b5e19452:4409
+logDeprecation @ react-router-dom.js?v=b5e19452:4412
+logV6DeprecationWarnings @ react-router-dom.js?v=b5e19452:4418
+(anonymous) @ react-router-dom.js?v=b5e19452:5290
+commitHookEffectListMount @ chunk-V5LT2MCF.js?v=b5e19452:16936
+commitPassiveMountOnFiber @ chunk-V5LT2MCF.js?v=b5e19452:18184
+commitPassiveMountEffects_complete @ chunk-V5LT2MCF.js?v=b5e19452:18157
+commitPassiveMountEffects_begin @ chunk-V5LT2MCF.js?v=b5e19452:18147
+commitPassiveMountEffects @ chunk-V5LT2MCF.js?v=b5e19452:18137
+flushPassiveEffectsImpl @ chunk-V5LT2MCF.js?v=b5e19452:19518
+flushPassiveEffects @ chunk-V5LT2MCF.js?v=b5e19452:19475
+performSyncWorkOnRoot @ chunk-V5LT2MCF.js?v=b5e19452:18896
+flushSyncCallbacks @ chunk-V5LT2MCF.js?v=b5e19452:9135
+commitRootImpl @ chunk-V5LT2MCF.js?v=b5e19452:19460
+commitRoot @ chunk-V5LT2MCF.js?v=b5e19452:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=b5e19452:18811
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=b5e19452:18746
+workLoop @ chunk-V5LT2MCF.js?v=b5e19452:197
+flushWork @ chunk-V5LT2MCF.js?v=b5e19452:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=b5e19452:384Understand this warning
+AssetDisposal.jsx:30 Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at AssetDisposal (AssetDisposal.jsx:30:25)
+    at renderWithHooks (chunk-V5LT2MCF.js?v=b5e19452:11568:26)
+    at updateFunctionComponent (chunk-V5LT2MCF.js?v=b5e19452:14602:28)
+    at mountLazyComponent (chunk-V5LT2MCF.js?v=b5e19452:14853:23)
+    at beginWork (chunk-V5LT2MCF.js?v=b5e19452:15938:22)
+    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=b5e19452:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=b5e19452:3699:24)
+    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=b5e19452:3733:39)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=b5e19452:19793:15)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=b5e19452:19226:20)
+AssetDisposal @ AssetDisposal.jsx:30
+renderWithHooks @ chunk-V5LT2MCF.js?v=b5e19452:11568
+updateFunctionComponent @ chunk-V5LT2MCF.js?v=b5e19452:14602
+mountLazyComponent @ chunk-V5LT2MCF.js?v=b5e19452:14853
+beginWork @ chunk-V5LT2MCF.js?v=b5e19452:15938
+callCallback2 @ chunk-V5LT2MCF.js?v=b5e19452:3674
+invokeGuardedCallbackDev @ chunk-V5LT2MCF.js?v=b5e19452:3699
+invokeGuardedCallback @ chunk-V5LT2MCF.js?v=b5e19452:3733
+beginWork$1 @ chunk-V5LT2MCF.js?v=b5e19452:19793
+performUnitOfWork @ chunk-V5LT2MCF.js?v=b5e19452:19226
+workLoopConcurrent @ chunk-V5LT2MCF.js?v=b5e19452:19217
+renderRootConcurrent @ chunk-V5LT2MCF.js?v=b5e19452:19192
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=b5e19452:18706
+workLoop @ chunk-V5LT2MCF.js?v=b5e19452:197
+flushWork @ chunk-V5LT2MCF.js?v=b5e19452:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=b5e19452:384Understand this error
+AssetDisposal.jsx:30 Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at AssetDisposal (AssetDisposal.jsx:30:25)
+    at renderWithHooks (chunk-V5LT2MCF.js?v=b5e19452:11568:26)
+    at updateFunctionComponent (chunk-V5LT2MCF.js?v=b5e19452:14602:28)
+    at mountLazyComponent (chunk-V5LT2MCF.js?v=b5e19452:14853:23)
+    at beginWork (chunk-V5LT2MCF.js?v=b5e19452:15938:22)
+    at HTMLUnknownElement.callCallback2 (chunk-V5LT2MCF.js?v=b5e19452:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-V5LT2MCF.js?v=b5e19452:3699:24)
+    at invokeGuardedCallback (chunk-V5LT2MCF.js?v=b5e19452:3733:39)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=b5e19452:19793:15)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=b5e19452:19226:20)
+AssetDisposal @ AssetDisposal.jsx:30
+renderWithHooks @ chunk-V5LT2MCF.js?v=b5e19452:11568
+updateFunctionComponent @ chunk-V5LT2MCF.js?v=b5e19452:14602
+mountLazyComponent @ chunk-V5LT2MCF.js?v=b5e19452:14853
+beginWork @ chunk-V5LT2MCF.js?v=b5e19452:15938
+callCallback2 @ chunk-V5LT2MCF.js?v=b5e19452:3674
+invokeGuardedCallbackDev @ chunk-V5LT2MCF.js?v=b5e19452:3699
+invokeGuardedCallback @ chunk-V5LT2MCF.js?v=b5e19452:3733
+beginWork$1 @ chunk-V5LT2MCF.js?v=b5e19452:19793
+performUnitOfWork @ chunk-V5LT2MCF.js?v=b5e19452:19226
+workLoopSync @ chunk-V5LT2MCF.js?v=b5e19452:19165
+renderRootSync @ chunk-V5LT2MCF.js?v=b5e19452:19144
+recoverFromConcurrentError @ chunk-V5LT2MCF.js?v=b5e19452:18764
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=b5e19452:18712
+workLoop @ chunk-V5LT2MCF.js?v=b5e19452:197
+flushWork @ chunk-V5LT2MCF.js?v=b5e19452:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=b5e19452:384Understand this error
+asset-disposal:93 The above error occurred in the <AssetDisposal> component:
+
+    at AssetDisposal (http://localhost:5173/src/pages/fixed-asset/AssetDisposal.jsx:22:26)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4103:5)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4103:5)
+    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4510:26)
+    at div
+    at MotionComponent (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=b5e19452:278:40)
+    at PresenceChild (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=b5e19452:7103:24)
+    at AnimatePresence (http://localhost:5173/node_modules/.vite/deps/framer-motion.js?v=b5e19452:7169:26)
+    at main
+    at div
+    at div
+    at Layout (http://localhost:5173/src/components/Layout.jsx:328:51)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4103:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4574:5)
+    at Suspense
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:4517:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b5e19452:5266:5)
+    at ThemeProvider (http://localhost:5173/src/contexts/ThemeContext.jsx:25:33)
+    at App (http://localhost:5173/src/App.jsx:132:35)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+overrideMethod @ hook.js:608
+console.error @ asset-disposal:93
+logCapturedError @ chunk-V5LT2MCF.js?v=b5e19452:14052
+update.callback @ chunk-V5LT2MCF.js?v=b5e19452:14072
+callCallback @ chunk-V5LT2MCF.js?v=b5e19452:11268
+commitUpdateQueue @ chunk-V5LT2MCF.js?v=b5e19452:11285
+commitLayoutEffectOnFiber @ chunk-V5LT2MCF.js?v=b5e19452:17115
+commitLayoutMountEffects_complete @ chunk-V5LT2MCF.js?v=b5e19452:18008
+commitLayoutEffects_begin @ chunk-V5LT2MCF.js?v=b5e19452:17997
+commitLayoutEffects @ chunk-V5LT2MCF.js?v=b5e19452:17948
+commitRootImpl @ chunk-V5LT2MCF.js?v=b5e19452:19381
+commitRoot @ chunk-V5LT2MCF.js?v=b5e19452:19305
+finishConcurrentRender @ chunk-V5LT2MCF.js?v=b5e19452:18788
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=b5e19452:18746
+workLoop @ chunk-V5LT2MCF.js?v=b5e19452:197
+flushWork @ chunk-V5LT2MCF.js?v=b5e19452:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=b5e19452:384Understand this error
+chunk-V5LT2MCF.js?v=b5e19452:19441 Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at AssetDisposal (AssetDisposal.jsx:30:25)
+    at renderWithHooks (chunk-V5LT2MCF.js?v=b5e19452:11568:26)
+    at updateFunctionComponent (chunk-V5LT2MCF.js?v=b5e19452:14602:28)
+    at mountLazyComponent (chunk-V5LT2MCF.js?v=b5e19452:14853:23)
+    at beginWork (chunk-V5LT2MCF.js?v=b5e19452:15938:22)
+    at beginWork$1 (chunk-V5LT2MCF.js?v=b5e19452:19781:22)
+    at performUnitOfWork (chunk-V5LT2MCF.js?v=b5e19452:19226:20)
+    at workLoopSync (chunk-V5LT2MCF.js?v=b5e19452:19165:13)
+    at renderRootSync (chunk-V5LT2MCF.js?v=b5e19452:19144:15)
+    at recoverFromConcurrentError (chunk-V5LT2MCF.js?v=b5e19452:18764:28)
+AssetDisposal @ AssetDisposal.jsx:30
+renderWithHooks @ chunk-V5LT2MCF.js?v=b5e19452:11568
+updateFunctionComponent @ chunk-V5LT2MCF.js?v=b5e19452:14602
+mountLazyComponent @ chunk-V5LT2MCF.js?v=b5e19452:14853
+beginWork @ chunk-V5LT2MCF.js?v=b5e19452:15938
+beginWork$1 @ chunk-V5LT2MCF.js?v=b5e19452:19781
+performUnitOfWork @ chunk-V5LT2MCF.js?v=b5e19452:19226
+workLoopSync @ chunk-V5LT2MCF.js?v=b5e19452:19165
+renderRootSync @ chunk-V5LT2MCF.js?v=b5e19452:19144
+recoverFromConcurrentError @ chunk-V5LT2MCF.js?v=b5e19452:18764
+performConcurrentWorkOnRoot @ chunk-V5LT2MCF.js?v=b5e19452:18712
+workLoop @ chunk-V5LT2MCF.js?v=b5e19452:197
+flushWork @ chunk-V5LT2MCF.js?v=b5e19452:176
+performWorkUntilDeadline @ chunk-V5LT2MCF.js?v=b5e19452:384Understand this error
