@@ -1,16 +1,16 @@
-[plugin:vite:react-babel] D:\B-Important\Programming\Github\AccERP\src\pages\Production.jsx: 'return' outside of function. (58:4)
-  61 |                 <CardTitle className="flex items-center">Bill of Materials (BOM)</CardTitle>
-D:/B-Important/Programming/Github/AccERP/src/pages/Production.jsx:58:4
-56 |      const perUnitCost = totalInputCost / (finishedGoodsQty || 1);
-57 |  
-58 |      return (
-   |      ^
-59 |          <Card>
-60 |              <CardHeader>
+[plugin:vite:react-babel] D:\B-Important\Programming\Github\AccERP\src\pages\Production.jsx: Missing semicolon. (1:2)
+
+  4 | import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+D:/B-Important/Programming/Github/AccERP/src/pages/Production.jsx:1:2
+1  |  '''import React from 'react';
+   |    ^
+2  |  import { Factory, PackagePlus, ClipboardList, Hourglass, PackageCheck, Trash2, Pencil } from 'lucide-react';
+3  |  import { Button } from '@/components/ui/button';
     at constructor (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:360:19)
     at JSXParserMixin.raise (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:6613:19)
-    at JSXParserMixin.parseReturnStatement (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13012:12)
-    at JSXParserMixin.parseStatementContent (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12675:21)
+    at JSXParserMixin.semicolon (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:6910:10)
+    at JSXParserMixin.parseExpressionStatement (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13161:10)
+    at JSXParserMixin.parseStatementContent (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12775:19)
     at JSXParserMixin.parseStatementLike (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12644:17)
     at JSXParserMixin.parseModuleItem (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12621:17)
     at JSXParserMixin.parseBlockOrModuleBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13192:36)

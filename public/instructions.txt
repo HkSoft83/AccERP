@@ -1,27 +1,37 @@
-আপনার কোডে একটি বড় সমস্যা হচ্ছে—BOM কম্পোনেন্টের ভিতরে একটি handleAddByProduct ফাংশন শুরু করে শেষ করা হয়নি, কিন্তু তার নিচেই আপনি অন্য কম্পোনেন্ট (ProductionOrder) ডিফাইন করে দিয়েছেন। এ কারণেই আপনি নিচের এরর পাচ্ছেন:
+✅ ✅ Updated Code Snippet (Fix for Cost Allocation)
+👉 নিচের কোডটি BOM কম্পোনেন্টের মধ্যে যোগ করো useEffect হিসেবে:
 
-'import' and 'export' may only appear at the top level.
 
-✅ সমাধান:
-handleAddByProduct ফাংশনের বডি (body) আপনি ভুলে গেছেন লিখতে, তাই React মনে করছে আপনি ভেতরে export লিখে ফেলেছেন, যা শুধুমাত্র টপ লেভেলে থাকতে পারে।
+// This recalculates byProductsWithAllocatedCost when sales price or byProducts change
+React.useEffect(() => {
+    if (!productToProduce || productToProduceQty <= 0) return;
 
-🔧 ঠিক করা কোড:
-আপনার handleAddByProduct ফাংশনটি সম্পূর্ণ করুন অথবা অন্তত একটি ফাঁকা ফাংশন দিন এইভাবে:
+    const mainProductSalesValue = productToProduceQty * editableSalesPrice;
+    const byProductsSalesValue = byProducts.reduce((total, item) => total + (item.quantity * item.editableSalesPrice), 0);
+    const totalSalesValue = mainProductSalesValue + byProductsSalesValue;
+    const totalInputCost = inputItems.reduce((total, item) => total + item.quantity * item.cost, 0) + overheadItems.reduce((total, item) => total + item.amount, 0);
 
-const handleAddByProduct = () => {
-  if (selectedByProduct && byProductQty > 0 && byProductCost >= 0) {
-    setByProducts([...byProducts, { name: selectedByProduct, quantity: byProductQty, cost: byProductCost }]);
-    setSelectedByProduct('');
-    setByProductQty(1);
-    setByProductCost(0);
-  }
-};
-এই ফাংশন শেষে দিতে ভুলে গিয়েছেন — }; — এবং এটাই পার্সিং সমস্যা তৈরি করছে।
+    // Update allocated costs
+    const mainCost = totalSalesValue > 0 ? (mainProductSalesValue / totalSalesValue) * totalInputCost : totalInputCost;
+    const updatedByProducts = byProducts.map(item => ({
+        ...item,
+        allocatedCost: totalSalesValue > 0
+            ? (item.quantity * item.editableSalesPrice / totalSalesValue) * totalInputCost
+            : 0
+    }));
 
-🔁 সারাংশে করণীয়:
-handleAddByProduct ফাংশনের কনটেন্ট সম্পূর্ণ লিখুন।
+    setByProducts(updatedByProducts);
+}, [editableSalesPrice, byProducts.map(bp => bp.editableSalesPrice).join(','), productToProduceQty, inputItems, overheadItems]);
+📌 যা করছে:
+যখন editableSalesPrice বা byProducts এর কোনো একটির editableSalesPrice চেঞ্জ হবে, তখন এটি নতুন করে:
 
-নিশ্চিত করুন আপনি কোন function বা component এর ভিতরে আর export লিখছেন না।
+main product-এর allocated cost রিক্যালকুলেট করবে
 
-React কম্পোনেন্টের বাইরে বা বন্ধ হবার পরে export default Production; থাকা উচিত।
+by-products গুলোর allocatedCost আবার হিসাব করবে
 
+setByProducts দিয়ে আপডেট করবে
+
+🧠 টিপস
+এই কোডে .map(bp => bp.editableSalesPrice).join(',') ব্যবহার করা হয়েছে যাতে byProducts এর ভেতরের ভ্যালু চেঞ্জ হলেও React তা useEffect এ ধরে ফেলে।
+
+তবে যদি তুমি performance আরও ভালো করতে চাও, তাহলে এটি utility ফাংশনের মাধ্যমে handle করতে পারো।

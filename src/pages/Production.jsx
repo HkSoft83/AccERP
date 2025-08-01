@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 
 const BOM = ({ products }) => {
     const [boms, setBoms] = React.useState(() => {
@@ -16,10 +16,6 @@ const BOM = ({ products }) => {
     const [isBomFormOpen, setIsBomFormOpen] = React.useState(false);
     const [editingBom, setEditingBom] = React.useState(null);
 
-    React.useEffect(() => {
-        localStorage.setItem('boms', JSON.stringify(boms));
-    }, [boms]);
-
     // State for the form
     const [inputItems, setInputItems] = React.useState([]);
     const [itemName, setItemName] = React.useState('');
@@ -28,8 +24,8 @@ const BOM = ({ products }) => {
 
     const [productToProduce, setProductToProduce] = React.useState('');
     const [productToProduceQty, setProductToProduceQty] = React.useState(1);
-    const [salesPrice, setSalesPrice] = React.useState(0);
     const [editableSalesPrice, setEditableSalesPrice] = React.useState(0);
+    
     const [byProducts, setByProducts] = React.useState([]);
     const [selectedByProduct, setSelectedByProduct] = React.useState('');
     const [byProductQty, setByProductQty] = React.useState(1);
@@ -39,6 +35,12 @@ const BOM = ({ products }) => {
     const [overheadName, setOverheadName] = React.useState('');
     const [overheadAmount, setOverheadAmount] = React.useState(0);
 
+    // State for calculated values
+    const [totalInputCost, setTotalInputCost] = React.useState(0);
+    const [mainProductAllocatedCost, setMainProductAllocatedCost] = React.useState(0);
+    const [allocatedByProducts, setAllocatedByProducts] = React.useState([]);
+    const [perUnitCost, setPerUnitCost] = React.useState(0);
+
     const resetForm = () => {
         setInputItems([]);
         setItemName('');
@@ -46,7 +48,6 @@ const BOM = ({ products }) => {
         setCost(0);
         setProductToProduce('');
         setProductToProduceQty(1);
-        setSalesPrice(0);
         setEditableSalesPrice(0);
         setByProducts([]);
         setSelectedByProduct('');
@@ -61,27 +62,77 @@ const BOM = ({ products }) => {
         if (editingBom) {
             setProductToProduce(editingBom.productToProduce);
             setProductToProduceQty(editingBom.productToProduceQty);
-            setInputItems(editingBom.inputItems);
-            setOverheadItems(editingBom.overheadItems);
-            setByProducts(editingBom.byProducts);
+            setInputItems(editingBom.inputItems || []);
+            setOverheadItems(editingBom.overheadItems || []);
+            setByProducts(editingBom.byProducts || []);
             const product = products.find(p => p.name === editingBom.productToProduce);
             if (product) {
-                setSalesPrice(product.salesPrice);
-                setEditableSalesPrice(product.salesPrice);
+                setEditableSalesPrice(product.salesPrice || 0);
             }
         } else {
             resetForm();
         }
     }, [editingBom, products]);
 
-    const handleSaveBom = () => {
-        const totalInputCost = inputItems.reduce((total, item) => total + item.quantity * item.cost, 0) + overheadItems.reduce((total, item) => total + item.amount, 0);
+    React.useEffect(() => {
+        const currentTotalInputCost = (inputItems || []).reduce((total, item) => total + (item.quantity || 0) * (item.cost || 0), 0) + (overheadItems || []).reduce((total, item) => total + (item.amount || 0), 0);
+        setTotalInputCost(currentTotalInputCost);
+
+        const mainProductSalesValue = (productToProduceQty || 0) * (editableSalesPrice || 0);
+        const byProductsSalesValue = (byProducts || []).reduce((total, item) => total + ((item.quantity || 0) * (item.editableSalesPrice || 0)), 0);
+        const totalSalesValue = mainProductSalesValue + byProductsSalesValue;
+
+        let newMainProductAllocatedCost;
+        let newAllocatedByProducts;
+
+        if (totalSalesValue > 0) {
+            newMainProductAllocatedCost = (mainProductSalesValue / totalSalesValue) * currentTotalInputCost;
+            newAllocatedByProducts = (byProducts || []).map(item => ({
+                ...item,
+                allocatedCost: ((item.quantity || 0) * (item.editableSalesPrice || 0) / totalSalesValue) * currentTotalInputCost
+            }));
+        } else {
+            newMainProductAllocatedCost = currentTotalInputCost;
+            newAllocatedByProducts = (byProducts || []).map(item => ({
+                ...item,
+                allocatedCost: 0
+            }));
+        }
+        
+        setMainProductAllocatedCost(newMainProductAllocatedCost);
+        setAllocatedByProducts(newAllocatedByProducts);
+
+        const newPerUnitCost = (productToProduceQty || 1) > 0 ? newMainProductAllocatedCost / productToProduceQty : 0;
+        setPerUnitCost(newPerUnitCost);
+
+    }, [inputItems, overheadItems, productToProduceQty, editableSalesPrice, byProducts]);
+
+    React.useEffect(() => {
+        localStorage.setItem('boms', JSON.stringify(boms));
+    }, [boms]);
+
+    // This recalculates byProductsWithAllocatedCost when sales price or byProducts change
+    React.useEffect(() => {
+        if (!productToProduce || productToProduceQty <= 0) return;
+
         const mainProductSalesValue = productToProduceQty * editableSalesPrice;
         const byProductsSalesValue = byProducts.reduce((total, item) => total + (item.quantity * item.editableSalesPrice), 0);
         const totalSalesValue = mainProductSalesValue + byProductsSalesValue;
-        const mainProductAllocatedCost = totalSalesValue > 0 ? (mainProductSalesValue / totalSalesValue) * totalInputCost : 0;
-        const perUnitCost = mainProductAllocatedCost / (productToProduceQty || 1);
+        const totalInputCost = inputItems.reduce((total, item) => total + item.quantity * item.cost, 0) + overheadItems.reduce((total, item) => total + item.amount, 0);
 
+        // Update allocated costs
+        const mainCost = totalSalesValue > 0 ? (mainProductSalesValue / totalSalesValue) * totalInputCost : totalInputCost;
+        const updatedByProducts = byProducts.map(item => ({
+            ...item,
+            allocatedCost: totalSalesValue > 0
+                ? (item.quantity * item.editableSalesPrice / totalSalesValue) * totalInputCost
+                : 0
+        }));
+
+        setByProducts(updatedByProducts);
+    }, [editableSalesPrice, byProducts.map(bp => bp.editableSalesPrice).join(','), productToProduceQty, inputItems, overheadItems]);
+
+    const handleSaveBom = () => {
         if (editingBom) {
             const updatedBom = {
                 ...editingBom,
@@ -89,7 +140,7 @@ const BOM = ({ products }) => {
                 productToProduceQty,
                 inputItems,
                 overheadItems,
-                byProducts,
+                byProducts: allocatedByProducts,
                 totalInputCost,
                 perUnitCost,
             };
@@ -102,7 +153,7 @@ const BOM = ({ products }) => {
                 productToProduceQty,
                 inputItems,
                 overheadItems,
-                byProducts,
+                byProducts: allocatedByProducts,
                 totalInputCost,
                 perUnitCost,
             };
@@ -131,8 +182,7 @@ const BOM = ({ products }) => {
         const selectedProduct = products.find(p => p.name === value);
         if (selectedProduct) {
             setProductToProduce(selectedProduct.name);
-            setSalesPrice(selectedProduct.salesPrice);
-            setEditableSalesPrice(selectedProduct.salesPrice);
+            setEditableSalesPrice(selectedProduct.salesPrice || 0);
         }
     };
 
@@ -140,13 +190,13 @@ const BOM = ({ products }) => {
         const selectedProduct = products.find(p => p.name === value);
         if (selectedProduct) {
             setItemName(selectedProduct.name);
-            setCost(selectedProduct.costingPrice);
+            setCost(selectedProduct.costingPrice || 0);
         }
     };
 
     const handleAddItem = () => {
-        if (itemName && quantity > 0 && cost >= 0) {
-            setInputItems([...inputItems, { name: itemName, quantity, cost }]);
+        if (itemName && quantity > 0) {
+            setInputItems([...inputItems, { name: itemName, quantity, cost: cost || 0 }]);
             setItemName('');
             setQuantity(1);
             setCost(0);
@@ -157,7 +207,7 @@ const BOM = ({ products }) => {
         if (selectedByProduct && byProductQty > 0) {
             const product = products.find(p => p.name === selectedByProduct);
             if (product) {
-                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice, costingPrice: product.costingPrice || 0, editableSalesPrice: byProductEditableSalesPrice }]);
+                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice || 0, costingPrice: product.costingPrice || 0, editableSalesPrice: byProductEditableSalesPrice || 0 }]);
                 setSelectedByProduct('');
                 setByProductQty(1);
                 setByProductEditableSalesPrice(0);
@@ -169,7 +219,7 @@ const BOM = ({ products }) => {
         const selectedProduct = products.find(p => p.name === value);
         if (selectedProduct) {
             setSelectedByProduct(selectedProduct.name);
-            setByProductEditableSalesPrice(selectedProduct.salesPrice);
+            setByProductEditableSalesPrice(selectedProduct.salesPrice || 0);
         }
     };
 
@@ -189,22 +239,6 @@ const BOM = ({ products }) => {
         }
     };
 
-    const totalInputCost = inputItems.reduce((total, item) => total + item.quantity * item.cost, 0) + overheadItems.reduce((total, item) => total + item.amount, 0);
-
-    // Calculate sales values
-    const mainProductSalesValue = productToProduceQty * editableSalesPrice;
-    const byProductsSalesValue = byProducts.reduce((total, item) => total + (item.quantity * item.editableSalesPrice), 0);
-    const totalSalesValue = mainProductSalesValue + byProductsSalesValue;
-
-    // Calculate allocated costs
-    const mainProductAllocatedCost = totalSalesValue > 0 ? (mainProductSalesValue / totalSalesValue) * totalInputCost : 0;
-    const allocatedByProducts = byProducts.map(item => ({
-        ...item,
-        allocatedCost: totalSalesValue > 0 ? (item.quantity * item.editableSalesPrice / totalSalesValue) * totalInputCost : 0
-    }));
-
-    const perUnitCost = mainProductAllocatedCost / (productToProduceQty || 1);
-
     return (
         <Card>
             <CardHeader>
@@ -212,13 +246,16 @@ const BOM = ({ products }) => {
                     <span>Bill of Materials (BOM)</span>
                     <Dialog open={isBomFormOpen} onOpenChange={setIsBomFormOpen}>
                         <DialogTrigger asChild>
-                            <Button onClick={() => { setEditingBom(null); setIsBomFormOpen(true); }}>
+                            <Button onClick={() => { setEditingBom(null); resetForm(); setIsBomFormOpen(true); }}>
                                 <PackagePlus className="mr-2 h-4 w-4" /> Create New BOM
                             </Button>
                         </DialogTrigger>
                         <DialogContent className="max-w-6xl h-[90vh] overflow-y-auto">
                             <DialogHeader>
                                 <DialogTitle>{editingBom ? 'Edit' : 'Create'} Bill of Materials</DialogTitle>
+                                <DialogDescription>
+                                    Manage the bill of materials for your products.
+                                </DialogDescription>
                             </DialogHeader>
                             {/* Form content */}
                             <div className="flex items-center gap-4 mb-4">
@@ -254,7 +291,7 @@ const BOM = ({ products }) => {
                                             </SelectContent>
                                         </Select>
                                         <Input type="number" placeholder="Quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10) || 0)} />
-                                        <Input type="number" placeholder="Cost per Unit" value={cost} readOnly />
+                                        <Input type="number" placeholder="Cost per Unit" value={cost || 0} readOnly />
                                         <Button onClick={handleAddItem}>Add</Button>
                                     </div>
                                     <Table>
@@ -271,14 +308,14 @@ const BOM = ({ products }) => {
                                                 <TableRow key={index}>
                                                     <TableCell>{item.name}</TableCell>
                                                     <TableCell>{item.quantity}</TableCell>
-                                                    <TableCell>${item.cost.toFixed(2)}</TableCell>
-                                                    <TableCell>${(item.quantity * item.cost).toFixed(2)}</TableCell>
+                                                    <TableCell>${(item.cost || 0).toFixed(2)}</TableCell>
+                                                    <TableCell>${((item.quantity || 0) * (item.cost || 0)).toFixed(2)}</TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>
                                     </Table>
                                     <div className="text-right mt-4 font-bold">
-                                        Total Raw Material Cost: ${inputItems.reduce((total, item) => total + item.quantity * item.cost, 0).toFixed(2)}
+                                        Total Raw Material Cost: ${inputItems.reduce((total, item) => total + (item.quantity || 0) * (item.cost || 0), 0).toFixed(2)}
                                     </div>
                                     <h3 className="text-lg font-semibold mb-2">Overhead Cost</h3>
                                     <div className="grid grid-cols-3 gap-4 mb-4">
@@ -298,7 +335,7 @@ const BOM = ({ products }) => {
                                             {overheadItems.map((item, index) => (
                                                 <TableRow key={index}>
                                                     <TableCell>{item.name}</TableCell>
-                                                    <TableCell>${item.amount.toFixed(2)}</TableCell>
+                                                    <TableCell>${(item.amount || 0).toFixed(2)}</TableCell>
                                                     <TableCell>
                                                         <Button variant="ghost" size="icon" onClick={() => handleDeleteOverhead(index)}>
                                                             <Trash2 className="h-4 w-4" />
@@ -309,7 +346,7 @@ const BOM = ({ products }) => {
                                         </TableBody>
                                     </Table>
                                     <div className="text-right mt-4 font-bold">
-                                        Total Overhead Cost: ${overheadItems.reduce((total, item) => total + item.amount, 0).toFixed(2)}
+                                        Total Overhead Cost: ${overheadItems.reduce((total, item) => total + (item.amount || 0), 0).toFixed(2)}
                                     </div>
                                     <div className="text-right mt-4 font-bold text-xl">
                                         Total Input Cost: ${totalInputCost.toFixed(2)}
@@ -376,8 +413,8 @@ const BOM = ({ products }) => {
                                                     updatedByProducts[index].editableSalesPrice = parseFloat(e.target.value) || 0;
                                                     setByProducts(updatedByProducts);
                                                 }} className="w-24 text-right" /></TableCell>
-                                                    <TableCell>${(item.allocatedCost / item.quantity).toFixed(2)}</TableCell>
-                                                    <TableCell>${item.allocatedCost.toFixed(2)}</TableCell>
+                                                    <TableCell>${((item.allocatedCost || 0) / (item.quantity || 1)).toFixed(2)}</TableCell>
+                                                    <TableCell>${(item.allocatedCost || 0).toFixed(2)}</TableCell>
                                                     <TableCell>
                                                         <Button variant="ghost" size="icon" onClick={() => handleDeleteByProduct(index)}>
                                                             <Trash2 className="h-4 w-4" />
@@ -388,7 +425,7 @@ const BOM = ({ products }) => {
                                         </TableBody>
                                     </Table>
                                     <div className="text-right mt-4 font-bold text-xl">
-                                        Total Allocated Cost: ${(mainProductAllocatedCost + allocatedByProducts.reduce((total, item) => total + item.allocatedCost, 0)).toFixed(2)}
+                                        Total Allocated Cost: ${(mainProductAllocatedCost + allocatedByProducts.reduce((total, item) => total + (item.allocatedCost || 0), 0)).toFixed(2)}
                                     </div>
                                 </div>
                             </div>
@@ -418,8 +455,8 @@ const BOM = ({ products }) => {
                                 <TableCell>{bom.id}</TableCell>
                                 <TableCell>{bom.productToProduce}</TableCell>
                                 <TableCell>{bom.productToProduceQty}</TableCell>
-                                <TableCell>${bom.totalInputCost.toFixed(2)}</TableCell>
-                                <TableCell>${bom.perUnitCost.toFixed(2)}</TableCell>
+                                <TableCell>${(bom.totalInputCost || 0).toFixed(2)}</TableCell>
+                                <TableCell>${(bom.perUnitCost || 0).toFixed(2)}</TableCell>
                                 <TableCell>
                                     <Button variant="ghost" size="icon" onClick={() => handleEditBom(bom)}>
                                         <Pencil className="h-4 w-4" />
@@ -455,15 +492,12 @@ const ProductionOrder = () => {
         ? productionQty / selectedBom.productToProduceQty
         : 1;
 
-    const totalInputsCost = selectedBom ? 
-        (selectedBom.inputItems.reduce((total, item) => total + (item.quantity * item.cost), 0) + 
-        selectedBom.overheadItems.reduce((total, item) => total + item.amount, 0)) * scalingFactor
-        : 0;
+    const totalInputsCost = selectedBom ? (selectedBom.totalInputCost || 0) * scalingFactor : 0;
 
-    const totalMainProductCost = selectedBom ? productionQty * selectedBom.perUnitCost : 0;
+    const totalMainProductCost = selectedBom ? productionQty * (selectedBom.perUnitCost || 0) : 0;
     
     const totalByProductCost = selectedBom ? 
-        selectedBom.byProducts.reduce((total, item) => total + ((item.costingPrice || 0) * item.quantity * scalingFactor), 0)
+        (selectedBom.byProducts || []).reduce((total, item) => total + ((item.allocatedCost || 0) * scalingFactor), 0)
         : 0;
 
     const totalOutputsCost = totalMainProductCost + totalByProductCost;
@@ -512,12 +546,12 @@ const ProductionOrder = () => {
                             <Table>
                                 <TableHeader><TableRow><TableHead>Item</TableHead><TableHead>Quantity</TableHead><TableHead>Per Unit Cost</TableHead><TableHead>Total Cost</TableHead></TableRow></TableHeader>
                                 <TableBody>
-                                    {selectedBom.inputItems.map((item, index) => (
+                                    {(selectedBom.inputItems || []).map((item, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{item.name}</TableCell>
-                                            <TableCell>{(item.quantity * scalingFactor).toFixed(2)}</TableCell>
-                                            <TableCell>${item.cost.toFixed(2)}</TableCell>
-                                            <TableCell>${(item.quantity * scalingFactor * item.cost).toFixed(2)}</TableCell>
+                                            <TableCell>{((item.quantity || 0) * scalingFactor).toFixed(2)}</TableCell>
+                                            <TableCell>${(item.cost || 0).toFixed(2)}</TableCell>
+                                            <TableCell>${((item.quantity || 0) * scalingFactor * (item.cost || 0)).toFixed(2)}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -527,10 +561,10 @@ const ProductionOrder = () => {
                             <Table>
                                 <TableHeader><TableRow><TableHead>Overhead</TableHead><TableHead>Total Cost</TableHead></TableRow></TableHeader>
                                 <TableBody>
-                                    {selectedBom.overheadItems.map((item, index) => (
+                                    {(selectedBom.overheadItems || []).map((item, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{item.name}</TableCell>
-                                            <TableCell>${(item.amount * scalingFactor).toFixed(2)}</TableCell>
+                                            <TableCell>${((item.amount || 0) * scalingFactor).toFixed(2)}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -550,13 +584,13 @@ const ProductionOrder = () => {
                                     <TableRow>
                                         <TableCell>{selectedBom.productToProduce}</TableCell>
                                         <TableCell>{productionQty}</TableCell>
-                                        <TableCell>${selectedBom.perUnitCost.toFixed(2)}</TableCell>
+                                        <TableCell>${(selectedBom.perUnitCost || 0).toFixed(2)}</TableCell>
                                         <TableCell>${totalMainProductCost.toFixed(2)}</TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>
 
-                            {selectedBom.byProducts.length > 0 && (
+                            {selectedBom.byProducts && selectedBom.byProducts.length > 0 && (
                                 <>
                                     <h4 className="font-semibold mt-4 mb-2">By-Products</h4>
                                     <Table>
@@ -565,9 +599,9 @@ const ProductionOrder = () => {
                                             {selectedBom.byProducts.map((item, index) => (
                                                 <TableRow key={index}>
                                                     <TableCell>{item.name}</TableCell>
-                                                    <TableCell>{(item.quantity * scalingFactor).toFixed(2)}</TableCell>
-                                                    <TableCell>${(item.costingPrice || 0).toFixed(2)}</TableCell>
-                                                    <TableCell>${((item.costingPrice || 0) * item.quantity * scalingFactor).toFixed(2)}</TableCell>
+                                                    <TableCell>{((item.quantity || 0) * scalingFactor).toFixed(2)}</TableCell>
+                                                    <TableCell>${((item.allocatedCost || 0) / (item.quantity || 1)).toFixed(2)}</TableCell>
+                                                    <TableCell>${((item.allocatedCost || 0) * scalingFactor).toFixed(2)}</TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -657,3 +691,4 @@ const Production = ({ products }) => {
 };
 
 export default Production;
+''
