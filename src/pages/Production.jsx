@@ -672,6 +672,8 @@ const ProductionOrder = () => {
 
 const WIPTracking = () => {
     const [wipOrders, setWipOrders] = React.useState([]);
+    const [showSummaryDialog, setShowSummaryDialog] = React.useState(false);
+    const [summaryDetails, setSummaryDetails] = React.useState(null);
 
     React.useEffect(() => {
         const savedWipOrders = localStorage.getItem('wipOrders');
@@ -679,6 +681,48 @@ const WIPTracking = () => {
             setWipOrders(JSON.parse(savedWipOrders));
         }
     }, []);
+
+    const handleFinishProduction = (orderToFinish) => {
+        // Calculate stock changes
+        const consumedProducts = orderToFinish.inputItems.map(item => ({
+            name: item.name,
+            quantity: item.quantity,
+            type: 'consumed'
+        }));
+
+        const producedProducts = [
+            {
+                name: orderToFinish.productToProduce,
+                quantity: orderToFinish.productionQty,
+                cost: orderToFinish.perUnitCost,
+                totalValue: orderToFinish.totalMainProductCost,
+                type: 'produced'
+            },
+            ...(orderToFinish.byProducts || []).map(item => ({
+                name: item.name,
+                quantity: item.quantity,
+                cost: (item.allocatedCost || 0) / (item.quantity || 1),
+                totalValue: item.allocatedCost,
+                type: 'produced'
+            }))
+        ];
+
+        setSummaryDetails({
+            order: orderToFinish,
+            consumed: consumedProducts,
+            produced: producedProducts
+        });
+        setShowSummaryDialog(true);
+
+        // Update order status and move to finished goods
+        const updatedWipOrders = wipOrders.filter(order => order.id !== orderToFinish.id);
+        setWipOrders(updatedWipOrders);
+        localStorage.setItem('wipOrders', JSON.stringify(updatedWipOrders));
+
+        const finishedOrder = { ...orderToFinish, status: "Finished", finishDate: new Date().toISOString() };
+        const existingFinishedGoods = JSON.parse(localStorage.getItem('finishedGoods') || '[]');
+        localStorage.setItem('finishedGoods', JSON.stringify([...existingFinishedGoods, finishedOrder]));
+    };
 
     return (
         <Card>
@@ -701,6 +745,7 @@ const WIPTracking = () => {
                                 <TableHead>Start Date</TableHead>
                                 <TableHead>Total Input Cost</TableHead>
                                 <TableHead>Total Output Cost</TableHead>
+                                <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -713,6 +758,101 @@ const WIPTracking = () => {
                                     <TableCell>{new Date(order.startDate).toLocaleString()}</TableCell>
                                     <TableCell>${order.totalInputsCost.toFixed(2)}</TableCell>
                                     <TableCell>${order.totalOutputsCost.toFixed(2)}</TableCell>
+                                    <TableCell>
+                                        <Button onClick={() => handleFinishProduction(order)}>Finish Production</Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                )}
+            </CardContent>
+            <Dialog open={showSummaryDialog} onOpenChange={setShowSummaryDialog}>
+                <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                        <DialogTitle>Production Finished: Stock Changes</DialogTitle>
+                        <DialogDescription>Summary of products consumed and produced for Order ID: {summaryDetails?.order.id}</DialogDescription>
+                    </DialogHeader>
+                    {summaryDetails && (
+                        <div className="space-y-4">
+                            <div>
+                                <h4 className="font-semibold">Products Consumed:</h4>
+                                <Table>
+                                    <TableHeader><TableRow><TableHead>Item</TableHead><TableHead>Quantity</TableHead></TableRow></TableHeader>
+                                    <TableBody>
+                                        {summaryDetails.consumed.map((item, index) => (
+                                            <TableRow key={index}><TableCell>{item.name}</TableCell><TableCell>{item.quantity.toFixed(2)}</TableCell></TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                            <div>
+                                <h4 className="font-semibold">Products Produced:</h4>
+                                <Table>
+                                    <TableHeader><TableRow><TableHead>Item</TableHead><TableHead>Quantity</TableHead><TableHead>Cost</TableHead><TableHead>Total Value</TableHead></TableRow></TableHeader>
+                                    <TableBody>
+                                        {summaryDetails.produced.map((item, index) => (
+                                            <TableRow key={index}><TableCell>{item.name}</TableCell><TableCell>{item.quantity.toFixed(2)}</TableCell><TableCell>${item.cost.toFixed(2)}</TableCell><TableCell>${item.totalValue.toFixed(2)}</TableCell></TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
+                    )}
+                    <DialogFooter>
+                        <Button onClick={() => setShowSummaryDialog(false)}>Close</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </Card>
+    );
+};
+
+const FinishedGoods = () => {
+    const [finishedOrders, setFinishedOrders] = React.useState([]);
+
+    React.useEffect(() => {
+        const savedFinishedGoods = localStorage.getItem('finishedGoods');
+        if (savedFinishedGoods) {
+            setFinishedOrders(JSON.parse(savedFinishedGoods));
+        }
+    }, []);
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center">
+                    <PackageCheck className="mr-2" /> Finished Goods
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                {finishedOrders.length === 0 ? (
+                    <p>No finished production orders.</p>
+                ) : (
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Order ID</TableHead>
+                                <TableHead>Product</TableHead>
+                                <TableHead>Quantity</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead>Start Date</TableHead>
+                                <TableHead>Finish Date</TableHead>
+                                <TableHead>Total Input Cost</TableHead>
+                                <TableHead>Total Output Cost</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {finishedOrders.map((order) => (
+                                <TableRow key={order.id}>
+                                    <TableCell>{order.id}</TableCell>
+                                    <TableCell>{order.productToProduce}</TableCell>
+                                    <TableCell>{order.productionQty}</TableCell>
+                                    <TableCell>{order.status}</TableCell>
+                                    <TableCell>{new Date(order.startDate).toLocaleString()}</TableCell>
+                                    <TableCell>{new Date(order.finishDate).toLocaleString()}</TableCell>
+                                    <TableCell>${order.totalInputsCost.toFixed(2)}</TableCell>
+                                    <TableCell>${order.totalOutputsCost.toFixed(2)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -722,19 +862,6 @@ const WIPTracking = () => {
         </Card>
     );
 };
-
-const FinishedGoods = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="flex items-center">
-                <PackageCheck className="mr-2" /> Finished Goods
-            </CardTitle>
-        </CardHeader>
-        <CardContent>
-            <p>Manage your inventory of finished goods.</p>
-        </CardContent>
-    </Card>
-);
 
 
 const Production = ({ products }) => {
