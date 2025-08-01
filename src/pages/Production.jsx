@@ -318,7 +318,7 @@ const BOM = ({ products }) => {
                                                     updatedByProducts[index].editableSalesPrice = parseFloat(e.target.value) || 0;
                                                     setByProducts(updatedByProducts);
                                                 }} className="w-24 text-right" /></TableCell>
-                                                    <TableCell>${(item.costingPrice || 0).toFixed(2)}</TableCell>
+                                                    <TableCell>${(item.allocatedCost / item.quantity).toFixed(2)}</TableCell>
                                                     <TableCell>${item.allocatedCost.toFixed(2)}</TableCell>
                                                 </TableRow>
                                             ))}
@@ -383,6 +383,19 @@ const ProductionOrder = () => {
         ? productionQty / selectedBom.productToProduceQty
         : 1;
 
+    const totalInputsCost = selectedBom ? 
+        (selectedBom.inputItems.reduce((total, item) => total + (item.quantity * item.cost), 0) + 
+        selectedBom.overheadItems.reduce((total, item) => total + item.amount, 0)) * scalingFactor
+        : 0;
+
+    const totalMainProductCost = selectedBom ? productionQty * selectedBom.perUnitCost : 0;
+    
+    const totalByProductCost = selectedBom ? 
+        selectedBom.byProducts.reduce((total, item) => total + ((item.costingPrice || 0) * item.quantity * scalingFactor), 0)
+        : 0;
+
+    const totalOutputsCost = totalMainProductCost + totalByProductCost;
+
     return (
         <Card>
             <CardHeader>
@@ -425,12 +438,14 @@ const ProductionOrder = () => {
                             <h3 className="text-lg font-semibold mb-2">Inputs (Scaled)</h3>
                             <h4 className="font-semibold mb-2">Raw Materials</h4>
                             <Table>
-                                <TableHeader><TableRow><TableHead>Item</TableHead><TableHead>Quantity</TableHead></TableRow></TableHeader>
+                                <TableHeader><TableRow><TableHead>Item</TableHead><TableHead>Quantity</TableHead><TableHead>Per Unit Cost</TableHead><TableHead>Total Cost</TableHead></TableRow></TableHeader>
                                 <TableBody>
                                     {selectedBom.inputItems.map((item, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{item.name}</TableCell>
                                             <TableCell>{(item.quantity * scalingFactor).toFixed(2)}</TableCell>
+                                            <TableCell>${item.cost.toFixed(2)}</TableCell>
+                                            <TableCell>${(item.quantity * scalingFactor * item.cost).toFixed(2)}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -438,7 +453,7 @@ const ProductionOrder = () => {
 
                             <h4 className="font-semibold mt-4 mb-2">Overhead Costs</h4>
                             <Table>
-                                <TableHeader><TableRow><TableHead>Overhead</TableHead><TableHead>Amount</TableHead></TableRow></TableHeader>
+                                <TableHeader><TableRow><TableHead>Overhead</TableHead><TableHead>Total Cost</TableHead></TableRow></TableHeader>
                                 <TableBody>
                                     {selectedBom.overheadItems.map((item, index) => (
                                         <TableRow key={index}>
@@ -448,6 +463,9 @@ const ProductionOrder = () => {
                                     ))}
                                 </TableBody>
                             </Table>
+                            <div className="text-right mt-4 font-bold text-xl">
+                                Total Input Cost: ${totalInputsCost.toFixed(2)}
+                            </div>
                         </div>
 
                         {/* Output Side */}
@@ -455,11 +473,13 @@ const ProductionOrder = () => {
                             <h3 className="text-lg font-semibold mb-2">Outputs (Scaled)</h3>
                             <h4 className="font-semibold mb-2">Main Product</h4>
                             <Table>
-                                <TableHeader><TableRow><TableHead>Product</TableHead><TableHead>Quantity</TableHead></TableRow></TableHeader>
+                                <TableHeader><TableRow><TableHead>Product</TableHead><TableHead>Quantity</TableHead><TableHead>Per Unit Cost</TableHead><TableHead>Total Cost</TableHead></TableRow></TableHeader>
                                 <TableBody>
                                     <TableRow>
                                         <TableCell>{selectedBom.productToProduce}</TableCell>
                                         <TableCell>{productionQty}</TableCell>
+                                        <TableCell>${selectedBom.perUnitCost.toFixed(2)}</TableCell>
+                                        <TableCell>${totalMainProductCost.toFixed(2)}</TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>
@@ -468,18 +488,23 @@ const ProductionOrder = () => {
                                 <>
                                     <h4 className="font-semibold mt-4 mb-2">By-Products</h4>
                                     <Table>
-                                        <TableHeader><TableRow><TableHead>By-Product</TableHead><TableHead>Quantity</TableHead></TableRow></TableHeader>
+                                        <TableHeader><TableRow><TableHead>By-Product</TableHead><TableHead>Quantity</TableHead><TableHead>Per Unit Cost</TableHead><TableHead>Total Cost</TableHead></TableRow></TableHeader>
                                         <TableBody>
                                             {selectedBom.byProducts.map((item, index) => (
                                                 <TableRow key={index}>
                                                     <TableCell>{item.name}</TableCell>
                                                     <TableCell>{(item.quantity * scalingFactor).toFixed(2)}</TableCell>
+                                                    <TableCell>${(item.costingPrice || 0).toFixed(2)}</TableCell>
+                                                    <TableCell>${((item.costingPrice || 0) * item.quantity * scalingFactor).toFixed(2)}</TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>
                                     </Table>
                                 </>
                             )}
+                            <div className="text-right mt-4 font-bold text-xl">
+                                Total Output Cost: ${totalOutputsCost.toFixed(2)}
+                            </div>
                         </div>
                     </div>
                 )}
