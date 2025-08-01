@@ -502,6 +502,53 @@ const ProductionOrder = () => {
 
     const totalOutputsCost = totalMainProductCost + totalByProductCost;
 
+    const handleStartProduction = () => {
+        if (!selectedBom || productionQty <= 0) {
+            alert("Please select a BOM and enter a valid quantity to produce.");
+            return;
+        }
+
+        const newProductionOrder = {
+            id: Date.now(), // Unique ID for the production order
+            bomId: selectedBom.id,
+            productToProduce: selectedBom.productToProduce,
+            productionQty: productionQty,
+            inputItems: selectedBom.inputItems.map(item => ({
+                ...item,
+                quantity: (item.quantity || 0) * scalingFactor,
+                totalCost: (item.quantity || 0) * scalingFactor * (item.cost || 0)
+            })),
+            overheadItems: selectedBom.overheadItems.map(item => ({
+                ...item,
+                amount: (item.amount || 0) * scalingFactor
+            })),
+            byProducts: selectedBom.byProducts.map(item => ({
+                ...item,
+                quantity: (item.quantity || 0) * scalingFactor,
+                totalCost: (item.allocatedCost || 0) * scalingFactor
+            })),
+            totalInputsCost: totalInputsCost,
+            totalOutputsCost: totalOutputsCost,
+            perUnitCost: selectedBom.perUnitCost,
+            status: "WIP", // Work In Progress
+            startDate: new Date().toISOString(),
+        };
+
+        const existingWipOrders = JSON.parse(localStorage.getItem('wipOrders') || '[]');
+        localStorage.setItem('wipOrders', JSON.stringify([...existingWipOrders, newProductionOrder]));
+
+        // Clear form
+        setSelectedBomId('');
+        setProductionQty(1);
+        alert("Production order started and moved to WIP!");
+    };
+
+    const handleCancelProduction = () => {
+        setSelectedBomId('');
+        setProductionQty(1);
+        alert("Production order cancelled.");
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -614,23 +661,67 @@ const ProductionOrder = () => {
                         </div>
                     </div>
                 )}
+                <div className="flex justify-end gap-4 mt-6">
+                    <Button variant="outline" onClick={handleCancelProduction}>Cancel</Button>
+                    <Button onClick={handleStartProduction} disabled={!selectedBomId || productionQty <= 0}>Start Production</Button>
+                </div>
             </CardContent>
         </Card>
     );
 };
 
-const WIPTracking = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="flex items-center">
-                <Hourglass className="mr-2" /> WIP Tracking
-            </CardTitle>
-        </CardHeader>
-        <CardContent>
-            <p>Track Work in Progress for your production orders.</p>
-        </CardContent>
-    </Card>
-);
+const WIPTracking = () => {
+    const [wipOrders, setWipOrders] = React.useState([]);
+
+    React.useEffect(() => {
+        const savedWipOrders = localStorage.getItem('wipOrders');
+        if (savedWipOrders) {
+            setWipOrders(JSON.parse(savedWipOrders));
+        }
+    }, []);
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center">
+                    <Hourglass className="mr-2" /> WIP Tracking
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                {wipOrders.length === 0 ? (
+                    <p>No production orders in progress.</p>
+                ) : (
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Order ID</TableHead>
+                                <TableHead>Product</TableHead>
+                                <TableHead>Quantity</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead>Start Date</TableHead>
+                                <TableHead>Total Input Cost</TableHead>
+                                <TableHead>Total Output Cost</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {wipOrders.map((order) => (
+                                <TableRow key={order.id}>
+                                    <TableCell>{order.id}</TableCell>
+                                    <TableCell>{order.productToProduce}</TableCell>
+                                    <TableCell>{order.productionQty}</TableCell>
+                                    <TableCell>{order.status}</TableCell>
+                                    <TableCell>{new Date(order.startDate).toLocaleString()}</TableCell>
+                                    <TableCell>${order.totalInputsCost.toFixed(2)}</TableCell>
+                                    <TableCell>${order.totalOutputsCost.toFixed(2)}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                )}
+            </CardContent>
+        </Card>
+    );
+};
 
 const FinishedGoods = () => (
     <Card>
