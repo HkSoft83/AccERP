@@ -9,8 +9,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 
 const BOM = ({ products }) => {
-    const [boms, setBoms] = React.useState([]);
+    const [boms, setBoms] = React.useState(() => {
+        const savedBoms = localStorage.getItem('boms');
+        return savedBoms ? JSON.parse(savedBoms) : [];
+    });
     const [isBomFormOpen, setIsBomFormOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        localStorage.setItem('boms', JSON.stringify(boms));
+    }, [boms]);
 
     // State for the form
     const [inputItems, setInputItems] = React.useState([]);
@@ -107,9 +114,10 @@ const BOM = ({ products }) => {
         if (selectedByProduct && byProductQty > 0) {
             const product = products.find(p => p.name === selectedByProduct);
             if (product) {
-                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice, costingPrice: product.costingPrice || 0, editableSalesPrice: product.salesPrice }]);
+                setByProducts([...byProducts, { name: product.name, quantity: byProductQty, salesPrice: product.salesPrice, costingPrice: product.costingPrice || 0, editableSalesPrice: byProductEditableSalesPrice }]);
                 setSelectedByProduct('');
                 setByProductQty(1);
+                setByProductEditableSalesPrice(0);
             }
         }
     };
@@ -176,7 +184,7 @@ const BOM = ({ products }) => {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                                <Input type="number" placeholder="Quantity" value={productToProduceQty} onChange={(e) => setProductToProduceQty(parseInt(e.target.value, 10))} className="w-[150px]" />
+                                <Input type="number" placeholder="Quantity" value={productToProduceQty} onChange={(e) => setProductToProduceQty(parseInt(e.target.value, 10) || 0)} className="w-[150px]" />
                             </div>
                             <div className="grid grid-cols-2 gap-8">
                                 <div>
@@ -194,7 +202,7 @@ const BOM = ({ products }) => {
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                        <Input type="number" placeholder="Quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} />
+                                        <Input type="number" placeholder="Quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10) || 0)} />
                                         <Input type="number" placeholder="Cost per Unit" value={cost} readOnly />
                                         <Button onClick={handleAddItem}>Add</Button>
                                     </div>
@@ -224,7 +232,7 @@ const BOM = ({ products }) => {
                                     <h3 className="text-lg font-semibold mb-2">Overhead Cost</h3>
                                     <div className="grid grid-cols-3 gap-4 mb-4">
                                         <Input placeholder="Overhead Name" value={overheadName} onChange={(e) => setOverheadName(e.target.value)} />
-                                        <Input type="number" placeholder="Amount" value={overheadAmount} onChange={(e) => setOverheadAmount(parseFloat(e.target.value))} />
+                                        <Input type="number" placeholder="Amount" value={overheadAmount} onChange={(e) => setOverheadAmount(parseFloat(e.target.value) || 0)} />
                                         <Button onClick={handleAddOverhead}>Add Overhead</Button>
                                     </div>
                                     <Table>
@@ -266,7 +274,7 @@ const BOM = ({ products }) => {
                                             <TableRow>
                                                 <TableCell>{productToProduce || 'Finished Product'}</TableCell>
                                                 <TableCell>{productToProduceQty}</TableCell>
-                                                <TableCell><Input type="number" value={editableSalesPrice} onChange={(e) => setEditableSalesPrice(parseFloat(e.target.value))} className="w-24 text-right" /></TableCell>
+                                                <TableCell><Input type="number" value={editableSalesPrice} onChange={(e) => setEditableSalesPrice(parseFloat(e.target.value) || 0)} className="w-24 text-right" /></TableCell>
                                                 <TableCell>${perUnitCost.toFixed(2)}</TableCell>
                                                 <TableCell>${mainProductAllocatedCost.toFixed(2)}</TableCell>
                                             </TableRow>
@@ -286,8 +294,8 @@ const BOM = ({ products }) => {
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                        <Input type="number" placeholder="Quantity" value={byProductQty} onChange={(e) => setByProductQty(parseInt(e.target.value, 10))} />
-                                        <Input type="number" placeholder="Sales Price" value={byProductEditableSalesPrice} onChange={(e) => setByProductEditableSalesPrice(parseFloat(e.target.value))} />
+                                        <Input type="number" placeholder="Quantity" value={byProductQty} onChange={(e) => setByProductQty(parseInt(e.target.value, 10) || 0)} />
+                                        <Input type="number" placeholder="Sales Price" value={byProductEditableSalesPrice} onChange={(e) => setByProductEditableSalesPrice(parseFloat(e.target.value) || 0)} />
                                         <Button onClick={handleAddByProduct}>Add By-Product</Button>
                                     </div>
                                     <Table>
@@ -301,13 +309,13 @@ const BOM = ({ products }) => {
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody>
-                                            {byProducts.map((item, index) => (
+                                            {allocatedByProducts.map((item, index) => (
                                                 <TableRow key={index}>
                                                     <TableCell>{item.name}</TableCell>
                                                     <TableCell>{item.quantity}</TableCell>
                                                     <TableCell><Input type="number" value={item.editableSalesPrice} onChange={(e) => {
                                                     const updatedByProducts = [...byProducts];
-                                                    updatedByProducts[index].editableSalesPrice = parseFloat(e.target.value);
+                                                    updatedByProducts[index].editableSalesPrice = parseFloat(e.target.value) || 0;
                                                     setByProducts(updatedByProducts);
                                                 }} className="w-24 text-right" /></TableCell>
                                                     <TableCell>${(item.costingPrice || 0).toFixed(2)}</TableCell>
@@ -357,18 +365,128 @@ const BOM = ({ products }) => {
     );
 };
 
-const ProductionOrder = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="flex items-center">
-                <Factory className="mr-2" /> Production Order
-            </CardTitle>
-        </CardHeader>
-        <CardContent>
-            <p>Create and track production orders.</p>
-        </CardContent>
-    </Card>
-);
+const ProductionOrder = () => {
+    const [boms, setBoms] = React.useState([]);
+    const [selectedBomId, setSelectedBomId] = React.useState('');
+    const [productionQty, setProductionQty] = React.useState(1);
+
+    React.useEffect(() => {
+        const savedBoms = localStorage.getItem('boms');
+        if (savedBoms) {
+            setBoms(JSON.parse(savedBoms));
+        }
+    }, []);
+
+    const selectedBom = boms.find(bom => bom.id.toString() === selectedBomId);
+
+    const scalingFactor = selectedBom && selectedBom.productToProduceQty > 0 && productionQty > 0
+        ? productionQty / selectedBom.productToProduceQty
+        : 1;
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center">Production Order</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="flex items-center gap-4 mb-6">
+                    <div className="flex-1">
+                        <label htmlFor="bom-select" className="text-sm font-medium">Select BOM to start production</label>
+                        <Select onValueChange={setSelectedBomId} value={selectedBomId}>
+                            <SelectTrigger id="bom-select">
+                                <SelectValue placeholder="Select a Bill of Materials" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {boms.map((bom) => (
+                                    <SelectItem key={bom.id} value={bom.id.toString()}>
+                                        {bom.id}: {bom.productToProduce} (Qty: {bom.productToProduceQty})
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="flex-1">
+                        <label htmlFor="production-qty" className="text-sm font-medium">Quantity to Produce</label>
+                        <Input
+                            id="production-qty"
+                            type="number"
+                            placeholder="Enter quantity"
+                            value={productionQty}
+                            onChange={(e) => setProductionQty(parseInt(e.target.value, 10) || 1)}
+                            disabled={!selectedBomId}
+                        />
+                    </div>
+                </div>
+
+                {selectedBom && (
+                    <div className="grid grid-cols-2 gap-8">
+                        {/* Input Side */}
+                        <div>
+                            <h3 className="text-lg font-semibold mb-2">Inputs (Scaled)</h3>
+                            <h4 className="font-semibold mb-2">Raw Materials</h4>
+                            <Table>
+                                <TableHeader><TableRow><TableHead>Item</TableHead><TableHead>Quantity</TableHead></TableRow></TableHeader>
+                                <TableBody>
+                                    {selectedBom.inputItems.map((item, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{item.name}</TableCell>
+                                            <TableCell>{(item.quantity * scalingFactor).toFixed(2)}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+
+                            <h4 className="font-semibold mt-4 mb-2">Overhead Costs</h4>
+                            <Table>
+                                <TableHeader><TableRow><TableHead>Overhead</TableHead><TableHead>Amount</TableHead></TableRow></TableHeader>
+                                <TableBody>
+                                    {selectedBom.overheadItems.map((item, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{item.name}</TableCell>
+                                            <TableCell>${(item.amount * scalingFactor).toFixed(2)}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
+
+                        {/* Output Side */}
+                        <div>
+                            <h3 className="text-lg font-semibold mb-2">Outputs (Scaled)</h3>
+                            <h4 className="font-semibold mb-2">Main Product</h4>
+                            <Table>
+                                <TableHeader><TableRow><TableHead>Product</TableHead><TableHead>Quantity</TableHead></TableRow></TableHeader>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>{selectedBom.productToProduce}</TableCell>
+                                        <TableCell>{productionQty}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+
+                            {selectedBom.byProducts.length > 0 && (
+                                <>
+                                    <h4 className="font-semibold mt-4 mb-2">By-Products</h4>
+                                    <Table>
+                                        <TableHeader><TableRow><TableHead>By-Product</TableHead><TableHead>Quantity</TableHead></TableRow></TableHeader>
+                                        <TableBody>
+                                            {selectedBom.byProducts.map((item, index) => (
+                                                <TableRow key={index}>
+                                                    <TableCell>{item.name}</TableCell>
+                                                    <TableCell>{(item.quantity * scalingFactor).toFixed(2)}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </CardContent>
+        </Card>
+    );
+};
 
 const WIPTracking = () => (
     <Card>
