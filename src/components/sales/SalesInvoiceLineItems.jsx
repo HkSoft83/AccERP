@@ -19,18 +19,19 @@ const SalesInvoiceLineItems = ({
 }) => {
   return (
     <div className="overflow-x-auto bg-background dark:bg-dark-background p-4 rounded-lg border border-border dark:border-dark-border shadow-inner">
-      <table className="w-full min-w-[1300px]"> {/* Adjusted min-width for new column order and spacing */}
+      <table className="w-full min-w-[1200px]"> 
         <thead className="border-b-2 border-primary dark:border-dark-primary">
           <tr>
-            <th className="p-3 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[18%]">Product/Service</th>
-            <th className="p-3 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[7%]">Quantity</th>
-            <th className="p-3 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[9%]">Qty Unit</th>
-            <th className="p-3 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[11%]">Rate (Billing Unit)</th>
-            <th className="p-3 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[11%]">Billing Unit</th>
-            <th className="p-3 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[7%]">Disc (%)</th>
-            <th className="p-3 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[9%]">Disc Amt</th>
-            <th className="p-3 text-right text-sm font-semibold text-primary dark:text-dark-primary w-[13%]">Total Price</th>
-            <th className="p-3 text-center text-sm font-semibold text-primary dark:text-dark-primary w-[5%]"></th>
+            <th className="p-2 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[20%]">Product/Service</th>
+            <th className="p-2 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[8%]">Qty</th>
+            <th className="p-2 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[10%]">Qty Unit</th>
+            <th className="p-2 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[12%]">Rate</th>
+            <th className="p-2 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[12%]">Billing Unit</th>
+            <th className="p-2 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[8%]">Disc (%)</th>
+            <th className="p-2 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[10%]">Disc Amt</th>
+            <th className="p-2 text-left text-sm font-semibold text-primary dark:text-dark-primary w-[8%]">Vat%</th>
+            <th className="p-2 text-right text-sm font-semibold text-primary dark:text-dark-primary w-[12%]">Total Price</th>
+            <th className="p-2 text-center text-sm font-semibold text-primary dark:text-dark-primary w-[5%]"></th>
           </tr>
         </thead>
         <tbody>
@@ -84,6 +85,16 @@ const SalesInvoiceLineItems = ({
                   className="w-full text-sm" 
                   min="0" step="0.01"
                   disabled={!!item.discountPercent && item.discountPercent > 0}
+                />
+              </td>
+              <td className="p-2"> {/* Vat% */}
+                <Input 
+                  type="number" 
+                  value={item.vatPercent} 
+                  onChange={(e) => handleLineItemChange(item.id, 'vatPercent', e.target.value)} 
+                  placeholder="0" 
+                  className="w-full text-sm" 
+                  min="0" max="100"
                 />
               </td>
               <td className="p-2 text-right text-sm font-medium"> {/* Total Price */}

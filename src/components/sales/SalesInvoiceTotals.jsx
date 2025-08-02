@@ -11,8 +11,9 @@ const SalesInvoiceTotals = ({
   setTerms,
   subtotal,
   totalDiscountDisplay,
-  taxAmount,
-  setTaxAmount,
+  totalVatAmount,
+  shippingAmount,
+  setShippingAmount,
   grandTotal,
 }) => {
   return (
@@ -37,8 +38,12 @@ const SalesInvoiceTotals = ({
           <span className="font-semibold text-green-600 dark:text-green-400">{totalDiscountDisplay}</span>
         </div>
         <div className="flex justify-between items-center">
-          <Label htmlFor="taxAmount" className="font-medium">Tax (% or Amount):</Label>
-          <Input id="taxAmount" type="number" value={taxAmount} onChange={(e) => setTaxAmount(parseFloat(e.target.value) || 0)} placeholder="0.00" className="w-28 text-sm text-right" min="0" step="0.01"/>
+          <span className="font-medium">Total VAT:</span>
+          <span className="font-semibold">{totalVatAmount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <Label htmlFor="shippingAmount" className="font-medium">Shipping/Other:</Label>
+          <Input id="shippingAmount" type="number" value={shippingAmount} onChange={(e) => setShippingAmount(parseFloat(e.target.value) || 0)} placeholder="0.00" className="w-28 text-sm text-right" min="0" step="0.01"/>
         </div>
         <hr className="border-border dark:border-dark-border my-2"/>
         <div className="flex justify-between items-center text-xl text-primary dark:text-dark-primary font-bold">

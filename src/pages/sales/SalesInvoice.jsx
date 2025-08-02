@@ -76,13 +76,15 @@ const SalesInvoice = () => {
       rateForBillingUnit: 0, 
       discountPercent: 0, 
       discountAmount: 0,
+      vatPercent: 0,
       totalPrice: 0 
     },
   ]);
 
   const [subtotal, setSubtotal] = useState(0);
   const [totalDiscountDisplay, setTotalDiscountDisplay] = useState('$0.00');
-  const [taxAmount, setTaxAmount] = useState(0); 
+  const [totalVatAmount, setTotalVatAmount] = useState(0);
+  const [shippingAmount, setShippingAmount] = useState(0); 
   const [grandTotal, setGrandTotal] = useState(0);
 
   const calculateLineItemTotal = useCallback((item) => {
@@ -110,7 +112,9 @@ const SalesInvoice = () => {
       itemDiscountAmountValue = itemRawTotal * (parseFloat(item.discountPercent) / 100);
     }
     
-    const totalPrice = parseFloat((itemRawTotal - itemDiscountAmountValue).toFixed(2));
+    const totalPriceBeforeVat = itemRawTotal - itemDiscountAmountValue;
+    const vatAmount = totalPriceBeforeVat * (parseFloat(item.vatPercent) / 100);
+    const totalPrice = parseFloat((totalPriceBeforeVat + vatAmount).toFixed(2));
     return { ...item, quantityInBase: calculatedQuantityInBase, totalPrice, itemRawTotal };
   }, []);
 
@@ -118,7 +122,22 @@ const SalesInvoice = () => {
     let currentSubtotal = 0;
     let currentTotalDiscountValue = 0;
 
-    const calculatedItems = lineItems.map(item => calculateLineItemTotal(item));
+    let currentTotalVat = 0;
+
+    const calculatedItems = lineItems.map(item => {
+      const calculated = calculateLineItemTotal(item);
+      const itemSubtotal = calculated.itemRawTotal || 0;
+      let itemDiscount = 0;
+      if (calculated.discountAmount > 0) {
+        itemDiscount = calculated.discountAmount;
+      } else if (calculated.discountPercent > 0) {
+        itemDiscount = itemSubtotal * (calculated.discountPercent / 100);
+      }
+      const priceAfterDiscount = itemSubtotal - itemDiscount;
+      const vatAmount = priceAfterDiscount * (parseFloat(calculated.vatPercent) / 100);
+      currentTotalVat += vatAmount;
+      return calculated;
+    });
 
     calculatedItems.forEach(item => {
       currentSubtotal += item.itemRawTotal || 0;
@@ -132,6 +151,7 @@ const SalesInvoice = () => {
     
     setSubtotal(parseFloat(currentSubtotal.toFixed(2)));
     setTotalDiscountDisplay(`-${currentTotalDiscountValue.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`);
+    setTotalVatAmount(parseFloat(currentTotalVat.toFixed(2)));
   }, [lineItems, calculateLineItemTotal]);
 
 
@@ -147,16 +167,16 @@ const SalesInvoice = () => {
         return acc + itemDiscountValue;
     },0);
 
-    const calculatedGrandTotal = subtotal - currentTotalDiscountValue + taxAmount;
+    const calculatedGrandTotal = subtotal - currentTotalDiscountValue + totalVatAmount + shippingAmount;
     setGrandTotal(parseFloat(calculatedGrandTotal.toFixed(2)));
-  }, [subtotal, taxAmount, lineItems, calculateLineItemTotal]);
+  }, [subtotal, shippingAmount, totalVatAmount, lineItems, calculateLineItemTotal]);
 
   const handleAddLineItem = () => {
     setLineItems([...lineItems, { 
       id: Date.now(), productId: '', productDetails: null, 
       quantityInput: 1, quantityUnitId: '', quantityInBase: 1, 
       billingUnitId: '', rateForBillingUnit: 0, 
-      discountPercent: 0, discountAmount: 0, totalPrice: 0 
+      discountPercent: 0, discountAmount: 0, vatPercent: 0, totalPrice: 0 
     }]);
   };
 
@@ -203,6 +223,8 @@ const SalesInvoice = () => {
           const amount = parseFloat(value) || 0;
           updatedItemState.discountAmount = amount;
           if (amount > 0) updatedItemState.discountPercent = 0; 
+        } else if (field === 'vatPercent') {
+          updatedItemState.vatPercent = parseFloat(value) || 0;
         } else {
           updatedItemState[field] = value;
         }
@@ -285,8 +307,9 @@ const SalesInvoice = () => {
       }), 
       subtotal: calculatedSubtotal, 
       totalDiscount: calculatedTotalDiscount, 
-      taxAmount, 
-      grandTotal: calculatedSubtotal - calculatedTotalDiscount + taxAmount, 
+      totalVatAmount, 
+      shippingAmount, 
+      grandTotal: calculatedSubtotal - calculatedTotalDiscount + totalVatAmount + shippingAmount, 
       notes, 
       terms
     };
@@ -351,8 +374,9 @@ const SalesInvoice = () => {
             setTerms={setTerms}
             subtotal={subtotal}
             totalDiscountDisplay={totalDiscountDisplay}
-            taxAmount={taxAmount}
-            setTaxAmount={setTaxAmount}
+            totalVatAmount={totalVatAmount}
+            shippingAmount={shippingAmount}
+            setShippingAmount={setShippingAmount}
             grandTotal={grandTotal}
           />
         </CardContent>
