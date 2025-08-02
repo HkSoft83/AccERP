@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { ArrowUpDown, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-const FixedAssetMasterRegister = ({ assets }) => {
+const FixedAssetMasterRegister = ({ assets, onEdit, onDelete }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [filters, setFilters] = useState({});
   const handleSort = (key) => {
@@ -375,6 +376,7 @@ const FixedAssetMasterRegister = ({ assets }) => {
                 </Popover>
               </div>
             </TableHead>
+            <TableHead className="border text-center">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -403,6 +405,10 @@ const FixedAssetMasterRegister = ({ assets }) => {
               <TableCell className="border text-center">{calculateBookValue(asset)}</TableCell>
               <TableCell className="border text-center">{asset.status}</TableCell>
               <TableCell className="border text-center">{asset.disposalDate}</TableCell>
+              <TableCell className="border text-center">
+                <Button variant="outline" size="sm" onClick={() => onEdit(asset)}>Edit</Button>
+                <Button variant="destructive" size="sm" className="ml-2" onClick={() => onDelete(asset.id)}>Delete</Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

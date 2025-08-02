@@ -1,38 +1,9 @@
-[plugin:vite:react-babel] D:\B-Important\Programming\Github\AccERP\src\pages\Production.jsx: Missing semicolon. (1:2)
-
-  4 | import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-D:/B-Important/Programming/Github/AccERP/src/pages/Production.jsx:1:2
-1  |  '''import React from 'react';
-   |    ^
-2  |  import { Factory, PackagePlus, ClipboardList, Hourglass, PackageCheck, Trash2, Pencil } from 'lucide-react';
-3  |  import { Button } from '@/components/ui/button';
-    at constructor (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:360:19)
-    at JSXParserMixin.raise (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:6613:19)
-    at JSXParserMixin.semicolon (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:6910:10)
-    at JSXParserMixin.parseExpressionStatement (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13161:10)
-    at JSXParserMixin.parseStatementContent (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12775:19)
-    at JSXParserMixin.parseStatementLike (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12644:17)
-    at JSXParserMixin.parseModuleItem (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12621:17)
-    at JSXParserMixin.parseBlockOrModuleBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13192:36)
-    at JSXParserMixin.parseBlockBody (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:13185:10)
-    at JSXParserMixin.parseProgram (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12514:10)
-    at JSXParserMixin.parseTopLevel (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:12504:25)
-    at JSXParserMixin.parse (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:14364:10)
-    at parse (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\parser\lib\index.js:14398:38)
-    at parser (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\parser\index.js:41:34)
-    at parser.next (<anonymous>)
-    at normalizeFile (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
-    at normalizeFile.next (<anonymous>)
-    at run (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\transformation\index.js:22:50)
-    at run.next (<anonymous>)
-    at transform (D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\transform.js:22:33)
-    at transform.next (<anonymous>)
-    at step (D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:261:32)
-    at D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:273:13
-    at async.call.result.err.err (D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:223:11)
-    at D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:189:28
-    at D:\B-Important\Programming\Github\AccERP\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
-    at D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:113:33
-    at step (D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:287:14)
-    at D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:273:13
-    at async.call.result.err.err (D:\B-Important\Programming\Github\AccERP\node_modules\gensync\index.js:223:11
+[plugin:vite:react-babel] D:\B-Important\Programming\Github\AccERP\src\pages\fixed-asset\AssetDisposal.jsx: Expected corresponding JSX closing tag for <form>. (87:8)
+  90 |         </div>
+D:/B-Important/Programming/Github/AccERP/src/pages/fixed-asset/AssetDisposal.jsx:87:8
+85 |              />
+86 |            </div>
+87 |          </div>
+   |          ^
+88 |          <div className="mt-4 flex justify-end">
+89 |            <Button type="submit">Dispose Asset</Button>

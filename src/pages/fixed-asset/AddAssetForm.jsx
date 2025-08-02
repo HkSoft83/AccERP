@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import mockAccounts from '@/data/mockAccounts';
 
-const AddAssetForm = ({ addAsset }) => {
+const AddAssetForm = ({ asset, onSave }) => {
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -22,6 +22,27 @@ const AddAssetForm = ({ addAsset }) => {
     assetLocation: '',
     tagSerialNumber: '',
   });
+
+  useEffect(() => {
+    if (asset) {
+      setFormData({
+        name: asset.name || '',
+        category: asset.category || '',
+        purchaseDate: asset.purchaseDate || '',
+        amount: asset.amount || '',
+        vendorName: asset.vendorName || '',
+        purchaseMode: asset.purchaseMode || '',
+        paymentMode: asset.paymentMode || '',
+        usefulLife: asset.usefulLife || '',
+        salvageValue: asset.salvageValue || '',
+        depreciationMethod: asset.depreciationMethod || 'Straight Line',
+        frequency: asset.frequency || '',
+        depreciationRate: asset.depreciationRate || '',
+        assetLocation: asset.assetLocation || '',
+        tagSerialNumber: asset.tagSerialNumber || '',
+      });
+    }
+  }, [asset]);
 
   const [paymentOptions, setPaymentOptions] = useState([]);
 
@@ -97,23 +118,7 @@ const AddAssetForm = ({ addAsset }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addAsset(formData);
-    setFormData({
-      name: '',
-      category: '',
-      purchaseDate: '',
-      amount: '',
-      vendorName: '',
-      purchaseMode: '',
-      paymentMode: formData.purchaseMode === 'On Credit' ? 'On Credit' : '',
-      usefulLife: '',
-      salvageValue: '',
-      depreciationMethod: 'Straight Line',
-      frequency: '',
-      depreciationRate: '',
-      assetLocation: '',
-      tagSerialNumber: '',
-    });
+    onSave({ ...formData, id: asset?.id });
   };
 
   return (
